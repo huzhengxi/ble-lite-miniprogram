@@ -1,0 +1,47 @@
+@import "./variable.scss";
+
+.baseItem {
+  height: 95rpx;
+}
+
+.filter-title {
+  background-color: $qp-secondary-background-color;
+}
+
+.arrow-icon {
+  height: 12rpx;
+  width: 21rpx;
+}
+
+.filter-list-item {
+  height: 95rpx;
+  border-bottom: $qp-secondary-background-color 1rpx solid;
+  margin-left: 20rpx;
+}
+
+
+.dropdown-menu {
+  background-color: #E2E2E2;
+  box-shadow: none;
+  border-radius: 13rpx;
+  margin: 30rpx 15rpx 0 15rpx;
+}
+
+.van-dropdown-menu__item {
+  justify-content: flex-start;
+}
+
+.van-popup {
+  background-color: $qp-page-background-color;
+  padding: 0 30rpx;
+}
+
+.button {
+  height: 70rpx;
+  border-radius: 35rpx;
+  width: 200rpx;
+}
+
+.drop-item {
+  width: 100%;
+}

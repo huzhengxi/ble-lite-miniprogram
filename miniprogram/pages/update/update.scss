@@ -1,0 +1,32 @@
+
+.updateing-icon {
+  width: 45rpx;
+  height: 60rpx;
+}
+
+.update-success-icon {
+  width: 35rpx;
+  height: 35rpx;
+}
+
+.update-fail-icon {
+  height: 45rpx;
+  width: 8rpx;
+}
+
+
+// 旋转180°动画
+@keyframes rotate180 {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+.updating-frame {
+  animation: rotate180 0.3s linear forwards;
+}
+

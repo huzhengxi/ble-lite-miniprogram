@@ -1,0 +1,10 @@
+{
+  "styleIsolation": "shared",
+  "usingComponents": {
+    "van-nav-bar": "@vant/weapp/nav-bar/index"
+  },
+  "navigationStyle": "default",
+  "navigationBarTitleText": "获取日志",
+  "navigationBarBackgroundColor": "#fff",
+  "navigationBarTextStyle": "black"
+}

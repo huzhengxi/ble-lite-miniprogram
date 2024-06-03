@@ -1,0 +1,34 @@
+{
+  "pages": [
+    "pages/main/main",
+    "pages/device/device",
+    "pages/versions/versions",
+    "pages/update/update",
+    "pages/log/log",
+    "pages/qrcode/qrcode"
+  ],
+  "window": {
+    "navigationStyle": "default"
+  },
+  "rendererOptions": {
+    "skyline": {
+      "defaultDisplayBlock": true,
+      "disableABTest": true,
+      "sdkVersionBegin": "3.0.0",
+      "sdkVersionEnd": "15.255.255"
+    }
+  },
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents",
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar"
+  },
+  "useExtendedLib": {
+    "weui": true
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "获取定位权限进行蓝牙设备连接"
+    }
+  }
+}

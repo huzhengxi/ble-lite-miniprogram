@@ -1,0 +1,21 @@
+
+.fireware-item {
+  min-height: 200rpx;
+}
+
+.button {
+  width: 100rpx;
+  height: 57rpx;
+  background: rgb(236, 234, 234);
+  border-radius: 29rpx;
+  color: #2962FF;
+  font-size: 25rpx;
+}
+
+.button:active {
+  opacity: 0.7;
+}
+
+.version-container {
+  padding-right: 0; margin-left: 30rpx; margin-right: 30rpx;
+}

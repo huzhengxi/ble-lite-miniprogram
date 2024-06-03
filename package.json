@@ -1,0 +1,20 @@
+{
+  "name": "ble-lite-miniprogram",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {},
+  "keywords": [],
+  "author": "虎正玺 <15264316179@163.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@vant/weapp": "^1.11.2",
+    "mobx-miniprogram": "^4.13.2",
+    "mobx-miniprogram-bindings": "^2.1.5",
+    "weapp-qrcode": "^1.0.0"
+  },
+  "devDependencies": {
+    "miniprogram-api-typings": "^3.12.2"
+  },
+  "main": "index.js",
+  "repository": ""
+}

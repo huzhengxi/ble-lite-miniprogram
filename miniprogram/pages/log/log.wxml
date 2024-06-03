@@ -1,0 +1,10 @@
+<scroll-view class="log-container" >
+  <text class="log-txt">
+    {{logs}}
+  </text>
+</scroll-view>
+
+<view class="share-container" bind:tap="shareTo">
+  <image src="/assets/icon/share.png" class="share-icon" />
+  <text>分享</text>
+</view>

@@ -1,0 +1,49 @@
+{
+  "description": "项目私有配置文件。此文件中的内容将覆盖 project.config.json 中的相同字段。项目的改动优先同步到此文件中。详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
+  "projectname": "ble-lite-miniprogram",
+  "setting": {
+    "compileHotReLoad": true,
+    "preloadBackgroundData": false
+  },
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages/log/log",
+          "pathName": "pages/log/log",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/test/test",
+          "pathName": "pages/test/test",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/update/update",
+          "pathName": "pages/update/update",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/versions/versions",
+          "pathName": "pages/versions/versions",
+          "query": "mac=582D34001111&model=Beacon-Medatc&version=1.0.2",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "device",
+          "pathName": "pages/device/device",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,9 @@
+export enum Opcode {
+  CMD_OTA_VERSION = 0xff00,
+  CMD_OTA_START = 0xff01,
+  CMD_OTA_END = 0xff02,
+  CMD_OTA_START_EXT = 0xff03,
+  CMD_OTA_FW_VERSION_REQ = 0xff04,
+  CMD_OTA_FW_VERSION_RSP = 0xff05,
+  CMD_OTA_RESULT = 0xff06,
+}

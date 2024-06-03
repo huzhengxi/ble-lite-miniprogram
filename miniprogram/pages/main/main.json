@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "device-filter": "/components/device-filter/device-filter",
+    "van-nav-bar": "@vant/weapp/nav-bar/index"
+
+  },
+  "navigationStyle": "custom",
+  "navigationBarTextStyle": "black"
+
+}

@@ -1,0 +1,9 @@
+<view class="container version-container " wx:if="{{availableFirmwares.length > 0}}">
+  <view class="row space-between fireware-item {{index === availableFirmwares.length - 1 ? '' : 'fliter-line'}}" wx:for="{{availableFirmwares}}" wx:key="index">
+    <view class="column">
+      <text class="mr-5" style="color: black;">{{item.version}}</text>
+      <text class="mt-2" style="color: gray;">{{item.title}}</text>
+    </view>
+    <view data-index="{{index}}" bind:tap="onUpdate" class="button row center" style="margin-right:20rpx ;">升级</view>
+  </view>
+</view>

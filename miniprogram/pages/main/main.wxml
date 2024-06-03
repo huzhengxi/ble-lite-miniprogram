@@ -1,0 +1,38 @@
+<!-- 导航栏 -->
+<van-nav-bar fixed>
+  <text class="vant-nav-bar-title" slot="left">设备配置</text>
+  <view slot="title" class="nav-bar-custom-title row flex-center-right">
+    <view bind:tap="changeScanStatus" class="scan-status-container row flex-center-center {{scanning ? 'loading': ''}}">
+      <image src="../../assets/icon/{{scanning ? 'start': 'stop'}}.png" style="height: 40rpx; width: 40rpx;" mode="aspectFit" />
+    </view>
+  </view>
+</van-nav-bar>
+
+<view style="padding: {{navHeight}}px 20rpx 20rpx 20rpx;">
+
+  <!-- 设备过滤 -->
+  <!-- <device-filter /> -->
+
+  <!-- 设备列表 -->
+  <view class="ble-device-item container row space-between " wx:for="{{devices}}" wx:key="index" data-device="{{item}}" bind:tap="onItemTap">
+    <view class="row flex-center-left" style="flex: 1;">
+      <image class="device-icon mr-3" src="../../assets/devices/small/beacon.png" />
+      <view class="column" style="flex: 1;">
+        <text style="width: 300rpx; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{item.name}}</text>
+        <text class="mt-1">{{item.mac}}</text>
+      </view>
+    </view>
+    <view class="column flex-bottom-center">
+      <image class="rssi-icon" src="../../assets/rssi/{{item.rssiLevel}}.png" mode="" />
+      <text class="mt-1">{{item.rssi}} dBm </text>
+    </view>
+  </view>
+
+</view>
+
+<view wx:if="{{devices.length === 0}}" class="scanning-tip">
+  <text wx:if="{{scanning}}">正在扫描...\n请长按设备背部按钮直至蓝牙图标快速闪烁</text>
+  <text bind:tap="startScan" wx:else>
+    已停止扫描，请点击<text class="start-scan-rich-txt">开始扫描</text>
+  </text>
+</view>

@@ -1,0 +1,42 @@
+.log-container {
+  width: auto;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  overflow-x: hidden;
+}
+
+.log-txt {
+  font-size: medium;
+  word-wrap: break-word;
+}
+
+.share-icon {
+  height: 27rpx;
+  width: 27rpx;
+  margin-right: 20rpx;
+}
+
+.share-container {
+  width: 650rpx;
+  height: 85rpx;
+  background: #2962FF;
+  border-radius: 13rpx;
+  border: 1px solid #448AFF;
+  color: white;
+  font-size: 30rpx;
+
+  position: fixed;
+  bottom: 50rpx;
+  left: 50%;
+  transform: translateX(-50%);
+
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.share-container:active {
+  opacity: .8;
+}

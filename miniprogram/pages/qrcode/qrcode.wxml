@@ -1,0 +1,8 @@
+<view class="container column center" style="height: 100vh; margin-top: 0;" bind:longpress="macLongPress">
+  <text class="mt-10 mac">{{mac}}</text>
+  <canvas class="mt-2" style="width: 200px; height: 200px;" canvas-id="macQrcode"></canvas>
+  <text class="copy-tip mt-3">长按二维码可复制到剪贴板</text>
+</view>
+<van-notify id="van-notify" />
+
+

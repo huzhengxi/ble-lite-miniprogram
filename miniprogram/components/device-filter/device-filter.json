@@ -1,0 +1,11 @@
+{
+  "component": true,
+  "styleIsolation": "shared",
+  
+  "usingComponents": {
+    "van-dropdown-menu": "@vant/weapp/dropdown-menu/index",
+    "van-dropdown-item": "@vant/weapp/dropdown-item/index",
+    "van-button": "@vant/weapp/button/index",
+    "select": "/components/select/select"
+  }
+}
