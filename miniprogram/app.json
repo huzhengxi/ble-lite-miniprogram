@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/luckincoffee/luckincoffee",
     "pages/main/main",
     "pages/device/device",
     "pages/versions/versions",
@@ -25,6 +26,25 @@
   },
   "useExtendedLib": {
     "weui": true
+  },
+  "tabBar": {
+    "custom": false,
+    "color": "#000000",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/luckincoffee/luckincoffee",
+        "text": "瑞幸温度计"
+      },
+      {
+        "pagePath": "pages/main/main",
+        "text": "主页"
+      },
+     {
+        "pagePath": "pages/log/log",
+        "text": "联系我们"
+      }
+    ]
   },
   "permission": {
     "scope.userLocation": {
