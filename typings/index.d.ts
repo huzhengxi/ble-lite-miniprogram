@@ -23,6 +23,8 @@ interface IBLEDeviceData {
   battery?: number;
   // 是否是绑定包
   isBind: boolean;
+  // 扫描间隔
+  scanInterval?: number;
 
   // productID
   productID: number;
@@ -50,7 +52,7 @@ interface IBleBroadcastFilter {
   // 过滤产品id
   productIds: number[];
   // 过滤产品名称
-  productName: string
+  productName: string;
 }
 
 /**
@@ -65,6 +67,7 @@ interface IBleScanStore {
 
   // computed
   devices: () => IBLEDeviceData[];
+  luckinDevices: () => IBLEDeviceData[];
   deviceFilterToString: string;
 
   // actions
@@ -118,12 +121,12 @@ type IUpdateStatus =
   | "downloading-fail"
   | "fail";
 
-
-
 interface IDevicePageItems {
-  canUpdate: boolean
-  showBroadcastInterval: boolean
-  showBroadcastPower: boolean
-  showBroadcastChannel: boolean
-  showLog: boolean
+  canUpdate: boolean;
+  showBroadcastInterval: boolean;
+  showBroadcastPower: boolean;
+  showBroadcastChannel: boolean;
+  showLog: boolean;
 }
+
+type IDeviceFilter = ((device: IBlueToothDevice) => boolean);

@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/luckincoffee/luckincoffee",
     "pages/main/main",
+    "pages/luckincoffee/luckincoffee",
     "pages/device/device",
     "pages/versions/versions",
     "pages/update/update",
@@ -33,14 +33,14 @@
     "backgroundColor": "#ffffff",
     "list": [
       {
+        "pagePath": "pages/main/main",
+        "text": "主页"
+      },
+      {
         "pagePath": "pages/luckincoffee/luckincoffee",
         "text": "瑞幸温度计"
       },
       {
-        "pagePath": "pages/main/main",
-        "text": "主页"
-      },
-     {
         "pagePath": "pages/log/log",
         "text": "联系我们"
       }

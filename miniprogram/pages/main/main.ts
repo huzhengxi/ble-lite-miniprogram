@@ -1,14 +1,13 @@
 import { BehaviorWithStore } from "mobx-miniprogram-bindings";
 
-import BleScanService from "../../services/BleScanService";
 import { bleScanStore, deviceStore } from "../../mobx/index";
-import { supportedProductIds } from "../../services/UuidInfo";
+import BleScanService from "../../services/BleScanService";
 import { permissionTip } from "../../utils/util";
 
 interface IMainData {
   devices: IBLEDeviceData[];
   scanning: boolean;
-  navHeight: number
+  navHeight: number;
 }
 
 interface IMainOption {
@@ -50,16 +49,12 @@ Page<IMainData, IMainOption>({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad() {
-
-  },
+  onLoad() {},
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady() {
-
-  },
+  onReady() {},
 
   /**
    * 生命周期函数--监听页面显示
@@ -69,10 +64,10 @@ Page<IMainData, IMainOption>({
   },
 
   async startScan() {
-    this.clearDevices?.()
+    this.clearDevices?.();
     this.setData({
-      devices: []
-    })
+      devices: [],
+    });
     const tipContent = permissionTip();
     const showPermissionTip = () => {
       wx.showModal({
@@ -80,8 +75,8 @@ Page<IMainData, IMainOption>({
         content: tipContent,
         showCancel: false,
         confirmText: "知道了",
-      })
-    }
+      });
+    };
     try {
       // 检查定位权限和蓝牙权限
       const platform = wx.getSystemInfoSync().platform;
@@ -92,7 +87,7 @@ Page<IMainData, IMainOption>({
           scope: "scope.userLocation",
         });
         if (!authorizeLocationResult) {
-          showPermissionTip()
+          showPermissionTip();
         }
       }
       if (!res.authSetting["scope.bluetooth"]) {
@@ -100,12 +95,12 @@ Page<IMainData, IMainOption>({
           scope: "scope.bluetooth",
         });
         if (!authorizeBluetoothResult) {
-          showPermissionTip()
+          showPermissionTip();
           return;
         }
       }
     } catch (error) {
-      showPermissionTip()
+      showPermissionTip();
     }
 
     if (!this.bleScanService) {
@@ -124,12 +119,12 @@ Page<IMainData, IMainOption>({
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload() { },
+  onUnload() {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh() { },
+  onPullDownRefresh() {},
   changeScanStatus() {
     if (this.data.scanning) {
       this.bleScanService?.stopScan();

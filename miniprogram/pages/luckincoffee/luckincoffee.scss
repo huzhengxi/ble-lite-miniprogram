@@ -1,1 +1,36 @@
-/* pages/luckincoffee/luckincoffee.wxss */
+.device-icon {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.rssi-icon {
+  width: 48rpx;
+  height: 25rpx;
+}
+
+.ble-device-item:active {
+  // opacity: 0.5;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.scan-status-container {
+  height: 60rpx;
+  width: 60rpx;
+  border-radius: 50%;
+  background-color: white;
+  border: 1rpx solid #e5e5e5;
+}
+
+.scanning-tip {
+  color: gray;
+  padding: 300rpx 40rpx 40rpx 40rpx;
+  text-align: center;
+  line-height: 70rpx;
+  font-size: 30rpx;
+}
+
+.start-scan-rich-txt {
+  color: #09B955;
+  opacity: 1;
+  font-weight: 700;
+}

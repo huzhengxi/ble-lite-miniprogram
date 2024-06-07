@@ -5,13 +5,17 @@ import { parseMAC, uint8Array2hexString, permissionTip } from "../utils/util";
 export default class BleScanService {
   logType = "蓝牙模块>>";
   scanTimeout: number | null = null;
+  // 默认过滤方法
+  private defaultFilter: IDeviceFilter = () => true;
+  // 自定义过滤方法
+  private customFilter: IDeviceFilter = this.defaultFilter;
 
   onBluetoothDeviceFound: WechatMiniprogram.OnBluetoothDeviceFoundCallback = ({
     devices,
   }) => {
     const parseDevices = devices
       .filter(filterBroadcast)
-      .filter(filterLuckinDevice)
+      .filter(this.customFilter)
       .map(parseBroadcastData);
     if (parseDevices) {
       helper.log(this.logType, "parseDevices:", parseDevices);
@@ -28,7 +32,8 @@ export default class BleScanService {
   /**
    * 开始扫描
    */
-  async startScan() {
+  async startScan(filter: IDeviceFilter = this.defaultFilter) {
+    this.customFilter = filter;
     helper.log(this.logType, "开始扫描");
     if (this.scanTimeout) {
       clearTimeout(this.scanTimeout);
@@ -158,7 +163,6 @@ export function parseBroadcastData(
   // battery = parseInt(eventData.substring(4, 6), 16);
   // }
 
-
   return {
     deviceId,
     battery: 100,
@@ -189,20 +193,4 @@ export const filterBroadcast = (device: IBlueToothDevice) => {
       (serviceData["0000fdcd-0000-1000-8000-00805f9b34fb"] &&
         serviceData["0000fdcd-0000-1000-8000-00805f9b34fb"].byteLength >= 8))
   );
-};
-
-const filterLuckinDevice = (device: IBlueToothDevice) => {
-  const { serviceData } = device;
-  const fdcdData =
-    serviceData["0000FDCD-0000-1000-8000-00805F9B34FB"] ||
-    serviceData["0000fdcd-0000-1000-8000-00805f9b34fb"];
-  if (!fdcdData) {
-    return false;
-  }
-
-  const byteData = new Uint8Array(fdcdData);
-  const hexData = uint8Array2hexString(byteData).toUpperCase();
-  console.log("filterLuckinDevice:", device, hexData);
-
-  return hexData.startsWith("01FF0110");
 };

@@ -41,6 +41,9 @@ export const bleScanStore: IBleScanStore = observable({
       return true;
     });
   },
+  get luckinDevices() {
+    return this.deviceList.filter(({ scanInterval = 1000 }: IBLEDeviceData) => scanInterval < 500);
+  },
 
   get deviceFilterToString() {
     const {
@@ -71,19 +74,16 @@ export const bleScanStore: IBleScanStore = observable({
   ) {
     devices.forEach((device) => {
       // 如果没有找到就添加，找到了就更新
-      const laseScanTime = this.lastScanTimeMap.get(device.mac) || 0;
+      const lastScanTime = this.lastScanTimeMap.get(device.deviceId) || 0;
       const currentScanTime = Date.now();
-      this.lastScanTimeMap.set(device.mac, Date.now());
-      console.log(`addDevice: lasttime:${laseScanTime}, current:${currentScanTime}, diff:${currentScanTime - laseScanTime}, mac:${device.mac}`);
-      
-      if (currentScanTime - laseScanTime > 200) {
-        return;
-      }
+      this.lastScanTimeMap.set(device.deviceId, Date.now());
+      // 扫描间隔
+      device.scanInterval = currentScanTime - lastScanTime;
+
       const index = this.deviceList.findIndex(
-        (item) => item.mac === device.mac
+        (item) => item.deviceId === device.deviceId
       );
-      console.log("addDevice:", index, this.deviceList);
-      
+
       if (index === -1) {
         this.deviceList = [...this.deviceList, device];
       } else {
@@ -91,7 +91,6 @@ export const bleScanStore: IBleScanStore = observable({
       }
     });
     this.deviceList = [...this.deviceList.sort((a, b) => b.rssi - a.rssi)];
-    // console.log('store:', '传进来的：',devices, 'this.deviceList:', this.deviceList, this.devices);
   }),
   clearDevices: action(function (this: typeof bleScanStore) {
     this.deviceList = [];
