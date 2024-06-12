@@ -2,9 +2,6 @@
   "pages": [
     "pages/main/main",
     "pages/luckincoffee/luckincoffee",
-    "pages/device/device",
-    "pages/versions/versions",
-    "pages/update/update",
     "pages/log/log",
     "pages/qrcode/qrcode"
   ],

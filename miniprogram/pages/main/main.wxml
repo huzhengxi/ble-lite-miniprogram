@@ -11,7 +11,7 @@
 <view style="padding: {{navHeight}}px 20rpx 20rpx 20rpx;">
 
   <!-- 设备过滤 -->
-  <!-- <device-filter /> -->
+  <device-filmater />
 
   <!-- 设备列表 -->
   <view class="ble-device-item container row space-between " wx:for="{{devices}}" wx:key="index" data-device="{{item}}" bind:tap="onItemTap">

@@ -1,8 +1,0 @@
-{
-  "usingComponents": {},
-  "navigationStyle": "default",
-
-  "navigationBarBackgroundColor": "#fff",
-  "navigationBarTextStyle": "black",
-  "navigationBarTitleText": "固件升级"
-}

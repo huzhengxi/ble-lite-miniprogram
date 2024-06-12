@@ -1,5 +1,3 @@
-import { shouldCompute } from "mobx-miniprogram/lib/internal";
-
 export const formatTime = (date: Date = new Date()) => {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
