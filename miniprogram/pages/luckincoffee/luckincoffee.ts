@@ -33,7 +33,7 @@ const filterLuckinDevice = (device: IBlueToothDevice) => {
   const hexData = uint8Array2hexString(byteData).toUpperCase();
   console.log("filterLuckinDevice:", device, hexData);
 
-  return true; // hexData.startsWith("01FF0110");
+  return hexData.startsWith("01FF0110");
 };
 
 const luckinBehavior = BehaviorWithStore({

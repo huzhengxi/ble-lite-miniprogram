@@ -31,15 +31,21 @@
     "list": [
       {
         "pagePath": "pages/main/main",
-        "text": "主页"
+        "text": "主页",
+        "iconPath": "/assets/tab-icons/normal/home.png",
+        "selectedIconPath": "/assets/tab-icons/selected/home.png"
       },
       {
         "pagePath": "pages/luckincoffee/luckincoffee",
-        "text": "瑞幸温度计"
+        "text": "瑞幸温度计",
+        "iconPath": "/assets/tab-icons/normal/luckin.png",
+        "selectedIconPath": "/assets/tab-icons/selected/luckin.png"
       },
       {
         "pagePath": "pages/log/log",
-        "text": "联系我们"
+        "text": "联系我们",
+        "iconPath": "/assets/tab-icons/normal/help.png",
+        "selectedIconPath": "/assets/tab-icons/selected/help.png"
       }
     ]
   },
