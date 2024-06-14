@@ -25,24 +25,17 @@ export const bleScanStore: IBleScanStore = observable({
       this.deviceList = generateFakeBLEDeviceList();
     }
     return this.deviceList.filter((device: IBLEDeviceData) => {
-      const {
-        name = "",
-        rssi = -100,
-        mac = "",
-        broadcastData = "",
-        productIds = [],
-      } = this.deviceFilter;
-      if (!device.name.includes(name)) return false;
-      if (device.rssi < rssi) return false;
-      if (!device.mac.includes(mac)) return false;
-      if (!device.broadcastData.includes(broadcastData)) return false;
-      if (productIds.length > 0 && !productIds.includes(device.productID))
-        return false;
+      const { name = "", rssi = -100, broadcastData = "" } = this.deviceFilter;
+      // if (!device.name.includes(name)) return false;
+      // if (device.rssi < rssi) return false;
+      // if (!device.broadcastData.includes(broadcastData)) return false;
       return true;
     });
   },
   get luckinDevices() {
-    return this.deviceList.filter(({ scanInterval = 1000 }: IBLEDeviceData) => scanInterval < 500);
+    return this.deviceList.filter(
+      ({ scanInterval = 1000 }: IBLEDeviceData) => scanInterval < 500
+    );
   },
 
   get deviceFilterToString() {

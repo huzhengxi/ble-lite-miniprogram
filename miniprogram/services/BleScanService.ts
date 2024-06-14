@@ -13,12 +13,11 @@ export default class BleScanService {
   onBluetoothDeviceFound: WechatMiniprogram.OnBluetoothDeviceFoundCallback = ({
     devices,
   }) => {
-    console.log('扫描到设备：', devices)
     const parseDevices = devices
       .filter(filterBroadcast)
       .filter(this.customFilter)
       .map(parseBroadcastData);
-    if (parseDevices) {
+    if (parseDevices.length > 0) {
       helper.log(this.logType, "parseDevices:", parseDevices);
       bleScanStore.addDevices(parseDevices);
     }
@@ -160,5 +159,5 @@ export function parseBroadcastData(
 export const filterBroadcast = (device: IBlueToothDevice) => {
   const { name, localName, serviceData, connectable } = device;
   const finalName = name || localName;
-  return true
+  return true;
 };
