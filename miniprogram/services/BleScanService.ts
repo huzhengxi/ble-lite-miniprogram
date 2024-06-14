@@ -13,6 +13,7 @@ export default class BleScanService {
   onBluetoothDeviceFound: WechatMiniprogram.OnBluetoothDeviceFoundCallback = ({
     devices,
   }) => {
+    console.log('扫描到设备：', devices)
     const parseDevices = devices
       .filter(filterBroadcast)
       .filter(this.customFilter)
@@ -41,7 +42,7 @@ export default class BleScanService {
     }
     this.scanTimeout = setTimeout(() => {
       this.stopScan();
-    }, 20000);
+    }, 20000, null);
     bleScanStore.startScan();
 
     const systemInfo = wx.getSystemInfoSync();
@@ -86,6 +87,7 @@ export default class BleScanService {
         // services: ["0000FDCD-0000-1000-8000-00805F9B34FB"],
       });
     } catch (error) {
+      // @ts-ignore
       if ([10000, 10001].includes(error.errCode)) {
         wx.showModal({
           title: "",
@@ -142,38 +144,13 @@ export function parseBroadcastData(
   const { serviceData, name, localName, RSSI, deviceId } = bleDevice;
   const rssiLevel = RSSI2Level(RSSI);
 
-  let sData = serviceData["0000FDCD-0000-1000-8000-00805F9B34FB"];
-  if (!sData) {
-    sData = serviceData["0000fdcd-0000-1000-8000-00805f9b34fb"];
-  }
-  const byteArray = new Uint8Array(sData);
-  // product id
-  // const productID = byteArray[1];
-  // frameControl
-  // const frameControl = byteArray[0];
-  // const isBind = (frameControl & 0b10000000) > 0;
-
-  // sData 转为 hex
-  const sDataHex = uint8Array2hexString(byteArray);
-  const mac = parseMAC(sDataHex.substring(8, 20));
-
-  // const eventData = sDataHex.substring(16);
-  // let battery = 100;
-  // if (eventData.length > 5 && eventData.substring(0, 2) === "02") {
-  // battery = parseInt(eventData.substring(4, 6), 16);
-  // }
-
   return {
     deviceId,
-    battery: 100,
     name: name || localName,
     rssiLevel,
     rssi: RSSI,
-    mac,
-    isBind: false,
-    productID: 0,
-    broadcastData: sDataHex,
     rawData: bleDevice,
+    broadcastData:''
   };
 }
 
@@ -183,14 +160,5 @@ export function parseBroadcastData(
 export const filterBroadcast = (device: IBlueToothDevice) => {
   const { name, localName, serviceData, connectable } = device;
   const finalName = name || localName;
-
-  return (
-    connectable &&
-    finalName &&
-    serviceData &&
-    ((serviceData["0000FDCD-0000-1000-8000-00805F9B34FB"] &&
-      serviceData["0000FDCD-0000-1000-8000-00805F9B34FB"].byteLength >= 8) ||
-      (serviceData["0000fdcd-0000-1000-8000-00805f9b34fb"] &&
-        serviceData["0000fdcd-0000-1000-8000-00805f9b34fb"].byteLength >= 8))
-  );
+  return true
 };

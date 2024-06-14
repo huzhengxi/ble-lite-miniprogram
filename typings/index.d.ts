@@ -17,17 +17,9 @@ interface IBLEDeviceData {
   rssi: number;
   // 设备信号强度等级(RSSI转换得到一个0~5的数字)
   rssiLevel: number;
-  // 设备 MAC 地址
-  mac: string;
-  // 电池电量
-  battery?: number;
-  // 是否是绑定包
-  isBind: boolean;
   // 扫描间隔
   scanInterval?: number;
 
-  // productID
-  productID: number;
   // 原始数据
   rawData?: IBlueToothDevice;
   // 广播数据
