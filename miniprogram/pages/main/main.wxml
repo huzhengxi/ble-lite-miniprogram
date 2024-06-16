@@ -11,6 +11,7 @@
 <view style="padding: {{navHeight}}px 20rpx 20rpx 20rpx;">
 
   <!-- 设备过滤 -->
+  
   <device-filmater />
 
   <!-- 设备列表 -->

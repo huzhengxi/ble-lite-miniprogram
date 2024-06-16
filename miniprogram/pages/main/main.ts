@@ -133,24 +133,5 @@ Page<IMainData, IMainOption>({
     }
   },
   onItemTap(event) {
-    const { device } = event.currentTarget.dataset;
-
-    console.log("条目点击：", device);
-    this.setCurrentDevice?.(device);
-    // if (!supportedProductIds.includes(device.productID)) {
-    //   wx.showModal({
-    //     title: "",
-    //     content: "此设备暂不支持连接",
-    //     showCancel: false,
-    //   });
-    //   return;
-    // }
-
-    // wx.navigateTo({
-    //   url: `/pages/device/device`,
-    // });
-    wx.navigateTo({
-      url: `/pages/qrcode/qrcode`,
-    });
   },
 });
