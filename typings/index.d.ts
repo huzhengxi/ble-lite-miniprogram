@@ -24,6 +24,8 @@ interface IBLEDeviceData {
   rawData?: IBlueToothDevice;
   // 广播数据
   broadcastData: string;
+  // mac 地址
+  mac?: string
 }
 
 // 广播过滤条件

@@ -21,7 +21,7 @@ interface ILuckinOption {
 }
 
 const filterLuckinDevice = (device: IBlueToothDevice) => {
-  const { serviceData } = device;
+  const { serviceData = {} } = device;
   const fdcdData =
     serviceData["0000FDCD-0000-1000-8000-00805F9B34FB"] ||
     serviceData["0000fdcd-0000-1000-8000-00805f9b34fb"];
@@ -31,7 +31,6 @@ const filterLuckinDevice = (device: IBlueToothDevice) => {
 
   const byteData = new Uint8Array(fdcdData);
   const hexData = uint8Array2hexString(byteData).toUpperCase();
-  console.log("filterLuckinDevice:", device, hexData);
 
   return hexData.startsWith("01FF0110");
 };
@@ -126,7 +125,7 @@ Page<ILuckinData, ILuckinOption>({
     if (this.data.scanning) {
       this.bleScanService?.stopScan();
     } else {
-      this.bleScanService?.startScan();
+      this.startScan()
     }
   },
   onItemTap(event) {

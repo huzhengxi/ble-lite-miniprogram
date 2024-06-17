@@ -5,6 +5,7 @@
 
 import { observable, action } from "mobx-miniprogram";
 import { generateFakeBLEDeviceList } from "../utils/fake";
+import { mac2Colon, parseMAC, uint8Array2hexString } from '../utils/util'
 
 export const bleScanStore: IBleScanStore = observable({
   // 数据字段
@@ -34,8 +35,16 @@ export const bleScanStore: IBleScanStore = observable({
   },
   get luckinDevices() {
     return this.deviceList.filter(
-      ({ scanInterval = 1000 }: IBLEDeviceData) => scanInterval < 500
-    );
+      ({ scanInterval = 1000 }: IBLEDeviceData) => scanInterval < 900
+    ).map((device: IBLEDeviceData) => {
+      const newDevice = { ...device };
+      const serviceData = device.rawData?.serviceData?.["0000FDCD-0000-1000-8000-00805F9B34FB"] ||
+        device.rawData?.serviceData?.["0000fdcd-0000-1000-8000-00805f9b34fb"];
+      const hexData = uint8Array2hexString(new Uint8Array(serviceData))
+      const mac = mac2Colon(parseMAC(hexData.substring(8, 20))) || '';
+      newDevice.mac = mac
+      return newDevice
+    });
   },
 
   get deviceFilterToString() {
@@ -72,6 +81,8 @@ export const bleScanStore: IBleScanStore = observable({
       this.lastScanTimeMap.set(device.deviceId, Date.now());
       // 扫描间隔
       device.scanInterval = currentScanTime - lastScanTime;
+
+      console.log('addDevices:', device.scanInterval, device)
 
       const index = this.deviceList.findIndex(
         (item) => item.deviceId === device.deviceId
