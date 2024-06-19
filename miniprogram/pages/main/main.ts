@@ -41,7 +41,7 @@ Page<IMainData, IMainOption>({
    * 页面的初始数据
    */
   data: {
-    navHeight: wx.getMenuButtonBoundingClientRect().bottom + 10,
+    navHeight: wx.getMenuButtonBoundingClientRect().bottom + 20,
     devices: [],
     scanning: false,
   },

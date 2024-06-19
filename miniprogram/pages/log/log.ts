@@ -1,21 +1,22 @@
 
-import { createStoreBindings } from "mobx-miniprogram-bindings";
-import { deviceStore } from "../../mobx/index";
-import BleConnection from "../../services/BleConnection";
-import { UuidInfo } from "../../services/UuidInfo";
-import { saveLog, shareLog, removeLog } from "../../services/Logger";
 
 interface ILogPageData {
-  currentDevice?: IBLEDeviceData;
-  currentBleConnection?: BleConnection;
-  logs: string;
+  nameSwitch: boolean;
+  dataSwitch: boolean;
+  services: string[];
+  selectedService: string;
+  servicesSwitch: boolean;
+  dBmSwitch: boolean;
+  exclusiveSwitch: boolean;
+  unnamedSwitch: boolean;
+  noDataSwitch: boolean;
+  unconnectableSwitch: boolean;
+
 }
 
 interface ILogPageOptions {
-
-  storeBinds?: any;
-  shareTo: () => void;
-  onBack: ()=> void
+  onSwitchChange: (e: any) => void;
+  onPickerChange: (e: any) => void;
 }
 
 Page<ILogPageData, ILogPageOptions>({
@@ -23,78 +24,68 @@ Page<ILogPageData, ILogPageOptions>({
    * 页面的初始数据
    */
   data: {
-    logs: ``,
+    nameSwitch: false,
+    dataSwitch: false,
+    services: ["None", "Service 1", "Service 2"],
+    selectedService: "None",
+    servicesSwitch: false,
+    dBmSwitch: true,
+    exclusiveSwitch: false,
+    unnamedSwitch: false,
+    noDataSwitch: false,
+    unconnectableSwitch: false,
+  },
+
+   onSwitchChange: function(e: any) {
+    const { id } = e.currentTarget;
+    this.setData({
+      [id]: e.detail.value
+    });
+  },
+
+  onPickerChange: function(e: any) {
+    this.setData({
+      selectedService: this.data.services[e.detail.value]
+    });
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad() { },
+  onLoad() {},
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady() {
-    this.storeBinds = createStoreBindings(this, {
-      store: deviceStore,
-      fields: ["currentDevice", "currentBleConnection"],
-    });
-
-    setTimeout(() => {
-      this.data.currentBleConnection?.enableNotification(
-        UuidInfo.LOG_SERVICE_UUID,
-        UuidInfo.LOG_NOTIFY_CHARACTERISTIC_UUID,
-        true,
-        (value) => {
-          const finalValue = saveLog(value, this.data.currentDevice?.mac || "");
-          this.setData({
-            logs: this.data.logs + finalValue,
-          });
-          console.log("log:", finalValue);
-        }
-      );
-    }, 500);
-  },
-
-  shareTo() {
-    shareLog(this.data.currentDevice?.mac || "")
-  },
-  onBack(){
-    wx.navigateBack()
-  },
+  onReady() {},
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow() { },
+  onShow() {},
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide() { },
+  onHide() {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload() {
-    this.data.currentBleConnection?.disableNotification(
-      UuidInfo.LOG_SERVICE_UUID,
-      UuidInfo.LOG_NOTIFY_CHARACTERISTIC_UUID)
-    removeLog()
-  },
+  onUnload() {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh() { },
+  onPullDownRefresh() {},
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom() { },
+  onReachBottom() {},
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage() { },
+  onShareAppMessage() {},
 });

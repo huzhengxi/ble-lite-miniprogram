@@ -25,7 +25,9 @@ interface IBLEDeviceData {
   // 广播数据
   broadcastData: string;
   // mac 地址
-  mac?: string
+  mac?: string;
+  // serviceData
+  serviceData?: Record<string, ArrayBuffer>;
 }
 
 // 广播过滤条件
@@ -123,4 +125,4 @@ interface IDevicePageItems {
   showLog: boolean;
 }
 
-type IDeviceFilter = ((device: IBlueToothDevice) => boolean);
+type IDeviceFilter = (device: IBlueToothDevice) => boolean;

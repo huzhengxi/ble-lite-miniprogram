@@ -14,7 +14,6 @@ export default class BleScanService {
     devices,
   }) => {
     const parseDevices = devices
-      .filter(filterBroadcast)
       .filter(this.customFilter)
       .map(parseBroadcastData);
     if (parseDevices.length > 0) {
@@ -39,9 +38,13 @@ export default class BleScanService {
       clearTimeout(this.scanTimeout);
       this.scanTimeout = null;
     }
-    this.scanTimeout = setTimeout(() => {
-      this.stopScan();
-    }, 20000, null);
+    this.scanTimeout = setTimeout(
+      () => {
+        this.stopScan();
+      },
+      20000,
+      null
+    );
     bleScanStore.startScan();
 
     const systemInfo = wx.getSystemInfoSync();
@@ -140,8 +143,13 @@ export function RSSI2Level(RSSI: number) {
 export function parseBroadcastData(
   bleDevice: IBlueToothDevice
 ): IBLEDeviceData {
-  const { serviceData, name, localName, RSSI, deviceId } = bleDevice;
+  const { serviceData = {}, name, localName, RSSI, deviceId } = bleDevice;
   const rssiLevel = RSSI2Level(RSSI);
+  // serviceData中数据的key都转为大写,value 为 ArrayBuffer 类型
+  const newServiceData = Object.keys(serviceData).reduce((acc, key) => {
+    acc[key.toUpperCase()] = serviceData[key];
+    return acc;
+  }, {} as Record<string, ArrayBuffer>);
 
   return {
     deviceId,
@@ -149,15 +157,7 @@ export function parseBroadcastData(
     rssiLevel,
     rssi: RSSI,
     rawData: bleDevice,
-    broadcastData:''
+    broadcastData: "",
+    serviceData: newServiceData,
   };
 }
-
-/**
- * 过滤广播
- */
-export const filterBroadcast = (device: IBlueToothDevice) => {
-  const { name, localName, serviceData, connectable } = device;
-  const finalName = name || localName;
-  return true;
-};

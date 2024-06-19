@@ -94,7 +94,7 @@ export const bleScanStore: IBleScanStore = observable({
         this.deviceList[index] = device;
       }
     });
-    this.deviceList = [...this.deviceList.sort((a, b) => b.rssi - a.rssi)];
+    // this.deviceList = [...this.deviceList.sort((a, b) => b.rssi - a.rssi)];
   }),
   clearDevices: action(function (this: typeof bleScanStore) {
     this.deviceList = [];
