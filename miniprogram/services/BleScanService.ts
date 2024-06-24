@@ -17,7 +17,6 @@ export default class BleScanService {
       .filter(this.customFilter)
       .map(parseBroadcastData);
     if (parseDevices.length > 0) {
-      helper.log(this.logType, "parseDevices:", parseDevices);
       bleScanStore.addDevices(parseDevices);
     }
   };
@@ -145,9 +144,15 @@ export function parseBroadcastData(
 ): IBLEDeviceData {
   const { serviceData = {}, name, localName, RSSI, deviceId } = bleDevice;
   const rssiLevel = RSSI2Level(RSSI);
+  let broadcastData = "";
   // serviceData中数据的key都转为大写,value 为 ArrayBuffer 类型
   const newServiceData = Object.keys(serviceData).reduce((acc, key) => {
-    acc[key.toUpperCase()] = serviceData[key];
+    const value = serviceData[key];
+    let hexString = uint8Array2hexString(new Uint8Array(value));
+    broadcastData = `${
+      broadcastData.length === 0
+    } ? ${key}: ${hexString} : ${broadcastData} , ${key}: ${hexString}`;
+    acc[key.toUpperCase()] = value;
     return acc;
   }, {} as Record<string, ArrayBuffer>);
 
@@ -157,7 +162,7 @@ export function parseBroadcastData(
     rssiLevel,
     rssi: RSSI,
     rawData: bleDevice,
-    broadcastData: "",
+    broadcastData,
     serviceData: newServiceData,
   };
 }

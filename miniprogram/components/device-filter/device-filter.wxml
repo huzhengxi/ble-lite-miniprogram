@@ -3,14 +3,6 @@
     <van-dropdown-item id="dropItem" title-class="drop-item" title="{{deviceFilterToString === '' ? '设置过滤条件':deviceFilterToString}}">
       <view class="container">
 
-        <!-- 按照产品id名称过滤 -->
-        <view class="row filter-list-item flex-center-left">
-          <text style="flex: 1;">产品</text>
-          <view style="flex: 2;">
-            <select nowId="{{productIDValue}}" nameList="{{productOptions}}" nowName="{{deviceFilter.productName}}" placeholder="" bind:handleChange="dropdownItemChange"></select>
-          </view>
-        </view>
-
         <view wx:for="{{filterForm}}" wx:key="index" class="row filter-list-item flex-center-left">
           <text style="flex: 1;">{{item.label}}</text>
           <input data-key="{{item.key}}" bindinput="onInputValueChange" placeholder-style="color: #B7B7B7" style="flex: 2; margin-left: 15rpx;" class="mr-3" value="{{deviceFilter[item.key]}}" placeholder="{{item.placeholder}}" />

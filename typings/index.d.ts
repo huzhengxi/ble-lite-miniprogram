@@ -36,19 +36,11 @@ interface IBleBroadcastFilter {
   name?: string;
   // 设备信号强度
   rssi?: number;
-  // 设备 MAC 地址
   mac?: string;
   // 电池电量
   battery?: number;
-  // productID
-  productID?: number;
   // 广播数据
   broadcastData?: string;
-
-  // 过滤产品id
-  productIds: number[];
-  // 过滤产品名称
-  productName: string;
 }
 
 /**

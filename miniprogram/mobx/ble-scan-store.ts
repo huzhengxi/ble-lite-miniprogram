@@ -5,7 +5,7 @@
 
 import { observable, action } from "mobx-miniprogram";
 import { generateFakeBLEDeviceList } from "../utils/fake";
-import { mac2Colon, parseMAC, uint8Array2hexString } from '../utils/util'
+import { mac2Colon, parseMAC, uint8Array2hexString } from "../utils/util";
 
 export const bleScanStore: IBleScanStore = observable({
   // 数据字段
@@ -13,10 +13,9 @@ export const bleScanStore: IBleScanStore = observable({
   // 保存设备上一次搜索到的时间Map，key为mac value为时间戳
   lastScanTimeMap: new Map<string, number>(),
   deviceFilter: {
-    mac: "",
+    rssi: -100,
     name: "",
-    productIds: [],
-    productName: "全部产品",
+    broadcastData: "",
   } as IBleBroadcastFilter,
   scanning: false,
 
@@ -25,36 +24,48 @@ export const bleScanStore: IBleScanStore = observable({
     if (this.deviceList.length === 0) {
       this.deviceList = generateFakeBLEDeviceList();
     }
-    return this.deviceList.filter((device: IBLEDeviceData) => {
-      const { name = "", rssi = -100, broadcastData = "" } = this.deviceFilter;
-      // if (!device.name.includes(name)) return false;
-      // if (device.rssi < rssi) return false;
-      // if (!device.broadcastData.includes(broadcastData)) return false;
-      return true;
-    });
+
+    return this.deviceList.filter(
+      ({
+        name: newName = "",
+        rssi: newRssi = -100,
+        broadcastData: newBroadcastData = "",
+      }: IBLEDeviceData) => {
+        const {
+          name = "",
+          rssi = -100,
+          broadcastData = "",
+        } = this.deviceFilter;
+
+        if (!newName.toUpperCase().includes(name.toUpperCase())) return false;
+        if (newRssi < rssi) return false;
+        if (
+          !newBroadcastData.toUpperCase().includes(broadcastData.toUpperCase())
+        )
+          return false;
+        return true;
+      }
+    );
   },
   get luckinDevices() {
-    return this.deviceList.filter(
-      ({ scanInterval = 1000 }: IBLEDeviceData) => scanInterval < 900
-    ).map((device: IBLEDeviceData) => {
-      const newDevice = { ...device };
-      const serviceData = device.rawData?.serviceData?.["0000FDCD-0000-1000-8000-00805F9B34FB"] ||
-        device.rawData?.serviceData?.["0000fdcd-0000-1000-8000-00805f9b34fb"];
-      const hexData = uint8Array2hexString(new Uint8Array(serviceData))
-      const mac = mac2Colon(parseMAC(hexData.substring(8, 20))) || '';
-      newDevice.mac = mac
-      return newDevice
-    });
+    return this.deviceList
+      .filter(({ scanInterval = 1000 }: IBLEDeviceData) => scanInterval < 900)
+      .map((device: IBLEDeviceData) => {
+        const newDevice = { ...device };
+        const serviceData =
+          device.rawData?.serviceData?.[
+            "0000FDCD-0000-1000-8000-00805F9B34FB"
+          ] ||
+          device.rawData?.serviceData?.["0000fdcd-0000-1000-8000-00805f9b34fb"];
+        const hexData = uint8Array2hexString(new Uint8Array(serviceData));
+        const mac = mac2Colon(parseMAC(hexData.substring(8, 20))) || "";
+        newDevice.mac = mac;
+        return newDevice;
+      });
   },
 
   get deviceFilterToString() {
-    const {
-      name = "",
-      rssi,
-      mac = "",
-      broadcastData = "",
-      productName,
-    } = this.deviceFilter;
+    const { name = "", rssi, broadcastData = "" } = this.deviceFilter;
 
     const addSplit = (str: string) => {
       return str === "" ? str : `${str}, `;
@@ -62,10 +73,9 @@ export const bleScanStore: IBleScanStore = observable({
     // 组装，如果有值就显示，没有就不显示
     let str = "";
 
-    if (productName !== "") str = `${addSplit(str)}产品:${productName}`;
     if (name) str = `${addSplit(str)}广播名称:${name}`;
     if (rssi) str = `${addSplit(str)}信号强度:${rssi}`;
-    if (mac) str = `${addSplit(str)}MAC:${mac}`;
+    if (broadcastData) str = `${addSplit(str)}广播内容:${broadcastData}`;
     return str;
   },
 
@@ -81,8 +91,6 @@ export const bleScanStore: IBleScanStore = observable({
       this.lastScanTimeMap.set(device.deviceId, Date.now());
       // 扫描间隔
       device.scanInterval = currentScanTime - lastScanTime;
-
-      console.log('addDevices:', device.scanInterval, device)
 
       const index = this.deviceList.findIndex(
         (item) => item.deviceId === device.deviceId

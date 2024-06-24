@@ -1,6 +1,5 @@
 import { ComponentWithStore } from "mobx-miniprogram-bindings";
 import { bleScanStore } from "../../mobx/ble-scan-store";
-import { getProductOptions } from '../../utils/util'
 
 ComponentWithStore({
   options: {
@@ -20,9 +19,7 @@ ComponentWithStore({
    * 组件的初始数据
    */
   data: {
-
     productIDValue: 0,
-    productOptions: getProductOptions(),
 
     filterForm: [
       {
@@ -31,11 +28,10 @@ ComponentWithStore({
         placeholder: "根据名称进行过滤",
       },
       {
-        label: "MAC",
-        key: "mac",
-        placeholder: "根据 MAC 地址进行过滤",
+        label: "广播内容",
+        key: "broadcastData",
+        placeholder: "根据广播名称地址进行过滤",
       },
-
     ],
   },
 
@@ -51,21 +47,16 @@ ComponentWithStore({
     },
 
     onClearFilter() {
-      this.onHideFilter()
+      this.onHideFilter();
       // @ts-ignore
       this.updateDeviceFilter?.({
-        productIds: [],
-        productName: '全部产品',
-        name: '',
-        mac: '',
-        rssi: undefined
-      })
-      this.setData({
-        productIDValue: 0
-      })
+        name: "",
+        mac: "",
+        rssi: undefined,
+      });
     },
     onHideFilter() {
-      this.selectComponent('#dropItem').toggle(false)
+      this.selectComponent("#dropItem").toggle(false);
     },
     onSliderChange(event: WechatMiniprogram.SliderChange) {
       console.log("onSliderChange：", event);
@@ -75,19 +66,5 @@ ComponentWithStore({
         rssi: event.detail.value * -1,
       });
     },
-    dropdownItemChange(event: WechatMiniprogram.CustomEvent) {
-      console.log('dropdownItemChange：', event.detail);
-      const option = this.data.productOptions.find(item => item.id === Number(event.detail.selectId))
-      this.setData({
-        productIDValue: Number(event.detail.selectId)
-      })
-      if (option) {
-        // @ts-ignore
-        this.updateDeviceFilter?.({
-          productIds: option?.productIds ?? [],
-          productName: option?.name ?? ''
-        })
-      }
-    }
   },
 });

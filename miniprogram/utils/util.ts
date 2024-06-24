@@ -212,30 +212,6 @@ export function generateArray(start: number, end: number, step: number) {
   return result;
 }
 
-/**
- *
- */
-
-export function getProductOptions() {
-  return [
-    {
-      id: 0,
-      name: "全部产品",
-      productIds: [],
-    },
-    {
-      id: 1,
-      productIds: [0x38, 0x40],
-      name: "智能定位标识",
-    },
-    {
-      id: 2,
-      name: "动态能量标识",
-      productIds: [0x39],
-    },
-  ];
-}
-
 export const permissionTip = () => {
   const platform = wx.getSystemInfoSync().platform;
   let tip =
