@@ -31,7 +31,7 @@
     "list": [
       {
         "pagePath": "pages/main/main",
-        "text": "主页",
+        "text": "设备",
         "iconPath": "/assets/tab-icons/normal/home.png",
         "selectedIconPath": "/assets/tab-icons/selected/home.png"
       },
@@ -43,7 +43,7 @@
       },
       {
         "pagePath": "pages/log/log",
-        "text": "联系我们",
+        "text": "设置",
         "iconPath": "/assets/tab-icons/normal/help.png",
         "selectedIconPath": "/assets/tab-icons/selected/help.png"
       }

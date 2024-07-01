@@ -1,0 +1,5 @@
+<view>
+  <image src="/assets/rssi/1.png" mode="" style="height: 50rpx;width: 50rpx; transform: rotateY(180deg); " />
+
+
+</view>

@@ -18,9 +18,7 @@ export const generateFakeBLEDeviceList = () => {
       rssi,
       rssiLevel: RSSI2Level(rssi),
       mac: "582D34000000",
-      isBind: false,
-      productID: 0x39,
-      broadcastData: "",
+      broadcastData: "hello ",
     });
   }
   
