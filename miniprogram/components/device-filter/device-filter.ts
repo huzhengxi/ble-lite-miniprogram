@@ -19,7 +19,6 @@ ComponentWithStore({
    * 组件的初始数据
    */
   data: {
-    productIDValue: 0,
 
     filterForm: [
       {
@@ -45,6 +44,14 @@ ComponentWithStore({
         [event.target.dataset.key]: event.detail.value,
       });
     },
+    onSwitchChange: function (event: WechatMiniprogram.SwitchChange) {
+      console.log("onSwitchChange:", event.currentTarget.id);
+
+      // @ts-ignore
+      this.updateDeviceFilter?.({
+        [event.currentTarget.id]: event.detail.value,
+      });
+    },
 
     onClearFilter() {
       this.onHideFilter();
@@ -53,6 +60,9 @@ ComponentWithStore({
         name: "",
         mac: "",
         rssi: undefined,
+        unnamedSwitch: false,
+        unconnectableSwitch: false,
+        noDataSwitch: false
       });
     },
     onHideFilter() {

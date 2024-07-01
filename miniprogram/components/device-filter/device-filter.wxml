@@ -16,6 +16,19 @@
           <text style="color: gray;" class="ml-3 mr-3">{{deviceFilter.rssi ? deviceFilter.rssi: -100}} dBm</text>
         </view>
 
+        <view class="row flex-center-left filter-list-item">
+          <text class="label">Remove Unnamed</text>
+          <switch id="unnamedSwitch" class="switch" checked="{{deviceFilter.unnamedSwitch}}" bindchange="onSwitchChange" />
+        </view>
+        <view class="row flex-center-left filter-list-item">
+          <text class="label">Remove Without Data</text>
+          <switch id="noDataSwitch" class="switch" checked="{{deviceFilter.noDataSwitch}}" bindchange="onSwitchChange" />
+        </view>
+        <view class="row flex-center-left filter-list-item">
+          <text class="label">Remove Unconnectable</text>
+          <switch id="unconnectableSwitch" class="switch" checked="{{deviceFilter.unconnectableSwitch}}" bindchange="onSwitchChange" />
+        </view>
+
         <view class="row" style="justify-content: space-around; margin-top: 20rpx;">
           <van-button custom-class="button" plain round bind:click="onClearFilter">
             清除

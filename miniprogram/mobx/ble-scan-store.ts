@@ -16,6 +16,9 @@ export const bleScanStore: IBleScanStore = observable({
     rssi: -100,
     name: "",
     broadcastData: "",
+    unconnectableSwitch: false,
+    unnamedSwitch: false,
+    noDataSwitch: false
   } as IBleBroadcastFilter,
   scanning: false,
 
@@ -24,18 +27,35 @@ export const bleScanStore: IBleScanStore = observable({
     if (this.deviceList.length === 0) {
       this.deviceList = generateFakeBLEDeviceList();
     }
+    const {
+      name = "",
+      rssi = -100,
+      broadcastData = "",
+      noDataSwitch,
+      unnamedSwitch,
+      unconnectableSwitch
+    } = this.deviceFilter;
 
     return this.deviceList.filter(
       ({
         name: newName = "",
         rssi: newRssi = -100,
         broadcastData: newBroadcastData = "",
+        rawData
       }: IBLEDeviceData) => {
-        const {
-          name = "",
-          rssi = -100,
-          broadcastData = "",
-        } = this.deviceFilter;
+
+        if (unnamedSwitch && newName === '') {
+          return false
+        }
+
+        if (unconnectableSwitch && !rawData?.connectable) {
+          return false
+        }
+
+        if (noDataSwitch && newBroadcastData === '') {
+          return false
+        }
+
 
         if (!newName.toUpperCase().includes(name.toUpperCase())) return false;
         if (newRssi < rssi) return false;
@@ -54,7 +74,7 @@ export const bleScanStore: IBleScanStore = observable({
         const newDevice = { ...device };
         const serviceData =
           device.rawData?.serviceData?.[
-            "0000FDCD-0000-1000-8000-00805F9B34FB"
+          "0000FDCD-0000-1000-8000-00805F9B34FB"
           ] ||
           device.rawData?.serviceData?.["0000fdcd-0000-1000-8000-00805f9b34fb"];
         const hexData = uint8Array2hexString(new Uint8Array(serviceData));

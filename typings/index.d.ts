@@ -28,6 +28,7 @@ interface IBLEDeviceData {
   mac?: string;
   // serviceData
   serviceData?: Record<string, ArrayBuffer>;
+
 }
 
 // 广播过滤条件
@@ -41,6 +42,12 @@ interface IBleBroadcastFilter {
   battery?: number;
   // 广播数据
   broadcastData?: string;
+  // 移除没有名称的广播
+  unnamedSwitch: boolean;
+  // 移除没有广播内容的广播
+  noDataSwitch: boolean;
+  // 异常不能连接的广播
+  unconnectableSwitch: boolean
 }
 
 /**

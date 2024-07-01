@@ -1,22 +1,13 @@
 
 
 interface ILogPageData {
-  nameSwitch: boolean;
-  dataSwitch: boolean;
-  services: string[];
-  selectedService: string;
-  servicesSwitch: boolean;
-  dBmSwitch: boolean;
-  exclusiveSwitch: boolean;
-  unnamedSwitch: boolean;
-  noDataSwitch: boolean;
-  unconnectableSwitch: boolean;
-
+  
+  
 }
 
 interface ILogPageOptions {
-  onSwitchChange: (e: any) => void;
-  onPickerChange: (e: any) => void;
+
+
 }
 
 Page<ILogPageData, ILogPageOptions>({
@@ -24,29 +15,8 @@ Page<ILogPageData, ILogPageOptions>({
    * 页面的初始数据
    */
   data: {
-    nameSwitch: false,
-    dataSwitch: false,
-    services: ["None", "Service 1", "Service 2"],
-    selectedService: "None",
-    servicesSwitch: false,
-    dBmSwitch: true,
-    exclusiveSwitch: false,
-    unnamedSwitch: false,
-    noDataSwitch: false,
-    unconnectableSwitch: false,
-  },
-
-   onSwitchChange: function(e: any) {
-    const { id } = e.currentTarget;
-    this.setData({
-      [id]: e.detail.value
-    });
-  },
-
-  onPickerChange: function(e: any) {
-    this.setData({
-      selectedService: this.data.services[e.detail.value]
-    });
+    
+    
   },
 
   /**

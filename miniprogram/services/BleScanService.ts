@@ -1,6 +1,6 @@
 import { bleScanStore } from "../mobx/ble-scan-store";
 import helper from "./helper";
-import { parseMAC, uint8Array2hexString, permissionTip } from "../utils/util";
+import { uint8Array2hexString, permissionTip } from "../utils/util";
 
 export default class BleScanService {
   logType = "蓝牙模块>>";
@@ -25,7 +25,7 @@ export default class BleScanService {
     this.init();
   }
 
-  private async init() {}
+  private async init() { }
 
   /**
    * 开始扫描
@@ -149,9 +149,8 @@ export function parseBroadcastData(
   const newServiceData = Object.keys(serviceData).reduce((acc, key) => {
     const value = serviceData[key];
     let hexString = uint8Array2hexString(new Uint8Array(value));
-    broadcastData = `${
-      broadcastData.length === 0
-    } ? ${key}: ${hexString} : ${broadcastData} , ${key}: ${hexString}`;
+    const keyValue = `${key}: ${hexString}`
+    broadcastData = broadcastData.length === 0 ? keyValue : `${broadcastData}, ${keyValue}`;
     acc[key.toUpperCase()] = value;
     return acc;
   }, {} as Record<string, ArrayBuffer>);
