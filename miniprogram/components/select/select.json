@@ -1,7 +1,0 @@
-{
-  "component": true,
-  "styleIsolation": "shared",
-  "usingComponents": {
-    "van-icon": "@vant/weapp/icon/index"
-  }
-}

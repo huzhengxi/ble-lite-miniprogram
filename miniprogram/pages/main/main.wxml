@@ -16,20 +16,19 @@
 
   <!-- 设备列表 -->
   <view class="ble-device-item container row space-between " wx:for="{{devices}}" wx:key="index" data-device="{{item}}" bind:tap="onItemTap">
-    <view class="row flex-center-left" style="flex: 1;">
+    <view class="row flex-center-left" style="flex: 1; flex-wrap: nowrap;">
       <view class="column flex-bottom-center mr-5">
         <image class="rssi-icon" src="../../assets/rssi/{{item.rssiLevel}}.png" mode="" />
         <text class="mt-1">{{item.rssi}}</text>
       </view>
-      <view class="column" style="flex: 1;">
-        <text style="width: 300rpx; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{item.name || 'N/A'}}</text>
+      <view class="column mr-3" style="flex: 1; ">
+        <text style="max-width: 80%;white-space: nowrap;overflow: hidden; text-overflow:ellipsis;">{{item.name || 'N/A'}}</text>
         <text class="mt-1">{{item.mac}}</text>
       </view>
-      <view class="column flex-bottom-center">
+      <view class="column flex-bottom-center" style="flex-shrink: 0; min-width: 50rpx;">
         <text wx:if="{{item.scanInterval && item.scanInterval < 20000}}" class="mt-1">{{item.scanInterval}} ms </text>
       </view>
     </view>
-
   </view>
 
 </view>

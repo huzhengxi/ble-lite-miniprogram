@@ -1,0 +1,15 @@
+{
+  "pages": [
+    "pages/main/main",
+    "pages/luckincoffee/luckincoffee",
+    "pages/log/log",
+    "pages/qrcode/qrcode"
+  ],
+  "window": {
+    "navigationBarTitleText": "Demo"
+  },
+  "networkTimeout": {
+    "request": 10000
+  },
+  "debug": true
+}

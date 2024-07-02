@@ -30,7 +30,8 @@
     "es6": true,
     "condition": true,
     "compileWorklet": true,
-    "minifyWXSS": true
+    "minifyWXSS": true,
+    "uglifyFileName": true
   },
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},

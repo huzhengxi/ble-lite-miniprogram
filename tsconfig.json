@@ -24,6 +24,6 @@
       "@vant/weapp": ["./node_modules/@vant/weapp/dist/*"]
     }
   },
-  "include": ["./**/*.ts", "miniprogram/components/select/select.js"],
+  "include": ["./**/*.ts"],
   "exclude": ["node_modules"]
 }

@@ -1,6 +1,7 @@
 import { bleScanStore } from "../mobx/ble-scan-store";
 import helper from "./helper";
 import { uint8Array2hexString, permissionTip } from "../utils/util";
+import { throttle } from "lodash";
 
 export default class BleScanService {
   logType = "蓝牙模块>>";
@@ -9,6 +10,15 @@ export default class BleScanService {
   private defaultFilter: IDeviceFilter = () => true;
   // 自定义过滤方法
   private customFilter: IDeviceFilter = this.defaultFilter;
+  // 保存设备上一次搜索到的时间Map，key为mac value为时间戳
+  private lastScanTimeMap = new Map<string, number>();
+  private devices: IBLEDeviceData[] = []
+
+  // 节流
+  private throttleUpdateDevice = throttle(() => {
+    console.log("throttleUpdateDevice...");
+    bleScanStore.addDevices(this.devices);
+  }, 1500);
 
   onBluetoothDeviceFound: WechatMiniprogram.OnBluetoothDeviceFoundCallback = ({
     devices,
@@ -17,7 +27,27 @@ export default class BleScanService {
       .filter(this.customFilter)
       .map(parseBroadcastData);
     if (parseDevices.length > 0) {
-      bleScanStore.addDevices(parseDevices);
+
+      const allDevices = [...bleScanStore.getAllDevices()];
+
+      parseDevices.forEach((newDevice) => {
+        const { deviceId } = newDevice;
+        const currentScanTime = Date.now();
+        const lastScanTime = this.lastScanTimeMap.get(deviceId) || 0;
+        this.lastScanTimeMap.set(deviceId, currentScanTime);
+        newDevice.scanInterval = currentScanTime - lastScanTime;
+
+        const findIndex = allDevices.findIndex(
+          (oldDevice) => oldDevice.deviceId === deviceId
+        );
+        if (findIndex > -1) {
+          allDevices[findIndex] = newDevice;
+        } else {
+          allDevices.push(newDevice);
+        }
+      });
+      this.devices = allDevices
+      this.throttleUpdateDevice();
     }
   };
 
@@ -149,8 +179,9 @@ export function parseBroadcastData(
   const newServiceData = Object.keys(serviceData).reduce((acc, key) => {
     const value = serviceData[key];
     let hexString = uint8Array2hexString(new Uint8Array(value));
-    const keyValue = `${key}: ${hexString}`
-    broadcastData = broadcastData.length === 0 ? keyValue : `${broadcastData}, ${keyValue}`;
+    const keyValue = `${key}: ${hexString}`;
+    broadcastData =
+      broadcastData.length === 0 ? keyValue : `${broadcastData}, ${keyValue}`;
     acc[key.toUpperCase()] = value;
     return acc;
   }, {} as Record<string, ArrayBuffer>);

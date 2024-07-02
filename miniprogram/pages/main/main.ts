@@ -49,12 +49,12 @@ Page<IMainData, IMainOption>({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad() {},
+  onLoad() { },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady() {},
+  onReady() { },
 
   /**
    * 生命周期函数--监听页面显示
@@ -64,6 +64,10 @@ Page<IMainData, IMainOption>({
   },
 
   async startScan() {
+    const sysInfo = wx.getSystemInfoSync();
+    if (sysInfo.platform === "devtools") {
+      return;
+    }
     this.clearDevices?.();
     this.setData({
       devices: [],
@@ -119,12 +123,12 @@ Page<IMainData, IMainOption>({
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload() {},
+  onUnload() { },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh() {},
+  onPullDownRefresh() { },
   changeScanStatus() {
     if (this.data.scanning) {
       this.bleScanService?.stopScan();

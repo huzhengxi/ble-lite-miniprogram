@@ -67,6 +67,7 @@ interface IBleScanStore {
 
   // actions
   addDevices: (devices: IBLEDeviceData[]) => void;
+  getAllDevices: () => IBLEDeviceData[],
   clearDevices: () => void;
   updateDeviceFilter: (filter: IBleBroadcastFilter) => void;
   startScan: () => void;

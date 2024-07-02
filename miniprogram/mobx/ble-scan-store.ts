@@ -7,6 +7,7 @@ import { observable, action } from "mobx-miniprogram";
 import { generateFakeBLEDeviceList } from "../utils/fake";
 import { mac2Colon, parseMAC, uint8Array2hexString } from "../utils/util";
 
+
 export const bleScanStore: IBleScanStore = observable({
   // 数据字段
   deviceList: [] as IBLEDeviceData[],
@@ -18,7 +19,7 @@ export const bleScanStore: IBleScanStore = observable({
     broadcastData: "",
     unconnectableSwitch: false,
     unnamedSwitch: false,
-    noDataSwitch: false
+    noDataSwitch: false,
   } as IBleBroadcastFilter,
   scanning: false,
 
@@ -27,13 +28,14 @@ export const bleScanStore: IBleScanStore = observable({
     if (this.deviceList.length === 0) {
       this.deviceList = generateFakeBLEDeviceList();
     }
+
     const {
       name = "",
       rssi = -100,
       broadcastData = "",
       noDataSwitch,
       unnamedSwitch,
-      unconnectableSwitch
+      unconnectableSwitch,
     } = this.deviceFilter;
 
     return this.deviceList.filter(
@@ -41,21 +43,19 @@ export const bleScanStore: IBleScanStore = observable({
         name: newName = "",
         rssi: newRssi = -100,
         broadcastData: newBroadcastData = "",
-        rawData
+        rawData,
       }: IBLEDeviceData) => {
-
-        if (unnamedSwitch && newName === '') {
-          return false
+        if (unnamedSwitch && newName === "") {
+          return false;
         }
 
         if (unconnectableSwitch && !rawData?.connectable) {
-          return false
+          return false;
         }
 
-        if (noDataSwitch && newBroadcastData === '') {
-          return false
+        if (noDataSwitch && newBroadcastData === "") {
+          return false;
         }
-
 
         if (!newName.toUpperCase().includes(name.toUpperCase())) return false;
         if (newRssi < rssi) return false;
@@ -99,30 +99,16 @@ export const bleScanStore: IBleScanStore = observable({
     return str;
   },
 
+  getAllDevices: (function (this: typeof bleScanStore) {
+    return this.deviceList
+  }),
   // actions
   addDevices: action(function (
     this: typeof bleScanStore,
     devices: IBLEDeviceData[]
   ) {
-    devices.forEach((device) => {
-      // 如果没有找到就添加，找到了就更新
-      const lastScanTime = this.lastScanTimeMap.get(device.deviceId) || 0;
-      const currentScanTime = Date.now();
-      this.lastScanTimeMap.set(device.deviceId, Date.now());
-      // 扫描间隔
-      device.scanInterval = currentScanTime - lastScanTime;
-
-      const index = this.deviceList.findIndex(
-        (item) => item.deviceId === device.deviceId
-      );
-
-      if (index === -1) {
-        this.deviceList = [...this.deviceList, device];
-      } else {
-        this.deviceList[index] = device;
-      }
-    });
-    // this.deviceList = [...this.deviceList.sort((a, b) => b.rssi - a.rssi)];
+    // this.deviceList = devices;
+    this.deviceList = [...devices.sort((a, b) => b.rssi - a.rssi)];
   }),
   clearDevices: action(function (this: typeof bleScanStore) {
     this.deviceList = [];
@@ -144,4 +130,5 @@ export const bleScanStore: IBleScanStore = observable({
   stopScan: action(function (this: typeof bleScanStore) {
     this.scanning = false;
   }),
+
 });
