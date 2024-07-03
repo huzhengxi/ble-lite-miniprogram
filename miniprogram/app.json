@@ -2,6 +2,7 @@
   "pages": [
     "pages/main/main",
     "pages/luckincoffee/luckincoffee",
+    "pages/devicedetail/devicedetail",
     "pages/log/log",
     "pages/qrcode/qrcode"
   ],

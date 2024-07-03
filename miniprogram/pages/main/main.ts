@@ -3,6 +3,7 @@ import { BehaviorWithStore } from "mobx-miniprogram-bindings";
 import { bleScanStore, deviceStore } from "../../mobx/index";
 import BleScanService from "../../services/BleScanService";
 import { permissionTip } from "../../utils/util";
+import { BleDeviceService } from "../../services/BleDeviceService";
 
 interface IMainData {
   devices: IBLEDeviceData[];
@@ -49,12 +50,12 @@ Page<IMainData, IMainOption>({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad() { },
+  onLoad() {},
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady() { },
+  onReady() {},
 
   /**
    * 生命周期函数--监听页面显示
@@ -123,12 +124,12 @@ Page<IMainData, IMainOption>({
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload() { },
+  onUnload() {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh() { },
+  onPullDownRefresh() {},
   changeScanStatus() {
     if (this.data.scanning) {
       this.bleScanService?.stopScan();
@@ -137,5 +138,8 @@ Page<IMainData, IMainOption>({
     }
   },
   onItemTap(event) {
+    const device = event.currentTarget.dataset.device as IBLEDeviceData;
+    const bleDeviceService = new BleDeviceService(device.rawData!);
+    bleDeviceService.startConnect();
   },
 });

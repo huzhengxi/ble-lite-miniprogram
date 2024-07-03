@@ -21,7 +21,9 @@
     "baseUrl": ".",
     "types": ["miniprogram-api-typings"],
     "paths": {
-      "@vant/weapp": ["./node_modules/@vant/weapp/dist/*"]
+      "@vant/weapp": ["./node_modules/@vant/weapp/dist/*"],
+      "@utils/*": ["./miniprogram/utils/*"],
+      "@services/*": ["./miniprogram/services/*"]
     }
   },
   "include": ["./**/*.ts"],

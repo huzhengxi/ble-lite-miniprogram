@@ -20,7 +20,7 @@ interface ILuckinOption {
   startScan: () => Promise<void>;
 }
 
-const filterLuckinDevice = (device: IBlueToothDevice) => {
+const filterLuckinDevice = (device: IBluetoothDevice) => {
   const { serviceData = {} } = device;
   const fdcdData =
     serviceData["0000FDCD-0000-1000-8000-00805F9B34FB"] ||

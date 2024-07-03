@@ -1,5 +1,5 @@
 import { bleScanStore } from "../mobx/ble-scan-store";
-import helper from "./helper";
+import helper from "../utils/helper";
 import { uint8Array2hexString, permissionTip } from "../utils/util";
 import { throttle } from "lodash";
 
@@ -170,7 +170,7 @@ export function RSSI2Level(RSSI: number) {
  * @return {} 广播数据
  */
 export function parseBroadcastData(
-  bleDevice: IBlueToothDevice
+  bleDevice: IBluetoothDevice
 ): IBLEDeviceData {
   const { serviceData = {}, name, localName, RSSI, deviceId } = bleDevice;
   const rssiLevel = RSSI2Level(RSSI);

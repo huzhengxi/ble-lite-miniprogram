@@ -2,7 +2,7 @@
  * 日志模块
  */
 
-import { formatTime } from '../utils/util'
+import { formatTime } from './util'
 
 const logFileName = `${wx.env.USER_DATA_PATH}/bletools.log`
 const fileSystem = wx.getFileSystemManager()

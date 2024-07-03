@@ -7,7 +7,7 @@ interface IAppOption {
   userInfoReadyCallback?: WechatMiniprogram.GetUserInfoSuccessCallback;
 }
 
-type IBlueToothDevice = WechatMiniprogram.BlueToothDevice;
+type IBluetoothDevice = WechatMiniprogram.BlueToothDevice;
 
 interface IBLEDeviceData {
   deviceId: string;
@@ -21,14 +21,13 @@ interface IBLEDeviceData {
   scanInterval?: number;
 
   // 原始数据
-  rawData?: IBlueToothDevice;
+  rawData?: IBluetoothDevice;
   // 广播数据
   broadcastData: string;
   // mac 地址
   mac?: string;
   // serviceData
   serviceData?: Record<string, ArrayBuffer>;
-
 }
 
 // 广播过滤条件
@@ -47,7 +46,7 @@ interface IBleBroadcastFilter {
   // 移除没有广播内容的广播
   noDataSwitch: boolean;
   // 异常不能连接的广播
-  unconnectableSwitch: boolean
+  unconnectableSwitch: boolean;
 }
 
 /**
@@ -67,7 +66,7 @@ interface IBleScanStore {
 
   // actions
   addDevices: (devices: IBLEDeviceData[]) => void;
-  getAllDevices: () => IBLEDeviceData[],
+  getAllDevices: () => IBLEDeviceData[];
   clearDevices: () => void;
   updateDeviceFilter: (filter: IBleBroadcastFilter) => void;
   startScan: () => void;
@@ -125,4 +124,57 @@ interface IDevicePageItems {
   showLog: boolean;
 }
 
-type IDeviceFilter = (device: IBlueToothDevice) => boolean;
+type IDeviceFilter = (device: IBluetoothDevice) => boolean;
+
+/**
+ * 写入命令参数
+ */
+interface IWriteCommandOption {
+  // 写入数据的特征值 UUID
+  writeCharacteristicUUID: string;
+  // 回复数据的特征值 UUID (如果noResponse为true，则不需要传)
+  notifyCharacteristicUUID?: string;
+  // 命令字
+  type: number;
+  // 是否不需要回复
+  noResponse?: boolean;
+  // 数据
+  data?: ArrayBuffer;
+  // 是否分包接收
+  isSplitReceive?: boolean;
+  // 超时时间
+  timeout?: number;
+}
+
+// 格式化数据类型
+type FormatType = "hex" | "string";
+
+type ConnectStateChangeType =
+  WechatMiniprogram.OnBLEConnectionStateChangeListenerResult;
+type CharValueChangeType =
+  WechatMiniprogram.OnBLECharacteristicValueChangeListenerResult;
+
+/**
+ * 蓝牙扫描结果回调
+ */
+type IBleDeviceFoundCallback = WechatMiniprogram.OnBluetoothDeviceFoundCallback;
+
+/**
+ * 微信蓝牙设备
+ */
+type IWechatBlueToothDevice = WechatMiniprogram.BlueToothDevice;
+
+/**
+ * 发送命令
+ */
+interface ICommand<T = IError | { success: boolean; data: Uint8Array }> {
+  // 命令字
+  type: number;
+  // 是否分包接收
+  isSplitReceive?: boolean;
+  // 超时定时器 id
+  timeoutId: number;
+  receivedData: Uint8Array;
+
+  resolve: (value: T) => void;
+}
