@@ -79,43 +79,6 @@ interface IDeviceValueItem {
   status: "loading" | "success" | "fail" | "idle";
   value?: number | string;
 }
-
-interface IDeviceStore {
-  // 数据字段
-  currentDevice?: IBLEDeviceData;
-  currentFirmware?: IFirmware;
-  currentBleConnection?: any;
-  deviceValueItems: Map<string, IDeviceValueItem>;
-
-  // computed
-  deviceValueItemsArray: IDeviceValueItem[];
-
-  // actions
-  setCurrentDevice: (device: IBLEDeviceData) => void;
-  setCurrentFirmware: (firmware: IFirmware) => void;
-  setCurrentBleConnection: (bleConnection: any) => void;
-  getDeviceValues: () => Promise<void>;
-  // getDeviceValue: () => Promise<void>;
-}
-
-/**
- * @description: 固件信息
- */
-interface IFirmware {
-  title: string;
-  version: string;
-  file_url: string;
-}
-
-// 升级状态
-type IUpdateStatus =
-  | "idle"
-  | "downloading"
-  | "updating"
-  | "success"
-  | "downloading-fail"
-  | "fail";
-
 interface IDevicePageItems {
   canUpdate: boolean;
   showBroadcastInterval: boolean;
@@ -147,7 +110,7 @@ interface IWriteCommandOption {
 }
 
 // 格式化数据类型
-type FormatType = "hex" | "string";
+type FormatType = "hex" | "str";
 
 type ConnectStateChangeType =
   WechatMiniprogram.OnBLEConnectionStateChangeListenerResult;
@@ -167,14 +130,14 @@ type IWechatBlueToothDevice = WechatMiniprogram.BlueToothDevice;
 /**
  * 发送命令
  */
-interface ICommand<T = IError | { success: boolean; data: Uint8Array }> {
-  // 命令字
-  type: number;
+interface ICommand<T = { success: boolean; data?: string }> {
   // 是否分包接收
   isSplitReceive?: boolean;
+  // 格式化类型
+  formatType: FormatType;
   // 超时定时器 id
   timeoutId: number;
-  receivedData: Uint8Array;
+  // receivedData: Uint8Array;
 
   resolve: (value: T) => void;
 }

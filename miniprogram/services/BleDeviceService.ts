@@ -2,27 +2,41 @@
  * Created by Tiger on 03/07/2024
  */
 
-import { ECommandStatus, EErrorCode } from "./define";
 import helper from "../utils/helper";
-import { formatBytes, strToBytes, uint8Array2hexString } from "../utils/util";
-import { IError } from "typings/types";
+import { formatBytes, uint8Array2hexString } from "../utils/util";
+import { getCharacteristicName, getServiceName } from "./uuidUtils";
+
+type ServiceUUID = String;
+
+interface ICharacteristic extends WechatMiniprogram.BLECharacteristic {
+  name: string;
+  value: string | number | ArrayBuffer;
+}
+
+interface IDeviceService {
+  serviceUUID: ServiceUUID;
+  serviceName: string;
+  characteristics: ICharacteristic[];
+}
 
 /**
  * 连接、管理蓝牙设备类
  */
 export class BleDeviceService {
+  // service map； key 为 service uuid value为 [WechatMiniprogram.BLECharacteristic]
+  public services: IDeviceService[] = [];
+  public currentDevice: IBLEDeviceData | null = null;
+
   private static LogTag = "BleDeviceService";
   // 超时时间，默认 20 秒
-  private timeout: number = 20000;
-  private scanTimer: any = null;
-  private currentDevice: IBluetoothDevice | null = null;
-  private isConnected: boolean = false;
+  private timeout: number = 1000;
+  public isConnected: boolean = false;
   private print = (...args: any) =>
     helper.log(BleDeviceService.LogTag, ...args);
   // 待onBLECharacteristicValueChange方法处理的的命令map
   private commandMap: Map<string, ICommand> = new Map();
 
-  constructor(currentDevice: IBluetoothDevice) {
+  constructor(currentDevice: IBLEDeviceData) {
     this.currentDevice = currentDevice;
     this.setupSubscriptions();
   }
@@ -48,7 +62,8 @@ export class BleDeviceService {
 
       // 设置连接状态
       this.isConnected = true;
-      this.debug();
+      // 发现服务
+      await this.discoverService();
       return true;
     } catch (error) {
       this.print("连接失败", error);
@@ -61,50 +76,71 @@ export class BleDeviceService {
     }
   }
 
-  private async debug() {
-    const service = await wx.getBLEDeviceServices({
+  private async discoverService() {
+    const services = await wx.getBLEDeviceServices({
       deviceId: this.currentDevice!.deviceId,
     });
 
-    service.services.forEach(async (item) => {
+    for (const service of services.services) {
       const characteristics = await wx.getBLEDeviceCharacteristics({
         deviceId: this.currentDevice!.deviceId,
-        serviceId: item.uuid,
+        serviceId: service.uuid,
       });
-      this.print("service:", item, "\n");
+      this.print("service:", service, "\n");
       this.print("characteristics:", characteristics.characteristics);
 
-      characteristics.characteristics.forEach(async (characteristic) => {
-        const { properties, uuid } = characteristic;
-        this.print("characteristic:", characteristic);
-        if (properties.write) {
-          this.print("write characteristic:", characteristic);
-          // await this.write({
-          //   writeCharacteristicUUID: uuid,
-          //   type: ECommandStatus.GetDeviceStatus,
-          //   data: strToBytes(""),
-          // });
+      let characs: ICharacteristic[] = [];
+      for (const characteristic of characteristics.characteristics) {
+        let value = "";
+        if (characteristic.properties.read) {
+          const valueRes = await this.read(service.uuid, characteristic.uuid);
+          value = valueRes.data || "";
         }
-        if (properties.read) {
-          this.print("read characteristic:", characteristic);
-          const readValue = await wx.readBLECharacteristicValue({
-            deviceId: this.currentDevice!.deviceId,
-            serviceId: item.uuid,
-            characteristicId: uuid,
-          });
-
-          this.print("readValue:", readValue);
-        }
-        if (properties.notify) {
-          this.print("notify characteristic:", characteristic);
-          // await this.notify({
-          //   notifyCharacteristicUUID: uuid,
-          //   type: ECommandStatus.GetDeviceStatus,
-          // });
-        }
+        characs.push({
+          ...characteristic,
+          name: getCharacteristicName(service.uuid, characteristic.uuid),
+          value,
+        });
+      }
+      this.services.push({
+        serviceUUID: service.uuid,
+        serviceName: getServiceName(service.uuid),
+        characteristics: characs,
       });
+    }
+  }
 
-      this.print("\n\n\n");
+  private async read(serviceUUID: string, characteristicUUID: string) {
+    return new Promise<{ success: boolean; data?: string }>(async (resolve) => {
+      const timeoutId = setTimeout(
+        () => {
+          this.commandMap.delete(characteristicUUID);
+          resolve({
+            success: false,
+          });
+        },
+        this.timeout,
+        undefined
+      );
+      this.commandMap.set(characteristicUUID, {
+        timeoutId,
+        resolve,
+        formatType: "str",
+      });
+      try {
+        await wx.readBLECharacteristicValue({
+          deviceId: this.currentDevice!.deviceId,
+          serviceId: serviceUUID,
+          characteristicId: characteristicUUID,
+        });
+      } catch (error) {
+        this.print("读取数据失败", error);
+        this.commandMap.delete(characteristicUUID);
+        clearTimeout(timeoutId);
+        resolve({
+          success: false,
+        });
+      }
     });
   }
 
@@ -221,6 +257,15 @@ export class BleDeviceService {
       "uf8:",
       formatBytes(new Uint8Array(value), "str")
     );
+    const command = this.commandMap.get(characteristicId);
+    if (!command) {
+      this.print("未找到对应的命令", characteristicId);
+      // todo notify command and value
+      return;
+    }
+    clearTimeout(command.timeoutId);
+    const resolveData = formatBytes(new Uint8Array(value), command.formatType);
+    command.resolve({ success: true, data: resolveData });
   };
 
   private onBLEConnectionStateChange = ({

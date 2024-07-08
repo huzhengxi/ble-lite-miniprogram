@@ -10,36 +10,8 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/log/log",
-          "pathName": "pages/log/log",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/test/test",
-          "pathName": "pages/test/test",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/update/update",
-          "pathName": "pages/update/update",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/versions/versions",
-          "pathName": "pages/versions/versions",
-          "query": "mac=582D34001111&model=Beacon-Medatc&version=1.0.2",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "device",
-          "pathName": "pages/device/device",
+          "name": "pages/devicedetail/devicedetail",
+          "pathName": "pages/devicedetail/devicedetail",
           "query": "",
           "launchMode": "default",
           "scene": null

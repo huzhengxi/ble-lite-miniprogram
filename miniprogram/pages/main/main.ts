@@ -138,8 +138,29 @@ Page<IMainData, IMainOption>({
     }
   },
   onItemTap(event) {
+    wx.showLoading({
+      title: "连接中",
+    });
     const device = event.currentTarget.dataset.device as IBLEDeviceData;
-    const bleDeviceService = new BleDeviceService(device.rawData!);
-    bleDeviceService.startConnect();
+    const deviceService: BleDeviceService = new BleDeviceService(device);
+    deviceStore.setCurrentDevice(deviceService);
+    deviceService
+      .startConnect()
+      .then((result) => {
+        if (!result) {
+          wx.showToast({
+            title: "连接失败",
+            icon: "none",
+          });
+          return;
+        }
+        console.log("连接成功");
+        wx.navigateTo({
+          url: "/pages/devicedetail/devicedetail",
+        });
+      })
+      .finally(() => {
+        wx.hideLoading();
+      });
   },
 });

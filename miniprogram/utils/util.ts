@@ -130,16 +130,14 @@ function getBytesDecVal(bytes: Uint8Array) {
   return parseInt(bytesToHex(bytes), 16);
 }
 
-export function formatBytes(bytes: Uint8Array, format: "hex" | "dec" | "str") {
+export function formatBytes(bytes: Uint8Array, format: "hex" | "str") {
   if (format === "hex") {
     return bytesToHex(bytes);
   }
 
-  if (format === "dec") {
-    console.log("formatBytes：", ...bytes);
-
-    return getBytesDecVal(bytes.reverse());
-  }
+  // if (format === "dec") {
+  //   return getBytesDecVal(bytes.reverse());
+  // }
 
   return buildUTF8Str(bytes);
 }
