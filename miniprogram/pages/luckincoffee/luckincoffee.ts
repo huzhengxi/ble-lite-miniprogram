@@ -125,7 +125,7 @@ Page<ILuckinData, ILuckinOption>({
     if (this.data.scanning) {
       this.bleScanService?.stopScan();
     } else {
-      this.startScan()
+      this.startScan();
     }
   },
   onItemTap(event) {

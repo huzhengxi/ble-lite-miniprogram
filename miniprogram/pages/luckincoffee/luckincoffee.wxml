@@ -10,18 +10,18 @@
 
 <view style="padding: {{navHeight}}px 20rpx 20rpx 20rpx;">
 
-  <!-- 设备列表 -->
-  <view class="ble-device-item container row space-between " wx:for="{{luckinDevices}}" wx:key="index" data-device="{{item}}" bind:tap="onItemTap">
-    <view class="row flex-center-left" style="flex: 1;">
-      <image class="device-icon mr-3" src="../../assets/devices/small/beacon.png" />
-      <view class="column" style="flex: 1;">
-        <text style="width: 300rpx; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{item.name}}</text>
-        <text class="mt-1">{{item.mac}}</text>
-      </view>
-    </view>
-    <view class="column flex-bottom-center">
+ <!-- 设备列表 -->
+  <view class="ble-device-item container row space-between " style="flex-wrap: nowrap;" wx:for="{{luckinDevices}}" wx:key="index" data-device="{{item}}" bind:tap="onItemTap">
+    <view class="column flex-bottom-center mr-5">
       <image class="rssi-icon" src="../../assets/rssi/{{item.rssiLevel}}.png" mode="" />
-      <text class="mt-1">{{item.rssi}} dBm </text>
+      <text class="mt-1">{{item.rssi}}</text>
+    </view>
+    <view class="column mr-5" style="flex: 1; overflow: hidden;">
+      <text style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{item.name || 'N/A'}}</text>
+      <text class="mt-1">{{item.mac}}</text>
+    </view>
+    <view class="column flex-bottom-center" style="flex-shrink: 0; min-width: 50rpx;">
+      <text wx:if="{{item.scanInterval && item.scanInterval < 20000}}" class="mt-1">{{item.scanInterval}} ms </text>
     </view>
   </view>
 

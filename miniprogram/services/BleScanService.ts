@@ -12,7 +12,7 @@ export default class BleScanService {
   private customFilter: IDeviceFilter = this.defaultFilter;
   // 保存设备上一次搜索到的时间Map，key为mac value为时间戳
   private lastScanTimeMap = new Map<string, number>();
-  private devices: IBLEDeviceData[] = []
+  private devices: IBLEDeviceData[] = [];
 
   // 节流
   private throttleUpdateDevice = throttle(() => {
@@ -27,7 +27,6 @@ export default class BleScanService {
       .filter(this.customFilter)
       .map(parseBroadcastData);
     if (parseDevices.length > 0) {
-
       const allDevices = [...bleScanStore.getAllDevices()];
 
       parseDevices.forEach((newDevice) => {
@@ -46,7 +45,7 @@ export default class BleScanService {
           allDevices.push(newDevice);
         }
       });
-      this.devices = allDevices
+      this.devices = allDevices;
       this.throttleUpdateDevice();
     }
   };
@@ -55,7 +54,7 @@ export default class BleScanService {
     this.init();
   }
 
-  private async init() { }
+  private async init() {}
 
   /**
    * 开始扫描
@@ -132,10 +131,12 @@ export default class BleScanService {
   }
 
   async stopScan() {
+    this.devices = [];
     if (this.scanTimeout) {
       clearTimeout(this.scanTimeout);
       this.scanTimeout = null;
     }
+    this.throttleUpdateDevice.cancel();
     bleScanStore.stopScan();
     helper.log(this.logType, "停止扫描");
     // 取消屏幕常亮
