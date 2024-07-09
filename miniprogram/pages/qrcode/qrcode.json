@@ -2,8 +2,5 @@
   "navigationStyle": "default",
   "navigationBarBackgroundColor": "#fff",
   "navigationBarTextStyle": "black",
-  "navigationBarTitleText": "设备详情",
-  "usingComponents": {
-    "van-notify": "@vant/weapp/notify/index"
-  }
+  "navigationBarTitleText": "设备详情"
 }

@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/help/help",
+          "pathName": "pages/help/help",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/devicedetail/devicedetail",
           "pathName": "pages/devicedetail/devicedetail",
           "query": "",

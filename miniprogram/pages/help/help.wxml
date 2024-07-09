@@ -1,0 +1,18 @@
+<view style="margin-top: 15rpx;" />
+<van-cell-group inset>
+  <van-cell center="true" is-link>
+    <view slot="title">
+      <button class="btn" open-type="contact">客服会话</button>
+    </view>
+  </van-cell>
+  <van-cell center="true" is-link>
+    <view slot="title">
+      <button class="btn" open-type="feedback">反馈与投诉</button>
+    </view>
+  </van-cell>
+  <van-cell center="true" is-link>
+    <view slot="title">
+      <button class="btn" open-type="openSetting">隐私与设置</button>
+    </view>
+  </van-cell>
+</van-cell-group>

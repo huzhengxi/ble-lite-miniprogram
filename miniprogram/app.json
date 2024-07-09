@@ -3,12 +3,13 @@
     "pages/main/main",
     "pages/luckincoffee/luckincoffee",
     "pages/devicedetail/devicedetail",
-    "pages/log/log",
+    "pages/help/help",
     "pages/qrcode/qrcode"
   ],
   "window": {
     "navigationStyle": "default"
   },
+
   "rendererOptions": {
     "skyline": {
       "defaultDisplayBlock": true,
@@ -20,7 +21,8 @@
   "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents",
   "usingComponents": {
-    "navigation-bar": "/components/navigation-bar/navigation-bar"
+    "navigation-bar": "/components/navigation-bar/navigation-bar",
+    "van-notify": "@vant/weapp/notify/index"
   },
   "useExtendedLib": {
     "weui": true
@@ -43,8 +45,8 @@
         "selectedIconPath": "/assets/tab-icons/selected/luckin.png"
       },
       {
-        "pagePath": "pages/log/log",
-        "text": "设置",
+        "pagePath": "pages/help/help",
+        "text": "帮助",
         "iconPath": "/assets/tab-icons/normal/help.png",
         "selectedIconPath": "/assets/tab-icons/selected/help.png"
       }

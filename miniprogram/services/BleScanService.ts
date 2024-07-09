@@ -138,6 +138,7 @@ export default class BleScanService {
     }
     this.throttleUpdateDevice.cancel();
     bleScanStore.stopScan();
+    bleScanStore.clearDevices();
     helper.log(this.logType, "停止扫描");
     // 取消屏幕常亮
     await wx.setKeepScreenOn({
