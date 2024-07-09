@@ -141,3 +141,20 @@ interface ICommand<T = { success: boolean; data?: string }> {
 
   resolve: (value: T) => void;
 }
+
+
+
+type ServiceUUID = String;
+
+interface ICharacteristic extends WechatMiniprogram.BLECharacteristic {
+  name: string;
+  value?: string | number | ArrayBuffer;
+  strProperties: string;
+  serviceUUID: string;
+}
+
+interface IDeviceService {
+  serviceUUID: ServiceUUID;
+  serviceName: string;
+  characteristics: ICharacteristic[];
+}

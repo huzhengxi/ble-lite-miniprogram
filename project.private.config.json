@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/characteristic/characteristic",
+          "pathName": "pages/characteristic/characteristic",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/help/help",
           "pathName": "pages/help/help",
           "query": "",

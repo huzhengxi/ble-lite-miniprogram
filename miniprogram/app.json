@@ -4,7 +4,8 @@
     "pages/luckincoffee/luckincoffee",
     "pages/devicedetail/devicedetail",
     "pages/help/help",
-    "pages/qrcode/qrcode"
+    "pages/qrcode/qrcode",
+    "pages/characteristic/characteristic"
   ],
   "window": {
     "navigationStyle": "default"

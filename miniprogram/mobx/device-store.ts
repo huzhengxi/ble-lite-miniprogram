@@ -8,17 +8,24 @@ import { observable, action } from "mobx-miniprogram";
 interface IDeviceStore {
   // 数据字段
   currentDevice?: BleDeviceService;
+  currentCharacteristic?: ICharacteristic;
+  connected: boolean
 
   // computed
 
   // actions
   setCurrentDevice: (device: BleDeviceService) => void;
   getCurrentDevice: () => BleDeviceService | undefined;
+
+  setCurrentCharacteristic: (characteristic: ICharacteristic) => void;
+  getCurrentCharacteristic: () => ICharacteristic | undefined;
+
+  setConnected: (connected: boolean) => void
 }
 
 export const deviceStore: IDeviceStore = observable({
   // 数据字段
-  currentDevice: undefined,
+  connected: false,
 
   // computed
 
@@ -33,4 +40,18 @@ export const deviceStore: IDeviceStore = observable({
   getCurrentDevice: action(function (this: IDeviceStore) {
     return this.currentDevice;
   }),
+
+  setCurrentCharacteristic: action(function (
+    this: IDeviceStore,
+    characteristic: ICharacteristic
+  ) {
+    this.currentCharacteristic = characteristic;
+  }),
+  getCurrentCharacteristic: action(function (this: IDeviceStore) {
+    return this.currentCharacteristic;
+  }),
+
+  setConnected: action(function (this: IDeviceStore, status: boolean) {
+    this.connected = status
+  })
 });

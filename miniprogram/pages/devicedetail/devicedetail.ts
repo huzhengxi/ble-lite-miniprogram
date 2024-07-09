@@ -5,10 +5,14 @@ import { BleDeviceService } from "../../services/BleDeviceService";
 interface IDeviceDetailData {
   currentDevice?: BleDeviceService;
   testData: Record<string, any>;
+  activeName: string
 }
 
 interface IDeviceDetailOption {
   behaviors: string[];
+  onCollapseChange: (event: any) => void;
+  onCharacteristic: (event: WechatMiniprogram.CustomEvent) => void;
+  setCurrentCharacteristic?: (characteristic: ICharacteristic) => void
 }
 
 Page<IDeviceDetailData, IDeviceDetailOption>({
@@ -18,7 +22,7 @@ Page<IDeviceDetailData, IDeviceDetailOption>({
         {
           store: deviceStore,
           fields: ["currentDevice"],
-          actions: [],
+          actions: ["setCurrentCharacteristic"],
         },
       ],
     }),
@@ -29,27 +33,34 @@ Page<IDeviceDetailData, IDeviceDetailOption>({
   data: {
     currentDevice: undefined,
     testData: { test: true },
+    activeName: ''
+  },
+
+  onCollapseChange(event) {
+    this.setData({
+      activeName: event.detail,
+    });
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad() {},
+  onLoad() { },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady() {},
+  onReady() { },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow() {},
+  onShow() { },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide() {},
+  onHide() { },
 
   /**
    * 生命周期函数--监听页面卸载
@@ -61,15 +72,23 @@ Page<IDeviceDetailData, IDeviceDetailOption>({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh() {},
+  onPullDownRefresh() { },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom() {},
+  onReachBottom() { },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage() {},
+  onShareAppMessage() { },
+
+  onCharacteristic(event) {
+    const { characteristic } = event.currentTarget.dataset;
+    this.setCurrentCharacteristic?.(characteristic)
+    wx.navigateTo({
+      url: '/pages/characteristic/characteristic'
+    })
+  }
 });

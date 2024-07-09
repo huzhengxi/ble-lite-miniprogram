@@ -6,18 +6,6 @@ import helper from "../utils/helper";
 import { formatBytes, uint8Array2hexString } from "../utils/util";
 import { getCharacteristicName, getServiceName } from "./uuidUtils";
 
-type ServiceUUID = String;
-
-interface ICharacteristic extends WechatMiniprogram.BLECharacteristic {
-  name: string;
-  value: string | number | ArrayBuffer;
-}
-
-interface IDeviceService {
-  serviceUUID: ServiceUUID;
-  serviceName: string;
-  characteristics: ICharacteristic[];
-}
 
 /**
  * 连接、管理蓝牙设备类
@@ -92,14 +80,31 @@ export class BleDeviceService {
       let characs: ICharacteristic[] = [];
       for (const characteristic of characteristics.characteristics) {
         let value = "";
+        let strProperties = "Properties:";
         if (characteristic.properties.read) {
           const valueRes = await this.read(service.uuid, characteristic.uuid);
           value = valueRes.data || "";
         }
+        if (characteristic.properties.write) {
+          strProperties += "Write ";
+        }
+        if (characteristic.properties.read) {
+          strProperties += "Read ";
+        }
+        if (characteristic.properties.notify) {
+          strProperties += "Notify ";
+        }
+
+        if (characteristic.properties.writeNoResponse) {
+          strProperties += "WriteNoResponse ";
+        }
+
         characs.push({
           ...characteristic,
           name: getCharacteristicName(service.uuid, characteristic.uuid),
           value,
+          strProperties,
+          serviceUUID: service.uuid,
         });
       }
       this.services.push({
@@ -314,6 +319,7 @@ export class BleDeviceService {
       throw error;
     } finally {
       this.isConnected = false;
+      
       this.currentDevice = null;
       this.removeSubscriptions();
     }

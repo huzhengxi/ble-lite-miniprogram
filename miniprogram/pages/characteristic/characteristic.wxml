@@ -1,0 +1,2 @@
+<van-nav-bar title="{{currentCharacteristic.name}}" left-arrow bind:click-left="onClickLeft" />
+
