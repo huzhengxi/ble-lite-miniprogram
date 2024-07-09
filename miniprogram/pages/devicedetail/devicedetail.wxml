@@ -1,11 +1,7 @@
 <view style="margin-top: 20rpx;" />
-<van-cell-group title="设备信息" wx:if="{{currentDevice}}">
-  <van-cell title="Name" value="{{currentDevice.currentDevice.name}}" />
-  <van-cell title="Device ID" value="{{currentDevice.currentDevice.deviceId}}" />
-  <van-cell title="Status" value="{{currentDevice.isConnected ? '已连接' : '已断开'}}" value-class="{{currentDevice.isConnected ? 'connected ' : 'disconneted'}}" />
-</van-cell-group>
+<van-cell title="{{currentDevice.currentDevice.name}}" label="deviceId:{{currentDevice.currentDevice.deviceId}}" value="{{currentDevice.isConnected ? '已连接' : '已断开'}}" value-class="{{currentDevice.isConnected ? 'connected ' : 'disconneted'}}" />
 
 <!-- 渲染 currentDevice.services 数组 -->
-<van-cell-group wx:if="{{currentDevice}}" wx:for="{{currentDevice.services}}" wx:key="index" title="{{item.serviceName}}">
-  <van-cell wx:for="{{item.characteristics}}" wx:key="index" title="{{item.name}}" value="{{item.value}}"/>
+<van-cell-group custom-class="cell-group" wx:if="{{currentDevice}}" wx:for="{{currentDevice.services}}" wx:key="index" title="{{item.serviceName}}">
+  <van-cell wx:for="{{item.characteristics}}" wx:key="index" title="{{item.name}}" label="{{item.value}}" />
 </van-cell-group>
