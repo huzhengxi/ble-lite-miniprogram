@@ -7,7 +7,6 @@ import { observable, action } from "mobx-miniprogram";
 import { generateFakeBLEDeviceList } from "../utils/fake";
 import { mac2Colon, parseMAC, uint8Array2hexString } from "../utils/util";
 
-
 export const bleScanStore: IBleScanStore = observable({
   // 数据字段
   deviceList: [] as IBLEDeviceData[],
@@ -74,7 +73,7 @@ export const bleScanStore: IBleScanStore = observable({
         const newDevice = { ...device };
         const serviceData =
           device.rawData?.serviceData?.[
-          "0000FDCD-0000-1000-8000-00805F9B34FB"
+            "0000FDCD-0000-1000-8000-00805F9B34FB"
           ] ||
           device.rawData?.serviceData?.["0000fdcd-0000-1000-8000-00805f9b34fb"];
         const hexData = uint8Array2hexString(new Uint8Array(serviceData));
@@ -99,16 +98,20 @@ export const bleScanStore: IBleScanStore = observable({
     return str;
   },
 
-  getAllDevices: (function (this: typeof bleScanStore) {
-    return this.deviceList
-  }),
+  getAllDevices: function (this: typeof bleScanStore) {
+    return this.deviceList;
+  },
   // actions
   addDevices: action(function (
     this: typeof bleScanStore,
     devices: IBLEDeviceData[]
   ) {
     // this.deviceList = devices;
-    this.deviceList = [...devices.sort((a, b) => b.rssi - a.rssi)];
+    this.deviceList = [
+      ...devices
+        .sort((a, b) => b.rssi - a.rssi)
+        .sort((a, b) => Number(b.connectable) - Number(a.connectable)),
+    ];
   }),
   clearDevices: action(function (this: typeof bleScanStore) {
     this.deviceList = [];
@@ -130,5 +133,4 @@ export const bleScanStore: IBleScanStore = observable({
   stopScan: action(function (this: typeof bleScanStore) {
     this.scanning = false;
   }),
-
 });

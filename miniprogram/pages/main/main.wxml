@@ -15,14 +15,14 @@
   <device-filter />
 
   <!-- 设备列表 -->
-  <view class="ble-device-item container row space-between " style="flex-wrap: nowrap;" wx:for="{{devices}}" wx:key="index" data-device="{{item}}" bind:tap="onItemTap">
+  <view class="ble-device-item container row space-between " style="flex-wrap: nowrap; opacity: {{item.connectable ? 1: 0.7}}; background-color: {{item.connectable ? item.color: gray}};" wx:for="{{devices}}" wx:key="index" data-device="{{item}}" bind:longpress="onItemLongPress" bind:tap="onItemTap">
     <view class="column flex-bottom-center mr-5">
       <image class="rssi-icon" src="../../assets/rssi/{{item.rssiLevel}}.png" mode="" />
       <text class="mt-1">{{item.rssi}}</text>
     </view>
     <view class="column mr-5" style="flex: 1; overflow: hidden;">
-      <text style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{item.name || 'N/A'}}</text>
-      <text class="mt-1">{{item.mac}}</text>
+      <text class="{{item.connectable ? 'black bold' : 'gray'}}" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{item.name || 'N/A'}}</text>
+      <text class="mt-1 broadcastData">{{item.broadcastData}}</text>
     </view>
     <view class="column flex-bottom-center" style="flex-shrink: 0; min-width: 50rpx;">
       <text wx:if="{{item.scanInterval && item.scanInterval < 20000}}" class="mt-1">{{item.scanInterval}} ms </text>

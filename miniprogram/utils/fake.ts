@@ -23,6 +23,9 @@ export const generateFakeBLEDeviceList = () => {
       mac: "582D34000000",
       broadcastData: "hello",
       scanInterval: random(300, 1000),
+      connectable: !!random(0, 1),
+      // 生成随机的color opacity为0.2
+      color: `rgba(${random(0, 100)}, ${random(0, 100)}, ${random(0, 100)}, 0.1)`,
     });
   }
 

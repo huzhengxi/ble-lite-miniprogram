@@ -19,6 +19,7 @@ interface IMainOption {
   setCurrentDevice?: (device: IBLEDeviceData) => void;
   clearDevices?: () => void;
   startScan: () => Promise<void>;
+  onItemLongPress: (event: WechatMiniprogram.CustomEvent) => void;
 }
 
 const mainBehavior = BehaviorWithStore({
@@ -61,6 +62,10 @@ Page<IMainData, IMainOption>({
    * 生命周期函数--监听页面显示
    */
   onShow() {
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ["shareAppMessage", "shareTimeline"],
+    });
     this.startScan();
   },
 
@@ -118,7 +123,7 @@ Page<IMainData, IMainOption>({
    * 生命周期函数--监听页面隐藏
    */
   onHide() {
-    this.bleScanService?.stopScan();
+    this.bleScanService?.stopScan(true);
   },
 
   /**
@@ -138,10 +143,17 @@ Page<IMainData, IMainOption>({
     }
   },
   onItemTap(event) {
+    const device = event.currentTarget.dataset.device as IBLEDeviceData;
+    if (!device.connectable) {
+      wx.showToast({
+        title: "此设备不允许连接",
+        icon: "none",
+      });
+      return;
+    }
     wx.showLoading({
       title: "连接中",
     });
-    const device = event.currentTarget.dataset.device as IBLEDeviceData;
     const deviceService: BleDeviceService = new BleDeviceService(device);
     deviceStore.setCurrentDevice(deviceService);
     deviceService
@@ -162,5 +174,25 @@ Page<IMainData, IMainOption>({
       .finally(() => {
         wx.hideLoading();
       });
+  },
+  onItemLongPress(event) {
+    const device = event.currentTarget.dataset.device as IBLEDeviceData;
+    const shareData = {
+      deviceId: device.deviceId,
+      name: device.name,
+      RSSI: device.rssi,
+      broadcastData: device.broadcastData,
+      connectable: device.connectable,
+    };
+
+    wx.setClipboardData({
+      data: JSON.stringify(shareData, null, 2),
+      success() {
+        wx.showToast({
+          title: "复制成功",
+          icon: "success",
+        });
+      },
+    });
   },
 });

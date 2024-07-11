@@ -224,38 +224,10 @@ export const permissionTip = () => {
   );
 };
 
-export const getDevicePageItems: (productId?: number) => IDevicePageItems = (
-  productId = 0
-) => {
-  switch (productId) {
-    case 0x38:
-    case 0x40:
-    case 0x41:
-      return {
-        canUpdate: true,
-        showBroadcastInterval: true,
-        showBroadcastPower: true,
-        showBroadcastChannel: true,
-        showLog: false,
-      };
-    default:
-      return {
-        canUpdate: false,
-        showBroadcastInterval: false,
-        showBroadcastPower: false,
-        showBroadcastChannel: false,
-        showLog: true,
-      };
-  }
-};
+/**
+ * 处理uuid 把 0000FDCD-0000-1000-8000-00805F9B34FB 转换为 FDCD
+ */
 
-export const getDeviceIcon: (productId?: number) => string = (
-  productId = 0
-) => {
-  switch (productId) {
-    case 0x39:
-      return "/assets/devices/big/plugcat.png";
-    default:
-      return "/assets/devices/big/beacon.png";
-  }
-};
+export function uuid2Short(uuid: string) {
+  return `${uuid.slice(4, 8)}`;
+}

@@ -1,5 +1,5 @@
 <view style="margin-top: 20rpx;" />
-<van-cell title="{{currentDevice.currentDevice.name}}" label="deviceId:{{currentDevice.currentDevice.deviceId}}" value="{{connected ? '已连接' : '已断开'}}" value-class="{{connected ? 'connected ' : 'disconneted'}}" />
+<van-cell title="{{currentDevice.currentDevice.name}}" label="serviceData {{currentDevice.currentDevice.broadcastData}}" value="{{connected ? '已连接' : '已断开'}}" value-class="{{connected ? 'connected ' : 'disconneted'}}" />
 
 <van-collapse accordion border="false" value="{{ activeName }}" bind:change="onCollapseChange">
   <van-collapse-item border="false" custom-class="collapse-container" content-class="collapse-content-class" wx:for="{{currentDevice.services}}" wx:key="index" title="{{item.serviceName}}" name="{{item.serviceUUID}}">

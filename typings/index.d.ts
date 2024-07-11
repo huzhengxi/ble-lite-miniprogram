@@ -28,6 +28,8 @@ interface IBLEDeviceData {
   mac?: string;
   // serviceData
   serviceData?: Record<string, ArrayBuffer>;
+  connectable?: boolean;
+  color?: any;
 }
 
 // 广播过滤条件
@@ -141,8 +143,6 @@ interface ICommand<T = { success: boolean; data?: string }> {
 
   resolve: (value: T) => void;
 }
-
-
 
 type ServiceUUID = String;
 

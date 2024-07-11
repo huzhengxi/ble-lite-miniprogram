@@ -1,7 +1,7 @@
 import { bleScanStore } from "../mobx/ble-scan-store";
 import helper from "../utils/helper";
-import { uint8Array2hexString, permissionTip } from "../utils/util";
-import { throttle } from "lodash";
+import { uint8Array2hexString, permissionTip, uuid2Short } from "../utils/util";
+import { random, throttle } from "lodash";
 
 export default class BleScanService {
   logType = "蓝牙模块>>";
@@ -130,15 +130,17 @@ export default class BleScanService {
     }
   }
 
-  async stopScan() {
-    this.devices = [];
+  async stopScan(clearDevices: boolean = false) {
     if (this.scanTimeout) {
       clearTimeout(this.scanTimeout);
       this.scanTimeout = null;
     }
-    this.throttleUpdateDevice.cancel();
+    if (clearDevices) {
+      this.throttleUpdateDevice.cancel();
+      this.devices = [];
+      bleScanStore.clearDevices();
+    }
     bleScanStore.stopScan();
-    bleScanStore.clearDevices();
     helper.log(this.logType, "停止扫描");
     // 取消屏幕常亮
     await wx.setKeepScreenOn({
@@ -181,7 +183,7 @@ export function parseBroadcastData(
   const newServiceData = Object.keys(serviceData).reduce((acc, key) => {
     const value = serviceData[key];
     let hexString = uint8Array2hexString(new Uint8Array(value));
-    const keyValue = `${key}: ${hexString}`;
+    const keyValue = `${uuid2Short(key)}: ${hexString}`;
     broadcastData =
       broadcastData.length === 0 ? keyValue : `${broadcastData}, ${keyValue}`;
     acc[key.toUpperCase()] = value;
@@ -196,5 +198,10 @@ export function parseBroadcastData(
     rawData: bleDevice,
     broadcastData,
     serviceData: newServiceData,
+    connectable: bleDevice.connectable,
+    color: `rgba(${random(100, 255)}, ${random(100, 255)}, ${random(
+      0,
+      255
+    )}, 0.2)`,
   };
 }

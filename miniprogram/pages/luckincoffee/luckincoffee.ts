@@ -118,12 +118,12 @@ Page<ILuckinData, ILuckinOption>({
    * 生命周期函数--监听页面隐藏
    */
   onHide() {
-    this.bleScanService?.stopScan();
+    this.bleScanService?.stopScan(true);
   },
 
   changeScanStatus() {
     if (this.data.scanning) {
-      this.bleScanService?.stopScan();
+      this.bleScanService?.stopScan(true);
     } else {
       this.startScan();
     }

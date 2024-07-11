@@ -4,13 +4,12 @@
 
 page {
   background-color: #f3f3f3;
-
 }
 
 .container {
   background-color: $qp-background-color;
   border-radius: $qp-radius;
-  padding: 20rpx;
+  padding: 30rpx;
   margin: 30rpx 0;
 }
 
@@ -303,7 +302,6 @@ page {
   border-bottom: 1rpx solid #e5e5e5;
 }
 
-
 .vant-nav-bar-title {
   color: black;
   font-weight: bold;
@@ -318,4 +316,17 @@ page {
   height: 100%;
   width: 60%;
   margin: auto;
+}
+
+.black {
+  color: black;
+}
+
+.gray {
+  color: gray;
+}
+
+.bold {
+  // 加粗
+  font-weight: 600;
 }

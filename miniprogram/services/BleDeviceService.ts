@@ -87,7 +87,7 @@ export class BleDeviceService {
       let characs: ICharacteristic[] = [];
       for (const characteristic of characteristics.characteristics) {
         let value = "";
-        let strProperties = "Properties:";
+        let strProperties = "Properties: ";
         if (characteristic.properties.read) {
           const valueRes = await this.read(service.uuid, characteristic.uuid);
           value = valueRes.data || "";
