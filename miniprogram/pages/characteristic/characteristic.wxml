@@ -6,7 +6,7 @@
 <van-cell title="Service UUID" label="{{currentCharacteristic.shortServiceUUID}}" />
 
 <van-cell-group title="Read Value">
-  <van-cell title-class="operate-btn">
+  <van-cell center title-class="operate-btn">
     <view slot="title">
       <button bind:tap="operateBtnTap" size="mini" type="primary">Read Again</button>
     </view>
