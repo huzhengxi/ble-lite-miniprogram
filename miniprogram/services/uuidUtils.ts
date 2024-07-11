@@ -1,3 +1,4 @@
+import { uuid2Short } from "../utils/util";
 /*
  * Created by Tiger on 06/07/2024
  * 定义一些公共的 service uuid 和 characteristic uuid
@@ -49,7 +50,7 @@ export function getServiceName(_serviceUUID: string): string {
     case servicesUUID.oad:
       return "OAD";
     default:
-      return serviceUUID;
+      return uuid2Short(serviceUUID);
   }
 }
 
@@ -78,14 +79,14 @@ export function getCharacteristicName(
         case characteristicsUUID.deviceInfo.manufacturerName:
           return "Manufacturer Name";
         default:
-          return characteristicUUID;
+          return uuid2Short(characteristicUUID);
       }
     case servicesUUID.battery:
       switch (characteristicUUID) {
         case characteristicsUUID.battery.batteryLevel:
           return "Battery Level";
         default:
-          return characteristicUUID;
+          return uuid2Short(characteristicUUID);
       }
     case servicesUUID.heartRate:
       switch (characteristicUUID) {
@@ -94,7 +95,7 @@ export function getCharacteristicName(
         case characteristicsUUID.heartRate.bodySensorLocation:
           return "Body Sensor Location";
         default:
-          return characteristicUUID;
+          return uuid2Short(characteristicUUID);
       }
     case servicesUUID.oad:
       switch (characteristicUUID) {
@@ -103,9 +104,9 @@ export function getCharacteristicName(
         case characteristicsUUID.oad.oadPacket:
           return "OAD Packet";
         default:
-          return characteristicUUID;
+          return uuid2Short(characteristicUUID);
       }
     default:
-      return characteristicUUID;
+      return uuid2Short(characteristicUUID);
   }
 }

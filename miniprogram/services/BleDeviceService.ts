@@ -3,10 +3,9 @@
  */
 
 import helper from "../utils/helper";
-import { formatBytes, uint8Array2hexString } from "../utils/util";
+import { formatBytes, uint8Array2hexString, uuid2Short } from "../utils/util";
 import { getCharacteristicName, getServiceName } from "./uuidUtils";
-import { deviceStore } from '../mobx/device-store'
-
+import { deviceStore } from "../mobx/device-store";
 
 /**
  * 连接、管理蓝牙设备类
@@ -30,9 +29,9 @@ export class BleDeviceService {
     this.setupSubscriptions();
   }
 
-  private setConntected(connected: boolean) {
+  private setConnected(connected: boolean) {
     this.isConnected = connected;
-    deviceStore.setConnected(connected)
+    deviceStore.setConnected(connected);
   }
 
   /**
@@ -55,7 +54,7 @@ export class BleDeviceService {
       });
 
       // 设置连接状态
-      this.setConntected(true);
+      this.setConnected(true);
 
       // 发现服务
       await this.discoverService();
@@ -112,12 +111,15 @@ export class BleDeviceService {
           value,
           strProperties,
           serviceUUID: service.uuid,
+          shortServiceUUID: uuid2Short(service.uuid),
+          shortCharacteristicUUID: uuid2Short(characteristic.uuid),
         });
       }
       this.services.push({
         serviceUUID: service.uuid,
         serviceName: getServiceName(service.uuid),
         characteristics: characs,
+        shortServiceUUID: uuid2Short(service.uuid),
       });
     }
   }
@@ -288,7 +290,7 @@ export class BleDeviceService {
     if (deviceId !== this.currentDevice?.deviceId) {
       return;
     }
-    this.setConntected(connected);
+    this.setConnected(connected);
     if (!connected) {
       this.removeSubscriptions();
     }
@@ -325,7 +327,7 @@ export class BleDeviceService {
       this.print("断开连接失败", error);
       throw error;
     } finally {
-      this.setConntected(false);
+      this.setConnected(false);
 
       this.currentDevice = null;
       this.removeSubscriptions();

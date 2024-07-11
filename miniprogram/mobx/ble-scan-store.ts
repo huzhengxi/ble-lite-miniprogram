@@ -106,11 +106,18 @@ export const bleScanStore: IBleScanStore = observable({
     this: typeof bleScanStore,
     devices: IBLEDeviceData[]
   ) {
-    // this.deviceList = devices;
+    // 可能有用的设备
+    const usefulDevices = devices.filter(
+      (device) => device.name && device.broadcastData && device.connectable
+    );
+    // 剩下的设备
+    const otherDevices = devices.filter(
+      (device) => !usefulDevices.includes(device)
+    );
+
     this.deviceList = [
-      ...devices
-        .sort((a, b) => b.rssi - a.rssi)
-        .sort((a, b) => Number(b.connectable) - Number(a.connectable)),
+      ...usefulDevices.sort((a, b) => b.rssi - a.rssi),
+      ...otherDevices.sort((a, b) => b.rssi - a.rssi),
     ];
   }),
   clearDevices: action(function (this: typeof bleScanStore) {

@@ -229,5 +229,12 @@ export const permissionTip = () => {
  */
 
 export function uuid2Short(uuid: string) {
-  return `${uuid.slice(4, 8)}`;
+  if (uuid.length < 8) return uuid;
+  if (
+    uuid.startsWith("0000") &&
+    uuid.toUpperCase().endsWith("1000-8000-00805F9B34FB")
+  ) {
+    return `${uuid.slice(4, 8)}`;
+  }
+  return uuid;
 }
