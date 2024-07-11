@@ -21,7 +21,7 @@ Page<IDeviceDetailData, IDeviceDetailOption>({
       storeBindings: [
         {
           store: deviceStore,
-          fields: ["currentDevice"],
+          fields: ["currentDevice", "connected"],
           actions: ["setCurrentCharacteristic"],
         },
       ],

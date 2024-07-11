@@ -5,6 +5,7 @@
 import helper from "../utils/helper";
 import { formatBytes, uint8Array2hexString } from "../utils/util";
 import { getCharacteristicName, getServiceName } from "./uuidUtils";
+import { deviceStore } from '../mobx/device-store'
 
 
 /**
@@ -18,7 +19,7 @@ export class BleDeviceService {
   private static LogTag = "BleDeviceService";
   // 超时时间，默认 20 秒
   private timeout: number = 1000;
-  public isConnected: boolean = false;
+  private isConnected: boolean = false;
   private print = (...args: any) =>
     helper.log(BleDeviceService.LogTag, ...args);
   // 待onBLECharacteristicValueChange方法处理的的命令map
@@ -27,6 +28,11 @@ export class BleDeviceService {
   constructor(currentDevice: IBLEDeviceData) {
     this.currentDevice = currentDevice;
     this.setupSubscriptions();
+  }
+
+  private setConntected(connected: boolean) {
+    this.isConnected = connected;
+    deviceStore.setConnected(connected)
   }
 
   /**
@@ -49,7 +55,8 @@ export class BleDeviceService {
       });
 
       // 设置连接状态
-      this.isConnected = true;
+      this.setConntected(true);
+
       // 发现服务
       await this.discoverService();
       return true;
@@ -281,7 +288,7 @@ export class BleDeviceService {
     if (deviceId !== this.currentDevice?.deviceId) {
       return;
     }
-    this.isConnected = connected;
+    this.setConntected(connected);
     if (!connected) {
       this.removeSubscriptions();
     }
@@ -318,8 +325,8 @@ export class BleDeviceService {
       this.print("断开连接失败", error);
       throw error;
     } finally {
-      this.isConnected = false;
-      
+      this.setConntected(false);
+
       this.currentDevice = null;
       this.removeSubscriptions();
     }
