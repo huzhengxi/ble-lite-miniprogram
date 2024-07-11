@@ -5,7 +5,13 @@
 
 import { observable, action } from "mobx-miniprogram";
 import { generateFakeBLEDeviceList } from "../utils/fake";
-import { mac2Colon, parseMAC, uint8Array2hexString } from "../utils/util";
+import {
+  mac2Colon,
+  otherDevicesSort,
+  parseMAC,
+  uint8Array2hexString,
+  usefulDevicesSort,
+} from "../utils/util";
 
 export const bleScanStore: IBleScanStore = observable({
   // 数据字段
@@ -108,7 +114,7 @@ export const bleScanStore: IBleScanStore = observable({
   ) {
     // 可能有用的设备
     const usefulDevices = devices.filter(
-      (device) => device.name && device.broadcastData && device.connectable
+      (device) => !!device.name && device.connectable
     );
     // 剩下的设备
     const otherDevices = devices.filter(
@@ -116,8 +122,8 @@ export const bleScanStore: IBleScanStore = observable({
     );
 
     this.deviceList = [
-      ...usefulDevices.sort((a, b) => b.rssi - a.rssi),
-      ...otherDevices.sort((a, b) => b.rssi - a.rssi),
+      ...usefulDevices.sort(usefulDevicesSort),
+      ...otherDevices.sort(otherDevicesSort),
     ];
   }),
   clearDevices: action(function (this: typeof bleScanStore) {

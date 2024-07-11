@@ -1,9 +1,13 @@
 {
   "usingComponents": {
-    "van-nav-bar": "@vant/weapp/nav-bar/index"
+    "van-nav-bar": "@vant/weapp/nav-bar/index",
+    "van-cell": "@vant/weapp/cell/index",
+    "van-cell-group": "@vant/weapp/cell-group/index",
+    "select": "/components/select/select"
+
   },
   "navigationStyle": "custom",
   "navigationBarBackgroundColor": "#fff",
   "navigationBarTextStyle": "black",
-  "navigationBarTitleText": "characteristic"
+  "navigationBarTitleText": "Characteristic"
 }

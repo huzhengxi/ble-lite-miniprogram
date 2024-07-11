@@ -13,6 +13,7 @@ interface IDeviceDetailOption {
   onCollapseChange: (event: any) => void;
   onCharacteristic: (event: WechatMiniprogram.CustomEvent) => void;
   setCurrentCharacteristic?: (characteristic: ICharacteristic) => void
+  clearStore?: () => void
 }
 
 Page<IDeviceDetailData, IDeviceDetailOption>({
@@ -22,7 +23,7 @@ Page<IDeviceDetailData, IDeviceDetailOption>({
         {
           store: deviceStore,
           fields: ["currentDevice", "connected"],
-          actions: ["setCurrentCharacteristic"],
+          actions: ["setCurrentCharacteristic", "clearStore"],
         },
       ],
     }),
@@ -67,6 +68,7 @@ Page<IDeviceDetailData, IDeviceDetailOption>({
    */
   onUnload() {
     this.data.currentDevice?.disconnect();
+    this.clearStore?.()
   },
 
   /**

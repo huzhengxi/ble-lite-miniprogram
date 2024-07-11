@@ -3,7 +3,13 @@
  */
 
 import helper from "../utils/helper";
-import { formatBytes, uint8Array2hexString, uuid2Short } from "../utils/util";
+import {
+  formatBytes,
+  hexString2ArrayArraybuffer,
+  strToBytes,
+  uint8Array2hexString,
+  uuid2Short,
+} from "../utils/util";
 import { getCharacteristicName, getServiceName } from "./uuidUtils";
 import { deviceStore } from "../mobx/device-store";
 
@@ -32,6 +38,39 @@ export class BleDeviceService {
   private setConnected(connected: boolean) {
     this.isConnected = connected;
     deviceStore.setConnected(connected);
+  }
+
+  public readAgain(serviceUUID: string, characteristicUUID: string) {
+    wx.readBLECharacteristicValue({
+      deviceId: this.currentDevice!.deviceId,
+      serviceId: serviceUUID,
+      characteristicId: characteristicUUID,
+    });
+  }
+
+  private async write(
+    serviceId: string,
+    characteristicId: string,
+    data: string,
+    type: FormatType
+  ) {
+    const value = type === "hex"
+      ? hexString2ArrayArraybuffer(data)
+      : new Uint8Array(strToBytes(data)).buffer
+      
+    deviceStore.setCharacteristicCache({
+      value,
+      deviceId: this.currentDevice!.deviceId,
+      characteristicId: characteristicId,
+      serviceId
+    })
+
+    wx.writeBLECharacteristicValue({
+      deviceId: this.currentDevice!.deviceId,
+      serviceId,
+      characteristicId,
+      value
+    });
   }
 
   /**
@@ -159,106 +198,11 @@ export class BleDeviceService {
   }
 
   /**
-   * 写入数据，这里不传 serviceUUID是因为写入的服务是固定不变的
-   * @returns
-   */
-  // private async write({
-  //   writeCharacteristicUUID,
-  //   type,
-  //   data,
-  //   noResponse = false,
-  //   isSplitReceive = false,
-  //   timeout = this.timeout,
-  // }: IWriteCommandOption): Promise<
-  //   IError | { success: boolean; data: Uint8Array }
-  // > {
-  //   if (!this.isConnected) {
-  //     return Promise.resolve({
-  //       errCode: EErrorCode.Disconnected,
-  //       errMessage: "蓝牙已断开",
-  //     } as IError);
-  //   }
-  //   const commandKey = `${notifyCharacteristicUUID}_${type}`;
-  //   if (this.commandMap.has(commandKey)) {
-  //     return Promise.resolve({
-  //       errCode: EErrorCode.InProgress,
-  //       errMessage: "上一次操作未完成",
-  //     } as IError);
-  //   }
-
-  //   return new Promise(async (resolve) => {
-  //     // 超时回复
-  //     const timeoutId = setTimeout(
-  //       () => {
-  //         this.commandMap.delete(commandKey);
-  //         resolve({
-  //           errCode: EErrorCode.Timeout,
-  //           errMessage: "写入数据超时",
-  //         });
-  //       },
-  //       timeout,
-  //       undefined
-  //     );
-  //     try {
-  //       if (!noResponse) {
-  //         this.commandMap.set(commandKey, {
-  //           type,
-  //           timeoutId,
-  //           isSplitReceive,
-  //           resolve,
-  //           receivedData: new Uint8Array([]),
-  //         });
-  //       }
-
-  //       let writeData = data ? new Uint8Array(data) : new Uint8Array([]);
-  //       // writeData 前面增加一个字节，用于标识数据长度
-  //       writeData = new Uint8Array([writeData.length + 1, type, ...writeData]);
-
-  //       let total = Math.ceil(writeData.length / 20);
-  //       // 如果writeData长度超过20，则分包发送
-  //       for (let i = 0; i < total; i++) {
-  //         const start = i * 20;
-  //         const end = (i + 1) * 20;
-  //         const currentData = writeData.slice(start, end);
-  //         this.print(
-  //           `写入数据[${writeCharacteristicUUID}]`,
-  //           uint8Array2hexString(currentData)
-  //         );
-  //         await wx.writeBLECharacteristicValue({
-  //           deviceId: this.currentDevice!.deviceId,
-  //           serviceId: QingUUID.DEVICE_BASE_SERVICE_UUID,
-  //           characteristicId: writeCharacteristicUUID,
-  //           value: currentData.buffer,
-  //         });
-  //       }
-
-  //       // 不需要回复的话就立即返回，比如分包发送的话 只要发送成功就可以了
-  //       if (noResponse) {
-  //         clearTimeout(timeoutId);
-  //         // 这里延迟100毫秒后再返回
-  //         setTimeout(() => {
-  //           resolve({ success: true, data: new Uint8Array() });
-  //         }, 100);
-  //       }
-  //     } catch (error: any) {
-  //       this.print("写入数据出错：", error);
-  //       // 执行失败
-  //       resolve(error);
-  //       // 清理定时器
-  //       clearTimeout(timeoutId);
-  //       this.commandMap.delete(commandKey);
-  //     }
-  //   });
-  // }
-
-  /**
    * 蓝牙特征值变化
    */
-  private onBLECharacteristicValueChange = ({
-    characteristicId,
-    deviceId,
-    value,
-  }: CharValueChangeType) => {
+  private onBLECharacteristicValueChange = (charValue: CharValueChangeType) => {
+    const { characteristicId, deviceId, value } = charValue;
+    deviceStore.setCharacteristicCache(charValue);
     if (deviceId !== this.currentDevice?.deviceId) {
       this.print("onBLECharacteristicValueChange: deviceId 不匹配", deviceId);
       return;

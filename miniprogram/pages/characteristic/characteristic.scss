@@ -1,1 +1,24 @@
-/* pages/characteristic/characteristic.wxss */
+.disconnected {
+  color: red !important;
+}
+
+.connected {
+  color: green !important;
+}
+
+.property-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+
+
+.operate-btn {
+  color: #00ac2c;
+}
+
+.characteristic-value {
+  font-weight: 700;
+  word-break: break-all;
+}

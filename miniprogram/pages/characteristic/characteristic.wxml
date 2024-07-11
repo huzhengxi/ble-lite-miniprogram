@@ -1,2 +1,24 @@
-<van-nav-bar title="{{currentCharacteristic.name}}" left-arrow bind:click-left="onClickLeft" />
+<van-nav-bar title="Characteristic" left-arrow bind:click-left="onClickLeft" />
 
+<van-cell title="{{currentCharacteristic.name}}" label="{{currentCharacteristic.name === currentCharacteristic.shortCharacteristicUUID ? '' : currentCharacteristic.shortCharacteristicUUID}}" value="{{connected ? '已连接' : '已断开'}}" value-class="{{connected ? 'connected ' : 'disconnected'}}" />
+
+<van-cell title="Device" label="{{currentDevice.currentDevice.name || 'N/A'}}" />
+<van-cell title="Service UUID" label="{{currentCharacteristic.shortServiceUUID}}" />
+
+<van-cell-group title="Read Value">
+  <van-cell title-class="operate-btn">
+    <view slot="title">
+      <button bind:tap="operateBtnTap" size="mini" type="primary">Read Again</button>
+    </view>
+    <select slot="right-icon" nowId="{{currentTypeOption.id}}" nameList="{{valueTypeOptions}}" nowName="{{currentTypeOption.name}}" placeholder="" bind:handleChange="dropdownItemChange"></select>
+  </van-cell>
+
+  <van-cell label-class="characteristic-value" wx:key="index" wx:for="{{currentCharacteristicCache}}" title="{{item.time}}" label="{{item.value}}" />
+</van-cell-group>
+
+
+<van-cell-group title="Properties">
+  <van-cell center wx:key="index" wx:for="{{currentCharacteristicProperties}}" title="{{item.title}}" label="{{item.label}}">
+    <image slot="icon" src="/assets/icon/{{item.icon}}" class="property-icon" />
+  </van-cell>
+</van-cell-group>

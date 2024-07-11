@@ -5,31 +5,31 @@ import { uuid2Short } from "../utils/util";
  */
 
 const servicesUUID = {
-  deviceInfo: "0000180a-0000-1000-8000-00805f9b34fb",
-  battery: "0000180f-0000-1000-8000-00805f9b34fb",
-  heartRate: "0000180d-0000-1000-8000-00805f9b34fb",
-  oad: "f000ffc0-0451-4000-b000-000000000000",
+  deviceInfo: "0000180A-0000-1000-8000-00805F9B34FB",
+  battery: "0000180F-0000-1000-8000-00805F9B34FB",
+  heartRate: "0000180D-0000-1000-8000-00805F9B34FB",
+  oad: "F000FFC0-0451-4000-B000-000000000000",
 };
 
 const characteristicsUUID = {
   deviceInfo: {
-    modelNumber: "00002a24-0000-1000-8000-00805f9b34fb",
-    serialNumber: "00002a25-0000-1000-8000-00805f9b34fb",
-    firmwareRevision: "00002a26-0000-1000-8000-00805f9b34fb",
-    hardwareRevision: "00002a27-0000-1000-8000-00805f9b34fb",
-    softwareRevision: "00002a28-0000-1000-8000-00805f9b34fb",
-    manufacturerName: "00002a29-0000-1000-8000-00805f9b34fb",
+    modelNumber: "00002A24-0000-1000-8000-00805F9B34FB",
+    serialNumber: "00002A25-0000-1000-8000-00805F9B34FB",
+    firmwareRevision: "00002A26-0000-1000-8000-00805F9B34FB",
+    hardwareRevision: "00002A27-0000-1000-8000-00805F9B34FB",
+    softwareRevision: "00002A28-0000-1000-8000-00805F9B34FB",
+    manufacturerName: "00002A29-0000-1000-8000-00805F9B34FB",
   },
   battery: {
-    batteryLevel: "00002a19-0000-1000-8000-00805f9b34fb",
+    batteryLevel: "00002A19-0000-1000-8000-00805F9B34FB",
   },
   heartRate: {
-    heartRateMeasurement: "00002a37-0000-1000-8000-00805f9b34fb",
-    bodySensorLocation: "00002a38-0000-1000-8000-00805f9b34fb",
+    heartRateMeasurement: "00002A37-0000-1000-8000-00805F9B34FB",
+    bodySensorLocation: "00002A38-0000-1000-8000-00805F9B34FB",
   },
   oad: {
-    oadControl: "f000ffc1-0451-4000-b000-000000000000",
-    oadPacket: "f000ffc2-0451-4000-b000-000000000000",
+    oadControl: "F000FFC1-0451-4000-B000-000000000000",
+    oadPacket: "F000FFC2-0451-4000-B000-000000000000",
   },
 };
 
@@ -39,7 +39,7 @@ export { servicesUUID, characteristicsUUID };
  * 根据 service uuid 获取 service name，如果没有获取到合适的名称则返回 uuid
  */
 export function getServiceName(_serviceUUID: string): string {
-  const serviceUUID = _serviceUUID.toLowerCase();
+  const serviceUUID = _serviceUUID.toUpperCase();
   switch (serviceUUID) {
     case servicesUUID.deviceInfo:
       return "Device Information";
@@ -61,8 +61,8 @@ export function getCharacteristicName(
   _serviceUUID: string,
   _characteristicUUID: string
 ): string {
-  const characteristicUUID = _characteristicUUID.toLowerCase();
-  const serviceUUID = _serviceUUID.toLowerCase();
+  const characteristicUUID = _characteristicUUID.toUpperCase();
+  const serviceUUID = _serviceUUID.toUpperCase();
   switch (serviceUUID) {
     case servicesUUID.deviceInfo:
       switch (characteristicUUID) {

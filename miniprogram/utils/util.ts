@@ -238,3 +238,39 @@ export function uuid2Short(uuid: string) {
   }
   return uuid;
 }
+
+/**
+ * 排序函数
+ * 按照信号强度排序 如果信号强度相同则按照扫描间隔排序
+ * @param a: IBLEDeviceData
+ * @param b: IBLEDeviceData
+ */
+export function usefulDevicesSort(a: IBLEDeviceData, b: IBLEDeviceData) {
+  if (a.rssi === b.rssi) {
+    return (a.scanInterval ?? 10000) - (b.scanInterval ?? 10000);
+  }
+  return b.rssi - a.rssi;
+}
+/**
+ * 排序函数
+ * 按照有无名称、信号强度、是否可连接排序
+ * @param a: IBLEDeviceData
+ * @param b: IBLEDeviceData
+ */
+export function otherDevicesSort(a: IBLEDeviceData, b: IBLEDeviceData) {
+  if (Number(!!a.name) === Number(!!b.name) && Number(!!a.name) === 1) {
+    if (a.rssi === b.rssi) {
+      return Number(!!a.connectable) - Number(!!b.connectable);
+    }
+    return b.rssi - a.rssi;
+  }
+  return Number(!!a.name) - Number(!!b.name);
+}
+
+export function formatTimeWithoutDate(date: Date = new Date()) {
+  const hours = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+  const seconds = date.getSeconds().toString().padStart(2, "0");
+  const milliseconds = date.getMilliseconds().toString().padStart(3, "0");
+  return `${hours}:${minutes}:${seconds}.${milliseconds}`;
+}
