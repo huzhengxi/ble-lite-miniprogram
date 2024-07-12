@@ -51,12 +51,12 @@ Page<IMainData, IMainOption>({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad() {},
+  onLoad() { },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady() {},
+  onReady() { },
 
   /**
    * 生命周期函数--监听页面显示
@@ -129,12 +129,12 @@ Page<IMainData, IMainOption>({
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload() {},
+  onUnload() { },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh() {},
+  onPullDownRefresh() { },
   changeScanStatus() {
     if (this.data.scanning) {
       this.bleScanService?.stopScan();
@@ -154,6 +154,9 @@ Page<IMainData, IMainOption>({
     wx.showLoading({
       title: "连接中",
     });
+    if (this.data.scanning) {
+      this.bleScanService?.stopScan();
+    }
     const deviceService: BleDeviceService = new BleDeviceService(device);
     deviceStore.setCurrentDevice(deviceService);
     deviceService

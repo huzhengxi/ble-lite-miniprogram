@@ -253,18 +253,15 @@ export function usefulDevicesSort(a: IBLEDeviceData, b: IBLEDeviceData) {
 }
 /**
  * 排序函数
- * 按照有无名称、信号强度、是否可连接排序
+ * 按照有无名称、是否可连接、信号强度排序
  * @param a: IBLEDeviceData
  * @param b: IBLEDeviceData
  */
 export function otherDevicesSort(a: IBLEDeviceData, b: IBLEDeviceData) {
-  if (Number(!!a.name) === Number(!!b.name) && Number(!!a.name) === 1) {
-    if (a.rssi === b.rssi) {
-      return Number(!!a.connectable) - Number(!!b.connectable);
-    }
-    return b.rssi - a.rssi;
+  if (!!a.name && !!b.name && a.connectable && b.connectable) {
+    b.rssi - a.rssi;
   }
-  return Number(!!a.name) - Number(!!b.name);
+  return Number(!!b.connectable) - Number(!!a.connectable);
 }
 
 export function formatTimeWithoutDate(date: Date = new Date()) {

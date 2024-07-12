@@ -107,7 +107,10 @@ export class BleDeviceService {
         keepScreenOn: false,
       });
     }
-  }
+  }/*
+ * Created by Tiger on 12/07/2024
+ */
+
 
   private async discoverService() {
     const services = await wx.getBLEDeviceServices({

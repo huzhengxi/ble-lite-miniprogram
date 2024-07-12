@@ -11,11 +11,10 @@
 <view style="padding: {{navHeight}}px 20rpx 20rpx 20rpx;">
 
   <!-- 设备过滤 -->
-
   <device-filter />
 
   <!-- 设备列表 -->
-  <view class="ble-device-item container row space-between " style="flex-wrap: nowrap; opacity: {{item.connectable ? 1: 0.7}}; background-color: {{item.connectable ? item.color: gray}};" wx:for="{{devices}}" wx:key="index" data-device="{{item}}" bind:longpress="onItemLongPress" bind:tap="onItemTap">
+  <view class="ble-device-item container row space-between " style="flex-wrap: nowrap; opacity: {{item.connectable ? 1: 0.7}}; " wx:for="{{devices}}" wx:key="index" data-device="{{item}}" bind:longpress="onItemLongPress" bind:tap="onItemTap">
     <view class="column flex-bottom-center mr-5">
       <image class="rssi-icon" src="../../assets/rssi/{{item.rssiLevel}}.png" mode="" />
       <text class="mt-1">{{item.rssi}}</text>
