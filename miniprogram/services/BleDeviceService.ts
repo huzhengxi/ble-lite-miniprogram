@@ -29,10 +29,15 @@ export class BleDeviceService {
     helper.log(BleDeviceService.LogTag, ...args);
   // 待onBLECharacteristicValueChange方法处理的的命令map
   private commandMap: Map<string, ICommand> = new Map();
+  private onNotify?: (uuid: string, value: string) => void;
 
   constructor(currentDevice: IBLEDeviceData) {
     this.currentDevice = currentDevice;
     this.setupSubscriptions();
+  }
+
+  public setNotify(notify: (uuid: string, value: string) => void) {
+    this.onNotify = notify;
   }
 
   private setConnected(connected: boolean) {
@@ -48,28 +53,52 @@ export class BleDeviceService {
     });
   }
 
-  private async write(
+  public notify(serviceId: string, characteristicId: string, state: boolean) {
+    wx.notifyBLECharacteristicValueChange({
+      deviceId: this.currentDevice!.deviceId,
+      serviceId,
+      characteristicId,
+      state,
+    }).then(() => {
+      this.print(
+        (state ? "notify" : "un notify") + " success:",
+        characteristicId,
+        state
+      );
+      if (state) {
+        deviceStore.subscribedCharacteristic(characteristicId);
+      } else {
+        deviceStore.unsubscribeCharacteristic(characteristicId);
+      }
+    });
+  }
+
+  public write(
     serviceId: string,
     characteristicId: string,
     data: string,
     type: FormatType
   ) {
-    const value = type === "hex"
-      ? hexString2ArrayArraybuffer(data)
-      : new Uint8Array(strToBytes(data)).buffer
-      
-    deviceStore.setCharacteristicCache({
-      value,
-      deviceId: this.currentDevice!.deviceId,
-      characteristicId: characteristicId,
-      serviceId
-    })
+    const value =
+      type === "hex"
+        ? hexString2ArrayArraybuffer(data)
+        : new Uint8Array(strToBytes(data)).buffer;
+
+    deviceStore.setCharacteristicCache(
+      {
+        value,
+        deviceId: this.currentDevice!.deviceId,
+        characteristicId: characteristicId,
+        serviceId,
+      },
+      "write"
+    );
 
     wx.writeBLECharacteristicValue({
       deviceId: this.currentDevice!.deviceId,
       serviceId,
       characteristicId,
-      value
+      value,
     });
   }
 
@@ -107,10 +136,10 @@ export class BleDeviceService {
         keepScreenOn: false,
       });
     }
-  }/*
- * Created by Tiger on 12/07/2024
- */
-
+  }
+  /*
+   * Created by Tiger on 12/07/2024
+   */
 
   private async discoverService() {
     const services = await wx.getBLEDeviceServices({
@@ -205,7 +234,6 @@ export class BleDeviceService {
    */
   private onBLECharacteristicValueChange = (charValue: CharValueChangeType) => {
     const { characteristicId, deviceId, value } = charValue;
-    deviceStore.setCharacteristicCache(charValue);
     if (deviceId !== this.currentDevice?.deviceId) {
       this.print("onBLECharacteristicValueChange: deviceId 不匹配", deviceId);
       return;
@@ -213,15 +241,17 @@ export class BleDeviceService {
     this.print(
       "onBLECharacteristicValueChange:",
       characteristicId,
-      uint8Array2hexString(new Uint8Array(value)),
-      "\n",
-      "uf8:",
-      formatBytes(new Uint8Array(value), "str")
+      uint8Array2hexString(new Uint8Array(value))
     );
     const command = this.commandMap.get(characteristicId);
+    deviceStore.setCharacteristicCache(charValue, command ? "read" : "notify");
+
     if (!command) {
       this.print("未找到对应的命令", characteristicId);
-      // todo notify command and value
+      this.onNotify?.(
+        uuid2Short(characteristicId),
+        uint8Array2hexString(new Uint8Array(value))
+      );
       return;
     }
     clearTimeout(command.timeoutId);

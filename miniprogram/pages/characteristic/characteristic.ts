@@ -2,22 +2,26 @@ import { BleDeviceService } from "@services/BleDeviceService";
 import { BehaviorWithStore } from "mobx-miniprogram-bindings";
 import { deviceStore } from "../../mobx/index";
 import { IProperty } from "../../mobx/device-store";
+import Notify from "@vant/weapp/notify/notify";
 
 interface ICharacteristicData {
+  currentCharacteristicSubscribed?: boolean;
+  dataType?: FormatType;
   currentCharacteristic?: ICharacteristic;
   connected?: boolean;
   currentDevice?: BleDeviceService;
   currentCharacteristicProperties?: IProperty[];
-  currentCharacteristicCache?: { time: string; value: string }[];
-  valueTypeOptions: { id: number, name: string, value: string }[]
+  currentCharacteristicReadOrNotifyCache?: { time: string; value: string }[];
+  valueTypeOptions?: { id: number; name: string; value: string }[];
 }
 
 interface ICharacteristicOption {
   behaviors: string[];
-  operateBtnTap: () => void;
+  operateBtnTap: (event: WechatMiniprogram.CustomEvent) => void;
   onClickLeft: () => void;
   dropdownItemChange: (event: WechatMiniprogram.CustomEvent) => void;
   setDateType?: (type: number) => void;
+  onNotify: (charUUID: string, hexValue: string) => void;
 }
 
 Page<ICharacteristicData, ICharacteristicOption>({
@@ -27,12 +31,17 @@ Page<ICharacteristicData, ICharacteristicOption>({
         {
           store: deviceStore,
           fields: [
+            "readable",
+            "writable",
+            "notify",
             "dataType",
             "connected",
             "currentDevice",
             "currentCharacteristic",
             "currentCharacteristicProperties",
-            "currentCharacteristicCache",
+            "currentCharacteristicReadOrNotifyCache",
+            "currentCharacteristicWriteCache",
+            "currentCharacteristicSubscribed",
             "valueTypeOptions",
             "currentTypeOption",
           ],
@@ -46,73 +55,77 @@ Page<ICharacteristicData, ICharacteristicOption>({
    * 页面的初始数据
    */
   data: {},
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad() {},
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {},
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {},
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {},
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-    // 卸载 behaviors
+  onShow() {
+    this.data.currentDevice?.setNotify(this.onNotify);
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {},
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {},
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {},
 
   onClickLeft() {
     wx.navigateBack();
   },
-  operateBtnTap() {
+  operateBtnTap(event) {
+    const type = event.currentTarget.dataset.type;
+    console.log("operateBtnTap:", event);
+
     const { currentCharacteristic, currentDevice } = this.data;
     if (!currentCharacteristic || !currentDevice) {
       return;
     }
     //read
-    if (currentCharacteristic.properties.read) {
+    if (type === "read") {
       currentDevice.readAgain(
         currentCharacteristic.serviceUUID,
         currentCharacteristic.uuid
       );
-    } else if (
-      currentCharacteristic.properties.write ||
-      currentCharacteristic.properties.writeDefault ||
-      currentCharacteristic.properties.writeNoResponse
-    ) {
-    } else if (currentCharacteristic.properties.notify) {
+      return;
+    }
+
+    if (type === "write") {
+      //write
+      // 先让用户输入一个dataType类型的数据
+      wx.showModal({
+        title: "请输入...",
+        placeholderText: `请输入类型为 ${this.data.dataType} 的数据`,
+        editable: true,
+        success: (res) => {
+          if (res.cancel) return;
+          // 用户点击确定
+          const value = res.content || "";
+          if (value.length === 0) {
+            return;
+          }
+          this.data.currentDevice?.write(
+            this.data.currentCharacteristic!.serviceUUID,
+            this.data.currentCharacteristic!.uuid,
+            value,
+            this.data.dataType!
+          );
+        },
+      });
+      return;
+    }
+
+    if (type === "notify") {
+      //notify
+      this.data.currentDevice?.notify(
+        this.data.currentCharacteristic!.serviceUUID,
+        this.data.currentCharacteristic!.uuid,
+        !this.data.currentCharacteristicSubscribed
+      );
     }
   },
   dropdownItemChange(event) {
     const selectId = event.detail.selectId;
     this.setDateType?.(selectId);
+  },
+
+  onUnload() {},
+
+  onNotify(uuid, value) {
+    Notify({
+      type: "success",
+      message: `${uuid}\n${value}`,
+      safeAreaInsetTop: true,
+      duration: 1500
+    });
   },
 });

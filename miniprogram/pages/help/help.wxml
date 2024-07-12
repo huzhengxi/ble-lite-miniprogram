@@ -1,3 +1,7 @@
+<!-- <van-nav-bar title="Characteristic" fixed left-arrow bind:click-left="onClickLeft">
+  <image slot="left" src="/assets/icon/back.png" mode="" style="height: 40rpx;width: 20rpx;" />
+</van-nav-bar> -->
+
 <view style="margin-top: 15rpx;" />
 <van-cell-group inset>
   <van-cell center="true" is-link>
@@ -16,4 +20,5 @@
     </view>
   </van-cell>
 </van-cell-group>
+
 
