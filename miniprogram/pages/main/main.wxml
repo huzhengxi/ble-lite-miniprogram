@@ -1,6 +1,6 @@
 <!-- 导航栏 -->
 <van-nav-bar fixed>
-  <text class="vant-nav-bar-title" slot="left">设备配置</text>
+  <text class="vant-nav-bar-title" slot="left">Scanner</text>
   <view slot="title" class="nav-bar-custom-title row flex-center-right">
     <view bind:tap="changeScanStatus" class="scan-status-container row flex-center-center {{scanning ? 'loading': ''}}">
       <image src="../../assets/icon/{{scanning ? 'start': 'stop'}}.png" style="height: 40rpx; width: 40rpx;" mode="aspectFit" />

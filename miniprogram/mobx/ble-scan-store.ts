@@ -98,9 +98,9 @@ export const bleScanStore: IBleScanStore = observable({
     // 组装，如果有值就显示，没有就不显示
     let str = "";
 
-    if (name) str = `${addSplit(str)}广播名称:${name}`;
-    if (rssi) str = `${addSplit(str)}信号强度:${rssi}`;
-    if (broadcastData) str = `${addSplit(str)}广播内容:${broadcastData}`;
+    if (name) str = `${addSplit(str)}Name:${name}`;
+    if (rssi) str = `${addSplit(str)}RSSI:${rssi}`;
+    if (broadcastData) str = `${addSplit(str)}Broadcast:${broadcastData}`;
     return str;
   },
 

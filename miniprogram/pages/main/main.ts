@@ -84,7 +84,7 @@ Page<IMainData, IMainOption>({
         title: "",
         content: tipContent,
         showCancel: false,
-        confirmText: "知道了",
+        confirmText: "OK",
       });
     };
     try {
@@ -153,6 +153,7 @@ Page<IMainData, IMainOption>({
     }
     wx.showLoading({
       title: "连接中",
+      mask: true
     });
     if (this.data.scanning) {
       this.bleScanService?.stopScan();
@@ -166,6 +167,7 @@ Page<IMainData, IMainOption>({
           wx.showToast({
             title: "连接失败",
             icon: "none",
+            mask: true
           });
           return;
         }

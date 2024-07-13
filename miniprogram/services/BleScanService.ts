@@ -54,7 +54,7 @@ export default class BleScanService {
     this.init();
   }
 
-  private async init() {}
+  private async init() { }
 
   /**
    * 开始扫描
@@ -118,14 +118,12 @@ export default class BleScanService {
       });
     } catch (error) {
       // @ts-ignore
-      if ([10000, 10001].includes(error.errCode)) {
-        wx.showModal({
-          title: "",
-          content: tipContent,
-          showCancel: false,
-          confirmText: "知道了",
-        });
-      }
+      wx.showModal({
+        title: "",
+        content: tipContent,
+        showCancel: false,
+        confirmText: "知道了",
+      });
       helper.log(this.logType, "扫描蓝牙错误：", error);
     }
   }

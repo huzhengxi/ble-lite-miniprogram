@@ -123,7 +123,7 @@ Page<ICharacteristicData, ICharacteristicOption>({
   onNotify(uuid, value) {
     Notify({
       type: "success",
-      message: `${uuid}\n${value}`,
+      message: `${uuid} ${value}`,
       safeAreaInsetTop: true,
       duration: 1500
     });

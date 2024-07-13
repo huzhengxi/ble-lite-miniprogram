@@ -1,7 +1,9 @@
-<van-nav-bar title="Characteristic" fixed left-arrow bind:click-left="onClickLeft">
+<van-nav-bar title-class="vant-nav-bar-title" title="Characteristic" fixed left-arrow bind:click-left="onClickLeft">
   <image slot="left" src="/assets/icon/back.png" mode="" style="height: 40rpx;width: 20rpx;" />
 </van-nav-bar>
+
 <van-notify id="van-notify" />
+<view style="margin-top: 60rpx;" />
 <van-cell title="{{currentCharacteristic.name}}" label="{{currentCharacteristic.name === currentCharacteristic.shortCharacteristicUUID ? '' : currentCharacteristic.shortCharacteristicUUID}}" value="{{connected ? '已连接' : '已断开'}}" value-class="{{connected ? 'connected ' : 'disconnected'}}" />
 
 <van-cell title="Device" label="{{currentDevice.currentDevice.name || 'N/A'}}" />

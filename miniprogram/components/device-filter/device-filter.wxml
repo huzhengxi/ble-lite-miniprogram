@@ -1,6 +1,6 @@
 <view>
   <van-dropdown-menu custom-class="dropdown-menu" active-color="#007AFF">
-    <van-dropdown-item id="dropItem" title-class="drop-item" title="{{deviceFilterToString === '' ? '设置过滤条件':deviceFilterToString}}">
+    <van-dropdown-item id="dropItem" title-class="drop-item" title="{{deviceFilterToString === '' ? 'No Filter':deviceFilterToString}}">
       <view class="container">
 
         <view wx:for="{{filterForm}}" wx:key="index" class="row filter-list-item flex-center-left">
@@ -31,10 +31,10 @@
 
         <view class="row" style="justify-content: space-around; margin-top: 20rpx;">
           <van-button custom-class="button" plain round bind:click="onClearFilter">
-            清除
+            Cancel
           </van-button>
           <van-button custom-class="button" plain type="info" round bind:click="onHideFilter">
-            确认
+            OK
           </van-button>
         </view>
       </view>

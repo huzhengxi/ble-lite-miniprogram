@@ -8,7 +8,7 @@
   },
 
   "navigationStyle": "default",
-  "navigationBarTitleText": "设备详情",
+  "navigationBarTitleText": "Peripheral",
   "navigationBarBackgroundColor": "#fff",
   "navigationBarTextStyle": "black"
 }

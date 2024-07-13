@@ -10,7 +10,6 @@
   "window": {
     "navigationStyle": "default"
   },
-
   "rendererOptions": {
     "skyline": {
       "defaultDisplayBlock": true,
@@ -35,19 +34,19 @@
     "list": [
       {
         "pagePath": "pages/main/main",
-        "text": "设备",
+        "text": "Scanner",
         "iconPath": "/assets/tab-icons/normal/home.png",
         "selectedIconPath": "/assets/tab-icons/selected/home.png"
       },
       {
         "pagePath": "pages/luckincoffee/luckincoffee",
-        "text": "瑞幸温度计",
+        "text": "Luckin",
         "iconPath": "/assets/tab-icons/normal/luckin.png",
         "selectedIconPath": "/assets/tab-icons/selected/luckin.png"
       },
       {
         "pagePath": "pages/help/help",
-        "text": "帮助",
+        "text": "Help",
         "iconPath": "/assets/tab-icons/normal/help.png",
         "selectedIconPath": "/assets/tab-icons/selected/help.png"
       }

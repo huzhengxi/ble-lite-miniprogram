@@ -19,17 +19,16 @@ ComponentWithStore({
    * 组件的初始数据
    */
   data: {
-
     filterForm: [
       {
-        label: "名称",
+        label: "Name",
         key: "name",
-        placeholder: "根据名称进行过滤",
+        placeholder: "Name",
       },
       {
-        label: "广播内容",
+        label: "Broadcast",
         key: "broadcastData",
-        placeholder: "根据广播名称地址进行过滤",
+        placeholder: "Broadcast",
       },
     ],
   },
@@ -62,7 +61,7 @@ ComponentWithStore({
         rssi: undefined,
         unnamedSwitch: false,
         unconnectableSwitch: false,
-        noDataSwitch: false
+        noDataSwitch: false,
       });
     },
     onHideFilter() {
