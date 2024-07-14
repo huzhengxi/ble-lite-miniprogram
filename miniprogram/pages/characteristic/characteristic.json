@@ -7,7 +7,5 @@
     "select": "/components/select/select"
   },
   "navigationStyle": "custom",
-  "navigationBarBackgroundColor": "#fff",
-  "navigationBarTextStyle": "black",
   "navigationBarTitleText": "Characteristic"
 }

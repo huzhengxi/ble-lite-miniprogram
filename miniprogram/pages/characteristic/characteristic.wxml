@@ -1,22 +1,27 @@
-<van-nav-bar title-class="vant-nav-bar-title" title="Characteristic" fixed left-arrow bind:click-left="onClickLeft">
+<van-nav-bar custom-style="background-color:#d2e1ff !important;" title-class="vant-nav-bar-title" title="Characteristic" fixed left-arrow bind:click-left="onClickLeft">
   <image slot="left" src="/assets/icon/back.png" mode="" style="height: 40rpx;width: 20rpx;" />
 </van-nav-bar>
 
 <van-notify id="van-notify" />
 <!-- nav bar height: 94px -->
 <view style="margin-top: 105px;" />
-<van-cell title="{{currentCharacteristic.name}}" label="{{currentCharacteristic.name === currentCharacteristic.shortCharacteristicUUID ? '' : currentCharacteristic.shortCharacteristicUUID}}" value="{{connected ? '已连接' : '已断开'}}" value-class="{{connected ? 'connected ' : 'disconnected'}}" />
 
-<van-cell title="Device" label="{{currentDevice.currentDevice.name || 'N/A'}}" />
-<van-cell title="Service UUID" label="{{currentCharacteristic.shortServiceUUID}}" />
 
-<!-- 编码设置 -->
-<van-cell center title="Type">
-  <select slot="right-icon" nowId="{{currentTypeOption.id}}" nameList="{{valueTypeOptions}}" nowName="{{currentTypeOption.name}}" placeholder="" bind:handleChange="dropdownItemChange"></select>
-</van-cell>
+<van-cell-group inset>
+  <van-cell title="{{currentCharacteristic.name}}" label="{{currentCharacteristic.name === currentCharacteristic.shortCharacteristicUUID ? '' : currentCharacteristic.shortCharacteristicUUID}}" value="{{connected ? '已连接' : '已断开'}}" value-class="{{connected ? 'connected ' : 'disconnected'}}" />
+
+  <van-cell title="Device" value="{{currentDevice.currentDevice.name || 'N/A'}}" />
+  <van-cell title="Service UUID" label="{{currentCharacteristic.shortServiceUUID}}" />
+
+  <!-- 编码设置 -->
+  <van-cell center title="Type">
+    <select slot="right-icon" nowId="{{currentTypeOption.id}}" nameList="{{valueTypeOptions}}" nowName="{{currentTypeOption.name}}" placeholder="" bind:handleChange="dropdownItemChange"></select>
+  </van-cell>
+
+</van-cell-group>
 
 <!-- 读属性 -->
-<van-cell-group title="Read Value" wx:if="{{readable}}">
+<van-cell-group inset title="Read Value" wx:if="{{readable}}">
   <van-cell center title-class="operate-btn">
     <view slot="title">
       <button data-type="read" bind:tap="operateBtnTap" size="mini" type="primary">Read Again</button>
@@ -29,7 +34,7 @@
 
 
 <!-- 写属性 -->
-<van-cell-group title="Write" wx:if="{{writable}}">
+<van-cell-group inset title="Write" wx:if="{{writable}}">
   <van-cell center title-class="operate-btn">
     <view slot="title">
       <button data-type="write" bind:tap="operateBtnTap" size="mini" type="primary">Write new value</button>
@@ -42,7 +47,7 @@
 </van-cell-group>
 
 <!-- 通知 -->
-<van-cell-group title="Notified Values" wx:if="{{notify}}">
+<van-cell-group inset title="Notified Values" wx:if="{{notify}}">
   <van-cell center title-class="operate-btn">
     <view slot="title">
       <button data-type="notify" bind:tap="operateBtnTap" size="mini" type="primary">{{currentCharacteristicSubscribed? "Unsubscribe":"Subscribe"}}</button>
@@ -56,7 +61,7 @@
 
 
 <!-- 属性列表 -->
-<van-cell-group title="Properties">
+<van-cell-group inset title="Properties">
   <van-cell center wx:key="index" wx:for="{{currentCharacteristicProperties}}" title="{{item.title}}" label="{{item.label}}">
     <image slot="icon" src="/assets/icon/{{item.icon}}" class="property-icon" />
   </van-cell>

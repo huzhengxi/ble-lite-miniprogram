@@ -1,18 +1,19 @@
+@import "../../variable.scss";
+
 .disconnected {
   color: red !important;
+  opacity: 0.5 !important;
 }
 
 .connected {
-  color: green !important;
+  color: #0191F1 !important;
 }
 
 .property-icon {
-  width: 20px;
-  height: 20px;
+  width: 36rpx;
+  height: 36rpx;
   margin-right: 10px;
 }
-
-
 
 .operate-btn {
   color: #00ac2c;
@@ -21,9 +22,4 @@
 .characteristic-value {
   font-weight: 700;
   word-break: break-all;
-}
-
-.van-icon-arrow-left {
-  font-size: 24px !important; 
-  color: #ff0000 !important; 
 }

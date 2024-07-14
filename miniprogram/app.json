@@ -8,7 +8,9 @@
     "pages/characteristic/characteristic"
   ],
   "window": {
-    "navigationStyle": "default"
+    "navigationStyle": "default",
+    "navigationBarBackgroundColor": "#d2e1ff",
+    "navigationBarTextStyle": "black"
   },
   "rendererOptions": {
     "skyline": {
@@ -29,8 +31,9 @@
   },
   "tabBar": {
     "custom": false,
-    "color": "#000000",
+    "color": "#999999",
     "backgroundColor": "#ffffff",
+    "selectedColor": "#0191F1",
     "list": [
       {
         "pagePath": "pages/main/main",

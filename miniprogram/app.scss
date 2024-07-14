@@ -320,6 +320,11 @@ page {
   margin: auto;
 }
 
+button[type="primary"] {
+  background-color: #0191f1 !important;
+  color: #fff;
+}
+
 .black {
   color: black;
 }
@@ -332,7 +337,6 @@ page {
   // 加粗
   font-weight: 600;
 }
-
 
 .rssi-icon {
   width: 60rpx;
@@ -347,9 +351,9 @@ page {
 }
 
 .rssi-container {
-  background-color: #F6F6F6;
+  background-color: #f6f6f6;
   border-radius: 20rpx;
-  min-width: 122rpx;
-  min-height: 122rpx;
+  min-width: 100rpx;
+  min-height: 100rpx;
   padding: 20rpx;
 }

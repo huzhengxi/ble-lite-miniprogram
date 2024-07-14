@@ -26,7 +26,7 @@
 }
 
 .start-scan-rich-txt {
-  color: #09B955;
+  color: #0191F1;
   opacity: 1;
   font-weight: 700;
 }
@@ -54,4 +54,14 @@
   flex: 1;
   margin-right: 10rpx;
   font-size: 32rpx;
+}
+
+.main-loading {
+  height: 40rpx;
+  width: 40rpx;
+}
+
+.main-stop {
+  height: 24rpx;
+  width: 20rpx;
 }

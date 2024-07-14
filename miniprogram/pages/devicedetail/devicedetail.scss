@@ -3,15 +3,18 @@
 }
 
 .connected {
-  color: green !important;
+  color: #0191f1 !important;
 }
 
 .collapse-container {
-  padding-top: 15rpx;
-  padding-bottom: 15rpx;
+  margin: 30rpx;
+  border-radius: 8px;
+  // 子元素多出来的裁剪掉
+  overflow: hidden;
 }
 
 .collapse-content-class {
   font-size: 17pt;
   font-weight: 600;
+  overflow: hidden;
 }

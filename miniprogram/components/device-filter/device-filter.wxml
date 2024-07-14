@@ -18,20 +18,20 @@
 
         <view class="row flex-center-left filter-list-item">
           <text class="label">Remove Unnamed</text>
-          <switch id="unnamedSwitch" class="switch" checked="{{deviceFilter.unnamedSwitch}}" bindchange="onSwitchChange" />
+          <switch id="unnamedSwitch" class="switch" color="#0191F1" checked="{{deviceFilter.unnamedSwitch}}" bindchange="onSwitchChange" />
         </view>
         <view class="row flex-center-left filter-list-item">
           <text class="label">Remove Without Data</text>
-          <switch id="noDataSwitch" class="switch" checked="{{deviceFilter.noDataSwitch}}" bindchange="onSwitchChange" />
+          <switch id="noDataSwitch" class="switch" color="#0191F1"  checked="{{deviceFilter.noDataSwitch}}" bindchange="onSwitchChange" />
         </view>
         <view class="row flex-center-left filter-list-item">
           <text class="label">Remove Unconnectable</text>
-          <switch id="unconnectableSwitch" class="switch" checked="{{deviceFilter.unconnectableSwitch}}" bindchange="onSwitchChange" />
+          <switch id="unconnectableSwitch" class="switch" color="#0191F1" checked="{{deviceFilter.unconnectableSwitch}}" bindchange="onSwitchChange" />
         </view>
 
         <view class="row" style="justify-content: space-around; margin-top: 20rpx;">
           <van-button custom-class="button" plain round bind:click="onClearFilter">
-            Cancel
+            Clear
           </van-button>
           <van-button custom-class="button" plain type="info" round bind:click="onHideFilter">
             OK

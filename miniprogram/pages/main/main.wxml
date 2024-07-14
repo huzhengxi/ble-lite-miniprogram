@@ -2,9 +2,9 @@
 
   <!-- 设备过滤 -->
   <view class="row space-between">
-    <device-filter style="flex: 1;"/>
+    <device-filter style="flex: 1;" />
     <view bind:tap="changeScanStatus" class="scan-status-container row flex-center-center">
-      <image class="{{scanning ? 'loading': ''}}" src="../../assets/icon/{{scanning ? 'start': 'stop'}}.png" style="height: 40rpx; width: 40rpx;" mode="aspectFit" />
+      <image class="{{scanning ? 'loading main-loading': 'main-stop'}}" src="../../assets/icon/{{scanning ? 'start': 'stop'}}.png" mode="aspectFit" />
     </view>
   </view>
 
