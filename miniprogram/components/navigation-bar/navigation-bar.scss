@@ -25,6 +25,7 @@
   padding-top: env(safe-area-inset-top);
   width: 100%;
   box-sizing: border-box;
+  z-index: 20;
 }
 
 .weui-navigation-bar__left {

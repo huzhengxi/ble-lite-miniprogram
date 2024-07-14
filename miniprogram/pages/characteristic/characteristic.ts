@@ -18,7 +18,6 @@ interface ICharacteristicData {
 interface ICharacteristicOption {
   behaviors: string[];
   operateBtnTap: (event: WechatMiniprogram.CustomEvent) => void;
-  onClickLeft: () => void;
   dropdownItemChange: (event: WechatMiniprogram.CustomEvent) => void;
   setDateType?: (type: number) => void;
   onNotify: (charUUID: string, hexValue: string) => void;
@@ -59,9 +58,6 @@ Page<ICharacteristicData, ICharacteristicOption>({
     this.data.currentDevice?.setNotify(this.onNotify);
   },
 
-  onClickLeft() {
-    wx.navigateBack();
-  },
   operateBtnTap(event) {
     const type = event.currentTarget.dataset.type;
     console.log("operateBtnTap:", event);
@@ -125,7 +121,8 @@ Page<ICharacteristicData, ICharacteristicOption>({
       type: "success",
       message: `${uuid} ${value}`,
       safeAreaInsetTop: true,
-      duration: 1500
+      background: "#0191F1",
+      duration: 2500,
     });
   },
 });

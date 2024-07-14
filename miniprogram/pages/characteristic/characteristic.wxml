@@ -1,8 +1,7 @@
-<van-nav-bar custom-style="background-color:#d2e1ff !important;" title-class="vant-nav-bar-title" title="Characteristic" fixed left-arrow bind:click-left="onClickLeft">
-  <image slot="left" src="/assets/icon/back.png" mode="" style="height: 40rpx;width: 20rpx;" />
-</van-nav-bar>
-
 <van-notify id="van-notify" />
+
+<navigation-bar extClass="nav-bar" title="Characteristic" />
+
 <!-- nav bar height: 94px -->
 <view style="margin-top: 105px;" />
 
