@@ -99,7 +99,7 @@ export const bleScanStore: IBleScanStore = observable({
     let str = "";
 
     if (name) str = `${addSplit(str)}Name:${name}`;
-    if (rssi) str = `${addSplit(str)}RSSI:${rssi}`;
+    if (rssi && rssi > -100) str = `${addSplit(str)}RSSI:${rssi}`;
     if (broadcastData) str = `${addSplit(str)}Broadcast:${broadcastData}`;
     return str;
   },

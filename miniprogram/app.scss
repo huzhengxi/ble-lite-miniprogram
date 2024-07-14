@@ -3,14 +3,15 @@
 @import "./wxbootstrap.wxss";
 
 page {
-  background-color: #f3f3f3;
+  // background: linear-gradient(to bottom, #d2e1ff 0%, #e6fbfe 100%);
+  background-color: #d2e1ff;
   --nav-bar-title-font-size: 30;
 }
 
 .container {
   background-color: $qp-background-color;
   border-radius: $qp-radius;
-  padding: 30rpx;
+  padding: 20rpx;
   margin: 30rpx 0;
 }
 
@@ -332,3 +333,23 @@ page {
   font-weight: 600;
 }
 
+
+.rssi-icon {
+  width: 60rpx;
+  height: 40rpx;
+}
+
+.rssi-txt {
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #000000;
+  margin-top: 10rpx;
+}
+
+.rssi-container {
+  background-color: #F6F6F6;
+  border-radius: 20rpx;
+  min-width: 122rpx;
+  min-height: 122rpx;
+  padding: 20rpx;
+}

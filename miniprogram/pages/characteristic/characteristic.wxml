@@ -3,7 +3,8 @@
 </van-nav-bar>
 
 <van-notify id="van-notify" />
-<view style="margin-top: 60rpx;" />
+<!-- nav bar height: 94px -->
+<view style="margin-top: 105px;" />
 <van-cell title="{{currentCharacteristic.name}}" label="{{currentCharacteristic.name === currentCharacteristic.shortCharacteristicUUID ? '' : currentCharacteristic.shortCharacteristicUUID}}" value="{{connected ? '已连接' : '已断开'}}" value-class="{{connected ? 'connected ' : 'disconnected'}}" />
 
 <van-cell title="Device" label="{{currentDevice.currentDevice.name || 'N/A'}}" />

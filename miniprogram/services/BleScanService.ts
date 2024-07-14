@@ -54,7 +54,7 @@ export default class BleScanService {
     this.init();
   }
 
-  private async init() { }
+  private async init() {}
 
   /**
    * 开始扫描
@@ -154,16 +154,14 @@ export default class BleScanService {
 }
 
 export function RSSI2Level(RSSI: number) {
-  if (RSSI <= -91) {
+  if (RSSI < -90) {
     return 0;
-  } else if (RSSI <= -81) {
+  } else if (RSSI < -70) {
     return 1;
-  } else if (RSSI <= -71) {
+  } else if (RSSI < -50) {
     return 2;
-  } else if (RSSI <= -51) {
-    return 3;
   } else {
-    return 4;
+    return 3;
   }
 }
 /**

@@ -7,7 +7,7 @@
     "van-checkbox-group": "@vant/weapp/checkbox-group/index"
   },
   "navigationStyle": "default",
-  "navigationBarBackgroundColor": "#fff",
+  "navigationBarBackgroundColor": "#d2e1ff",
   "navigationBarTextStyle": "black",
   "navigationBarTitleText": "Help"
 }

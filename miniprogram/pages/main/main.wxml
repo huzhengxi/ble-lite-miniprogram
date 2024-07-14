@@ -15,9 +15,9 @@
 
   <!-- 设备列表 -->
   <view class="ble-device-item container row space-between " style="flex-wrap: nowrap; opacity: {{item.connectable ? 1: 0.7}}; " wx:for="{{devices}}" wx:key="index" data-device="{{item}}" bind:longpress="onItemLongPress" bind:tap="onItemTap">
-    <view class="column flex-bottom-center mr-5">
+    <view class="column center mr-5 rssi-container">
       <image class="rssi-icon" src="../../assets/rssi/{{item.rssiLevel}}.png" mode="" />
-      <text class="mt-1">{{item.rssi}}</text>
+      <text class="rssi-txt">{{item.rssi}}</text>
     </view>
     <view class="column mr-5" style="flex: 1; overflow: hidden;">
       <text class="{{item.connectable ? 'black bold' : 'gray'}}" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{item.name || 'N/A'}}</text>
