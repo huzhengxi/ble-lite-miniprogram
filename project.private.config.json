@@ -10,6 +10,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/luckincoffee/luckincoffee",
+          "pathName": "pages/luckincoffee/luckincoffee",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/characteristic/characteristic",
           "pathName": "pages/characteristic/characteristic",
           "query": "",

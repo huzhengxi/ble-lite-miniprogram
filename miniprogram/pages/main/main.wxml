@@ -1,17 +1,12 @@
-<!-- 导航栏 -->
-<van-nav-bar fixed>
-  <text class="vant-nav-bar-title" slot="left">Scanner</text>
-  <view slot="title" class="nav-bar-custom-title row flex-center-right">
-    <view bind:tap="changeScanStatus" class="scan-status-container row flex-center-center {{scanning ? 'loading': ''}}">
-      <image src="../../assets/icon/{{scanning ? 'start': 'stop'}}.png" style="height: 40rpx; width: 40rpx;" mode="aspectFit" />
-    </view>
-  </view>
-</van-nav-bar>
-
-<view style="padding: {{navHeight}}px 20rpx 20rpx 20rpx;">
+<view style="padding: 20rpx">
 
   <!-- 设备过滤 -->
-  <device-filter />
+  <view class="row space-between">
+    <device-filter style="flex: 1;"/>
+    <view bind:tap="changeScanStatus" class="scan-status-container row flex-center-center">
+      <image class="{{scanning ? 'loading': ''}}" src="../../assets/icon/{{scanning ? 'start': 'stop'}}.png" style="height: 40rpx; width: 40rpx;" mode="aspectFit" />
+    </view>
+  </view>
 
   <!-- 设备列表 -->
   <view class="ble-device-item container row space-between " style="flex-wrap: nowrap; opacity: {{item.connectable ? 1: 0.7}}; " wx:for="{{devices}}" wx:key="index" data-device="{{item}}" bind:longpress="onItemLongPress" bind:tap="onItemTap">
@@ -24,7 +19,7 @@
     <view class="column justify-content-between" style="flex: 1;">
       <view class="row align-items-center">
         <!-- 名称 -->
-        <view class="{{item.connectable ? 'black bold' : 'gray'}} name" >{{item.name || 'N/A'}}
+        <view class="{{item.connectable ? 'black bold' : 'gray'}} name">{{item.name || 'N/A'}}
           <!-- 是否可连接 -->
           <image wx:if="{{item.connectable}}" src="/assets/icon/connectable.png" mode="scaleToFill" class="connecttale" />
         </view>

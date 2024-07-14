@@ -1,16 +1,16 @@
 <!-- 导航栏 -->
-<van-nav-bar fixed>
+<van-nav-bar fixed custom-style="background-color:#d2e1ff !important;">
   <text class="vant-nav-bar-title" slot="left">瑞幸温度计</text>
   <view slot="title" class="nav-bar-custom-title row flex-center-right">
     <view bind:tap="changeScanStatus" class="scan-status-container row flex-center-center {{scanning ? 'loading': ''}}">
-      <image src="../../assets/icon/{{scanning ? 'start': 'stop'}}.png" style="height: 40rpx; width: 40rpx;" mode="aspectFit" />
+      <image src="../../assets/icon/{{scanning ? 'start': 'stop'}}.png" style="{{scanning ? 'height: 40rpx; width: 40rpx;': 'height: 20rpx; width: 20rpx;' }}" mode="aspectFit" />
     </view>
   </view>
 </van-nav-bar>
 
 <view style="padding: {{navHeight}}px 20rpx 20rpx 20rpx;">
 
- <!-- 设备列表 -->
+  <!-- 设备列表 -->
   <view class="ble-device-item container row space-between " style="flex-wrap: nowrap;" wx:for="{{luckinDevices}}" wx:key="index" data-device="{{item}}" bind:tap="onItemTap">
     <view class="column flex-bottom-center mr-5">
       <image class="rssi-icon" src="../../assets/rssi/{{item.rssiLevel}}.png" mode="" />

@@ -1,7 +1,6 @@
 @import "./variable.scss";
 
 .baseItem {
-  height: 90rpx;
 }
 
 .filter-title {
@@ -9,8 +8,8 @@
 }
 
 .arrow-icon {
-  height: 12rpx;
-  width: 21rpx;
+  height: 15rpx;
+  width: 25rpx;
 }
 
 .filter-list-item {
@@ -21,10 +20,9 @@
 
 
 .dropdown-menu {
-  background-color: #E2E2E2;
+  background-color: white;
   box-shadow: none;
-  border-radius: 13rpx;
-  margin: 30rpx 15rpx 0 15rpx;
+  border-radius: 30rpx;
 }
 
 .van-dropdown-menu__item {
@@ -44,6 +42,7 @@
 
 .drop-item {
   width: 100%;
+  background-color: white;
 }
 
 .label {
