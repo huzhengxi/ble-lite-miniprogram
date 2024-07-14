@@ -15,17 +15,31 @@
 
   <!-- 设备列表 -->
   <view class="ble-device-item container row space-between " style="flex-wrap: nowrap; opacity: {{item.connectable ? 1: 0.7}}; " wx:for="{{devices}}" wx:key="index" data-device="{{item}}" bind:longpress="onItemLongPress" bind:tap="onItemTap">
+    <!-- 信号 -->
     <view class="column center mr-5 rssi-container">
       <image class="rssi-icon" src="../../assets/rssi/{{item.rssiLevel}}.png" mode="" />
       <text class="rssi-txt">{{item.rssi}}</text>
     </view>
-    <view class="column mr-5" style="flex: 1; overflow: hidden;">
-      <text class="{{item.connectable ? 'black bold' : 'gray'}}" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{item.name || 'N/A'}}</text>
-      <text class="mt-1 broadcastData">{{item.broadcastData}}</text>
+
+    <view class="column justify-content-between" style="flex: 1;">
+      <view class="row align-items-center">
+        <!-- 名称 -->
+        <view class="{{item.connectable ? 'black bold' : 'gray'}} name" >{{item.name || 'N/A'}}
+          <!-- 是否可连接 -->
+          <image wx:if="{{item.connectable}}" src="/assets/icon/connectable.png" mode="scaleToFill" class="connecttale" />
+        </view>
+
+        <!-- 广播间隔 -->
+        <view class="column flex-bottom-center" style="flex-shrink: 0; min-width: 50rpx;">
+          <text wx:if="{{item.scanInterval && item.scanInterval < 20000}}" class="mt-1">{{item.scanInterval}} ms </text>
+        </view>
+      </view>
+
+
+      <!-- 广播内容 -->
+      <text class="broadcastData">{{item.broadcastData}}</text>
     </view>
-    <view class="column flex-bottom-center" style="flex-shrink: 0; min-width: 50rpx;">
-      <text wx:if="{{item.scanInterval && item.scanInterval < 20000}}" class="mt-1">{{item.scanInterval}} ms </text>
-    </view>
+
   </view>
 
 

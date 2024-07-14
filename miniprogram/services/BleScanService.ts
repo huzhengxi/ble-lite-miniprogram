@@ -181,7 +181,7 @@ export function parseBroadcastData(
     let hexString = uint8Array2hexString(new Uint8Array(value));
     const keyValue = `${uuid2Short(key)}: ${hexString}`;
     broadcastData =
-      broadcastData.length === 0 ? keyValue : `${broadcastData}, ${keyValue}`;
+      broadcastData.length === 0 ? keyValue : `${broadcastData}\n${keyValue}`;
     acc[key.toUpperCase()] = value;
     return acc;
   }, {} as Record<string, ArrayBuffer>);

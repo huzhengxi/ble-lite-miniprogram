@@ -17,11 +17,10 @@ export const generateFakeBLEDeviceList = () => {
 
     list.push({
       deviceId: Math.random().toString(36).substr(2),
-      name: generateRandomString(40),
+      name: generateRandomString(random(5, 20)),
       rssi,
       rssiLevel: RSSI2Level(rssi),
-      mac: "582D34000000",
-      broadcastData: "hello",
+      broadcastData: generateRandomString(random(5, 30)),
       scanInterval: random(300, 1000),
       connectable: !!random(0, 1),
       // 生成随机的color opacity为0.2
