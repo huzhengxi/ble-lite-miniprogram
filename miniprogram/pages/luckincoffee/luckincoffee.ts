@@ -8,6 +8,7 @@ interface ILuckinData {
   luckinDevices: IBLEDeviceData[];
   scanning: boolean;
   navHeight: number;
+  loading: boolean;
 }
 
 interface ILuckinOption {
@@ -59,6 +60,7 @@ Page<ILuckinData, ILuckinOption>({
     navHeight: wx.getMenuButtonBoundingClientRect().bottom + 10,
     luckinDevices: [],
     scanning: false,
+    loading: true,
   },
 
   /**
@@ -66,6 +68,11 @@ Page<ILuckinData, ILuckinOption>({
    */
   onShow() {
     this.startScan();
+    setTimeout(() => {
+      this.setData({
+        loading: false,
+      });
+    }, 1000);
   },
 
   async startScan() {

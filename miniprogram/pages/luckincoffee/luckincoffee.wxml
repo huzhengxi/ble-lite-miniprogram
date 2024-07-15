@@ -10,8 +10,15 @@
 
 <view style="padding: {{navHeight}}px 20rpx 20rpx 20rpx;">
 
+  <view wx:if="{{luckinDevices.length === 0 || loading}}" class="scanning-tip">
+    <text wx:if="{{scanning}}">正在扫描...\n请长按设备背部按钮直至蓝牙图标快速闪烁</text>
+    <text bind:tap="startScan" wx:else>
+      已停止扫描，请点击<text class="start-scan-rich-txt">开始扫描</text>
+    </text>
+  </view>
+
   <!-- 设备列表 -->
-  <view class="ble-device-item container row space-between " style="flex-wrap: nowrap;" wx:for="{{luckinDevices}}" wx:key="index" data-device="{{item}}" bind:tap="onItemTap">
+  <view wx:if="{{!loading}}" class="ble-device-item container row space-between " style="flex-wrap: nowrap;" wx:for="{{luckinDevices}}" wx:key="index" data-device="{{item}}" bind:tap="onItemTap">
     <view class="column flex-bottom-center mr-5">
       <image class="rssi-icon" src="../../assets/rssi/{{item.rssiLevel}}.png" mode="" />
       <text class="mt-1">{{item.rssi}}</text>
@@ -27,9 +34,3 @@
 
 </view>
 
-<view wx:if="{{luckinDevices.length === 0}}" class="scanning-tip">
-  <text wx:if="{{scanning}}">正在扫描...\n请长按设备背部按钮直至蓝牙图标快速闪烁</text>
-  <text bind:tap="startScan" wx:else>
-    已停止扫描，请点击<text class="start-scan-rich-txt">开始扫描</text>
-  </text>
-</view>
