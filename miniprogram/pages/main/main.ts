@@ -57,12 +57,12 @@ Page<IMainData, IMainOption>({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad() {},
+  onLoad() { },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady() {},
+  onReady() { },
 
   /**
    * 生命周期函数--监听页面显示
@@ -135,12 +135,12 @@ Page<IMainData, IMainOption>({
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload() {},
+  onUnload() { },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh() {},
+  onPullDownRefresh() { },
   changeScanStatus() {
     if (this.data.scanning) {
       this.bleScanService?.stopScan();
@@ -172,6 +172,10 @@ Page<IMainData, IMainOption>({
     deviceService
       .startConnect()
       .then((result) => {
+        if (this.data.canceledConnect) {
+          // 已经取消连接了返回吧
+          return
+        }
         if (!result) {
           this.setData({
             connectDialogShow: false,
@@ -184,11 +188,11 @@ Page<IMainData, IMainOption>({
           return;
         }
         console.log("连接成功");
-        if (!this.data.canceledConnect) {
-          wx.navigateTo({
-            url: "/pages/devicedetail/devicedetail",
-          });
-        }
+
+        wx.navigateTo({
+          url: "/pages/devicedetail/devicedetail",
+        });
+
       })
       .finally(() => {
         this.setData({
