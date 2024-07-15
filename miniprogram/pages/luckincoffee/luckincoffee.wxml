@@ -3,7 +3,7 @@
   <text class="vant-nav-bar-title" slot="left">瑞幸温度计</text>
   <view slot="title" class="nav-bar-custom-title row flex-center-right">
     <view bind:tap="changeScanStatus" class="scan-status-container row flex-center-center {{scanning ? 'loading': ''}}">
-      <image src="../../assets/icon/{{scanning ? 'start': 'stop'}}.png" style="{{scanning ? 'height: 40rpx; width: 40rpx;': 'height: 20rpx; width: 20rpx;' }}" mode="aspectFit" />
+      <image src="../../assets/icon/{{scanning ? 'start': 'stop'}}.png" style="{{scanning ? 'height: 40rpx; width: 40rpx;': 'height: 24rpx; width: 24rpx;' }}" mode="aspectFit" />
     </view>
   </view>
 </van-nav-bar>

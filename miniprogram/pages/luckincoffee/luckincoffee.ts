@@ -68,11 +68,14 @@ Page<ILuckinData, ILuckinOption>({
    */
   onShow() {
     this.startScan();
+    this.setData({
+      loading: true
+    })
     setTimeout(() => {
       this.setData({
         loading: false,
       });
-    }, 1000);
+    }, 1500);
   },
 
   async startScan() {
