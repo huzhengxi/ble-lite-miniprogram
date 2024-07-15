@@ -143,7 +143,11 @@ export function formatBytes(bytes: Uint8Array, format: "hex" | "str") {
 }
 
 function buildUTF8Str(data: Uint8Array) {
-  return decodeURIComponent(escape(String.fromCharCode(...data)));
+  try {
+    return decodeURIComponent(escape(String.fromCharCode(...data)));
+  } catch {
+    return "Failed to parse";
+  }
 }
 
 export function strToBytes(str: string) {
