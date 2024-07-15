@@ -47,14 +47,7 @@
 </view>
 
 
-<van-dialog
-  title="{{currentDevice.currentDevice.name || 'N/A'}}"
- close-on-click-overlay="true" 
- show-confirm-button="false" 
- use-slot 
- show="{{ connectDialogShow }}" 
- bind:close="onDialogClose" 
- confirm-button-text="取消"
-confirm-button-color="gray">
+
+<van-dialog title="{{currentDevice.currentDevice.name || 'N/A'}}" close-on-click-overlay="true" show-confirm-button="false" use-slot show="{{ connectDialogShow }}" bind:close="onDialogClose" confirm-button-text="取消" confirm-button-color="gray">
   <van-loading color="#0191F1" custom-class='connect-loading' size="30px">连接中...</van-loading>
 </van-dialog>
