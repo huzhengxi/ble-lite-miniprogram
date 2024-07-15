@@ -1,7 +1,7 @@
 <view style="margin-top: 20rpx;" />
 
 <van-cell-group inset>
-<van-cell title="{{currentDevice.currentDevice.name}}" label="serviceData {{currentDevice.currentDevice.broadcastData}}" value="{{connected ? '已连接' : '已断开'}}" value-class="{{connected ? 'connected ' : 'disconneted'}}" />
+<van-cell title="{{currentDevice.currentDevice.name}}" label="广播数据 {{currentDevice.currentDevice.broadcastData}}" value="{{connected ? '已连接' : '已断开'}}" value-class="{{connected ? 'connected ' : 'disconneted'}}" />
 </van-cell-group>
 
 <van-collapse border="false" value="{{ activeName }}" bind:change="onCollapseChange">

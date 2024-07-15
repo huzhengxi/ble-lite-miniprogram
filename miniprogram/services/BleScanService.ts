@@ -95,6 +95,7 @@ export default class BleScanService {
       helper.log(this.logType, available);
 
       if (!available) {
+        bleScanStore.stopScan()
         helper.log(this.logType, "蓝牙未打开");
         await wx.showModal({
           content: "请打开蓝牙后再扫描设备！",
@@ -117,12 +118,14 @@ export default class BleScanService {
         // services: ["0000FDCD-0000-1000-8000-00805F9B34FB"],
       });
     } catch (error) {
+      bleScanStore.stopScan()
       // @ts-ignore
       wx.showModal({
         title: "",
         content: tipContent,
         showCancel: false,
         confirmText: "知道了",
+        
       });
       helper.log(this.logType, "扫描蓝牙错误：", error);
     }

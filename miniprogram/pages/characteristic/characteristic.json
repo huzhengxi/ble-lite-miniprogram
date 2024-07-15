@@ -8,5 +8,5 @@
     "select": "/components/select/select"
   },
   "navigationStyle": "custom",
-  "navigationBarTitleText": "Characteristic"
+  "navigationBarTitleText": "Characteristic（特征）"
 }

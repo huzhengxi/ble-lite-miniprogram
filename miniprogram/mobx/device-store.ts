@@ -100,26 +100,24 @@ export const deviceStore: IDeviceStore = observable({
   get currentCharacteristicProperties() {
     return [
       {
-        title: this.readable ? "Readable" : "Un-readable",
+        title: this.readable ? "可读" : "不可读",
         label: this.readable
-          ? "Able to be read from"
-          : "Unable to be read from",
+          ? "该特征支持 read 操作"
+          : "该特征不支持 read 操作",
         icon: this.readable ? "has.png" : "none.png",
       },
       {
-        title: this.writable ? "Writable" : "Un-writable",
+        title: this.writable ? "可写" : "不可写",
         label: this.writable
-          ? "Able to be written to"
-          : "Unable to be written to",
+          ? "该特征支持 write 操作"
+          : "该特征不支持 write 操作",
         icon: this.writable ? "has.png" : "none.png",
       },
       {
-        title: this.notify
-          ? "Support notifications"
-          : "Does not support notifications/indications",
+        title: this.notify ? "支持 notify / indicate" : "不支持 notify / indicate",
         label: this.notify
-          ? "Able to be subscribed to notifications on changes to the characteristic"
-          : "Unable to be subscribed to notifications/indications on changes to the characteristic",
+          ? "该特征支持 notify 操作"
+          : "该特征不支持 notify 操作",
         icon: this.notify ? "has.png" : "none.png",
       },
     ] as IProperty[];
@@ -128,7 +126,11 @@ export const deviceStore: IDeviceStore = observable({
     return !!this.currentCharacteristic?.properties.read;
   },
   get writable() {
-    return !!this.currentCharacteristic?.properties.write;
+    return !!(
+      this.currentCharacteristic?.properties.write ||
+      this.currentCharacteristic?.properties.writeDefault ||
+      this.currentCharacteristic?.properties.writeNoResponse
+    );
   },
   get notify() {
     return !!(
@@ -149,7 +151,6 @@ export const deviceStore: IDeviceStore = observable({
       ...(this.characteristicsCache[notifyKey] || []),
       ...(this.characteristicsCache[readKey] || []),
     ];
-
 
     return cache.map((item) => {
       return {

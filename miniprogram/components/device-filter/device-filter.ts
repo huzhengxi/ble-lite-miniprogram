@@ -21,14 +21,14 @@ ComponentWithStore({
   data: {
     filterForm: [
       {
-        label: "Name",
+        label: "广播名称",
         key: "name",
-        placeholder: "Name",
+        placeholder: "",
       },
       {
-        label: "Broadcast",
+        label: "广播数据",
         key: "broadcastData",
-        placeholder: "Broadcast",
+        placeholder: "",
       },
     ],
   },

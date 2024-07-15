@@ -36,17 +36,17 @@ const characteristicsUUID = {
 export { servicesUUID, characteristicsUUID };
 
 /**
- * 根据 service uuid 获取 service name，如果没有获取到合适的名称则返回 uuid
+ * 根据 service uuid 获取 服务名称（中文描述），如果没有获取到合适的名称则返回 uuid
  */
 export function getServiceName(_serviceUUID: string): string {
   const serviceUUID = _serviceUUID.toUpperCase();
   switch (serviceUUID) {
     case servicesUUID.deviceInfo:
-      return "Device Information";
+      return "设备信息";
     case servicesUUID.battery:
-      return "Battery";
+      return "电池";
     case servicesUUID.heartRate:
-      return "Heart Rate";
+      return "心率";
     case servicesUUID.oad:
       return "OAD";
     default:
@@ -55,7 +55,7 @@ export function getServiceName(_serviceUUID: string): string {
 }
 
 /**
- * 根据 characteristic uuid 获取 characteristic name，如果没有获取到合适的名称则返回 uuid
+ * 根据 characteristic uuid 获取 characteristic 名称，如果没有获取到合适的名称则返回 uuid
  */
 export function getCharacteristicName(
   _serviceUUID: string,
@@ -67,42 +67,42 @@ export function getCharacteristicName(
     case servicesUUID.deviceInfo:
       switch (characteristicUUID) {
         case characteristicsUUID.deviceInfo.modelNumber:
-          return "Model Number";
+          return "型号";
         case characteristicsUUID.deviceInfo.serialNumber:
-          return "Serial Number";
+          return "序列号";
         case characteristicsUUID.deviceInfo.firmwareRevision:
-          return "Firmware Revision";
+          return "固件版本";
         case characteristicsUUID.deviceInfo.hardwareRevision:
-          return "Hardware Revision";
+          return "硬件版本";
         case characteristicsUUID.deviceInfo.softwareRevision:
-          return "Software Revision";
+          return "软件版本";
         case characteristicsUUID.deviceInfo.manufacturerName:
-          return "Manufacturer Name";
+          return "制造商";
         default:
           return uuid2Short(characteristicUUID);
       }
     case servicesUUID.battery:
       switch (characteristicUUID) {
         case characteristicsUUID.battery.batteryLevel:
-          return "Battery Level";
+          return "电量";
         default:
           return uuid2Short(characteristicUUID);
       }
     case servicesUUID.heartRate:
       switch (characteristicUUID) {
         case characteristicsUUID.heartRate.heartRateMeasurement:
-          return "Heart Rate Measurement";
+          return "心率测量";
         case characteristicsUUID.heartRate.bodySensorLocation:
-          return "Body Sensor Location";
+          return "传感器位置";
         default:
           return uuid2Short(characteristicUUID);
       }
     case servicesUUID.oad:
       switch (characteristicUUID) {
         case characteristicsUUID.oad.oadControl:
-          return "OAD Control";
+          return "OAD 控制";
         case characteristicsUUID.oad.oadPacket:
-          return "OAD Packet";
+          return "OAD 数据包";
         default:
           return uuid2Short(characteristicUUID);
       }

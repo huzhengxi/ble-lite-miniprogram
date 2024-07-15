@@ -37,19 +37,19 @@
     "list": [
       {
         "pagePath": "pages/main/main",
-        "text": "Scanner",
+        "text": "设备",
         "iconPath": "/assets/tab-icons/normal/home.png",
         "selectedIconPath": "/assets/tab-icons/selected/home.png"
       },
       {
         "pagePath": "pages/luckincoffee/luckincoffee",
-        "text": "Luckin",
+        "text": "瑞幸",
         "iconPath": "/assets/tab-icons/normal/luckin.png",
         "selectedIconPath": "/assets/tab-icons/selected/luckin.png"
       },
       {
         "pagePath": "pages/help/help",
-        "text": "Help",
+        "text": "帮助",
         "iconPath": "/assets/tab-icons/normal/help.png",
         "selectedIconPath": "/assets/tab-icons/selected/help.png"
       }

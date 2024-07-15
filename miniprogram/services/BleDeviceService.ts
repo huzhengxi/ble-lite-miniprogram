@@ -171,7 +171,10 @@ export class BleDeviceService {
         if (characteristic.properties.notify) {
           strProperties += "Notify ";
         }
-
+        if (characteristic.properties.indicate) {
+          strProperties += "Indicate ";
+        }
+        
         if (characteristic.properties.writeNoResponse) {
           strProperties += "WriteNoResponse ";
         }

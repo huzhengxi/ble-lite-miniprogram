@@ -6,5 +6,5 @@
     "van-cell": "@vant/weapp/cell/index",
     "van-cell-group": "@vant/weapp/cell-group/index"
   },
-  "navigationBarTitleText": "Peripheral"
+  "navigationBarTitleText": "设备服务列表"
 }

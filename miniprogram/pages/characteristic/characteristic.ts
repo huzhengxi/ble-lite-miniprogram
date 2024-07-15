@@ -2,6 +2,7 @@ import { BleDeviceService } from "@services/BleDeviceService";
 import { BehaviorWithStore } from "mobx-miniprogram-bindings";
 import { deviceStore } from "../../mobx/index";
 import { IProperty } from "../../mobx/device-store";
+// @ts-ignore
 import Notify from "@vant/weapp/notify/notify";
 
 interface ICharacteristicData {

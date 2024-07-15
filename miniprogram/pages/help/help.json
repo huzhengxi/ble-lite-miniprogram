@@ -6,5 +6,5 @@
     "van-checkbox": "@vant/weapp/checkbox/index",
     "van-checkbox-group": "@vant/weapp/checkbox-group/index"
   },
-  "navigationBarTitleText": "Help"
+  "navigationBarTitleText": "帮助"
 }

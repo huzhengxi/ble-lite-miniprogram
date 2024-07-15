@@ -1,6 +1,6 @@
 <view>
   <van-dropdown-menu custom-class="dropdown-menu" active-color="#007AFF">
-    <van-dropdown-item id="dropItem" title-class="drop-item" title="{{deviceFilterToString === '' ? 'No Filter':deviceFilterToString}}">
+    <van-dropdown-item id="dropItem" title-class="drop-item" title="{{deviceFilterToString === '' ? '筛选':deviceFilterToString}}">
       <view class="container">
 
         <view wx:for="{{filterForm}}" wx:key="index" class="row filter-list-item flex-center-left">
@@ -9,7 +9,7 @@
         </view>
 
         <!-- 0 - 100的进度条 -->
-        <view class="baseItem flex-center-left" style="margin-left: 20rpx;">RSSI</view>
+        <view class="baseItem flex-center-left" style="margin-left: 20rpx;">广播信号</view>
 
         <view class="row flex-center-left baseItem">
           <slider style="flex: 1;" activeColor="#007AFF" bindchange="onSliderChange" value="{{deviceFilter.rssi ? deviceFilter.rssi * -1 : 100}}" min="1" max="100" step="1" />
@@ -17,24 +17,24 @@
         </view>
 
         <view class="row flex-center-left filter-list-item">
-          <text class="label">Remove Unnamed</text>
+          <text class="label">移除无名称的广播</text>
           <switch id="unnamedSwitch" class="switch" color="#0191F1" checked="{{deviceFilter.unnamedSwitch}}" bindchange="onSwitchChange" />
         </view>
         <view class="row flex-center-left filter-list-item">
-          <text class="label">Remove Without Data</text>
+          <text class="label">移除无数据的广播</text>
           <switch id="noDataSwitch" class="switch" color="#0191F1"  checked="{{deviceFilter.noDataSwitch}}" bindchange="onSwitchChange" />
         </view>
         <view class="row flex-center-left filter-list-item">
-          <text class="label">Remove Unconnectable</text>
+          <text class="label">移除不可连接的广播</text>
           <switch id="unconnectableSwitch" class="switch" color="#0191F1" checked="{{deviceFilter.unconnectableSwitch}}" bindchange="onSwitchChange" />
         </view>
 
         <view class="row" style="justify-content: space-around; margin-top: 20rpx;">
           <van-button custom-class="button" plain round bind:click="onClearFilter">
-            Clear
+            清空
           </van-button>
           <van-button custom-class="button" plain type="info" round bind:click="onHideFilter">
-            OK
+            确定
           </van-button>
         </view>
       </view>
