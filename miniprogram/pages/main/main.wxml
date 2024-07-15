@@ -1,7 +1,7 @@
 <view style="padding: 20rpx">
 
   <!-- 设备过滤 -->
-  <view class="row space-between">
+  <view class="row space-between filter-and-scanning">
     <device-filter style="flex: 1;" />
     <view bind:tap="changeScanStatus" class="scan-status-container row flex-center-center">
       <image class="{{scanning ? 'loading main-loading': 'main-stop'}}" src="../../assets/icon/{{scanning ? 'start': 'stop'}}.png" mode="aspectFit" />
@@ -25,7 +25,7 @@
         </view>
 
         <!-- 广播间隔 -->
-        <view class="column flex-bottom-center" style="flex-shrink: 0; min-width: 50rpx;">
+        <view class="column flex-bottom-center scan-interval">
           <text wx:if="{{item.scanInterval && item.scanInterval < 20000}}" class="mt-1">{{item.scanInterval}} ms </text>
         </view>
       </view>

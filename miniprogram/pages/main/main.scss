@@ -1,3 +1,6 @@
+.filter-and-scanning {
+}
+
 .device-icon {
   width: 48rpx;
   height: 48rpx;
@@ -52,7 +55,7 @@
   text-overflow: ellipsis;
   flex: 1;
   margin-right: 10rpx;
-  font-size: 32rpx;
+  font-size: 28rpx;
 }
 
 .main-loading {
@@ -63,4 +66,12 @@
 .main-stop {
   height: 24rpx;
   width: 24rpx;
+}
+
+.scan-interval {
+  flex-shrink: 0;
+  min-width: 50rpx;
+  color: #000000;
+  opacity: 0.5;
+  font-size: 25rpx;
 }
