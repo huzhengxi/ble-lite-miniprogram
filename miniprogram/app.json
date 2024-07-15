@@ -23,8 +23,6 @@
   "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents",
   "usingComponents": {
-    "navigation-bar": "/components/navigation-bar/navigation-bar",
-    "van-notify": "@vant/weapp/notify/index"
   },
   "useExtendedLib": {
     "weui": true

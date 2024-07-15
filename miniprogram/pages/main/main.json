@@ -1,5 +1,7 @@
 {
   "usingComponents": {
+    "van-loading": "@vant/weapp/loading/index",
+    "van-dialog": "@vant/weapp/dialog/index",
     "device-filter": "/components/device-filter/device-filter",
     "van-nav-bar": "@vant/weapp/nav-bar/index"
   },

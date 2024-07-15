@@ -65,3 +65,5 @@
     <image slot="icon" src="/assets/icon/{{item.icon}}" class="property-icon" />
   </van-cell>
 </van-cell-group>
+
+<view style="margin-bottom: 30rpx;" />

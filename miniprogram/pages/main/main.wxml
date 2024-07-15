@@ -45,3 +45,8 @@
     已停止扫描，请点击<text class="start-scan-rich-txt">开始扫描</text>
   </text>
 </view>
+
+
+<van-dialog  close-on-click-overlay="true" show-confirm-button="false" use-slot show="{{ connectDialogShow }}" bind:close="onDialogClose" confirm-button-text="取消" confirm-button-color="gray">
+  <van-loading color="#0191F1" custom-class='connect-loading' size="30px" >连接中...</van-loading>
+</van-dialog>

@@ -9,6 +9,9 @@ interface IMainData {
   devices: IBLEDeviceData[];
   scanning: boolean;
   navHeight: number;
+  connectDialogShow: boolean;
+  canceledConnect: boolean;
+  currentDevice?: BleDeviceService;
 }
 
 interface IMainOption {
@@ -16,10 +19,11 @@ interface IMainOption {
   bleScanService?: BleScanService;
   changeScanStatus?: () => void;
   onItemTap?: (event: WechatMiniprogram.CustomEvent) => void;
-  setCurrentDevice?: (device: IBLEDeviceData) => void;
+  setCurrentDevice?: (device: BleDeviceService) => void;
   clearDevices?: () => void;
   startScan: () => Promise<void>;
   onItemLongPress: (event: WechatMiniprogram.CustomEvent) => void;
+  onDialogClose: () => void;
 }
 
 const mainBehavior = BehaviorWithStore({
@@ -31,7 +35,7 @@ const mainBehavior = BehaviorWithStore({
     },
     {
       store: deviceStore,
-      fields: [],
+      fields: ["currentDevice"],
       actions: ["setCurrentDevice"],
     },
   ],
@@ -46,17 +50,19 @@ Page<IMainData, IMainOption>({
     navHeight: wx.getMenuButtonBoundingClientRect().bottom + 20,
     devices: [],
     scanning: false,
+    connectDialogShow: false,
+    canceledConnect: false,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad() { },
+  onLoad() {},
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady() { },
+  onReady() {},
 
   /**
    * 生命周期函数--监听页面显示
@@ -129,12 +135,12 @@ Page<IMainData, IMainOption>({
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload() { },
+  onUnload() {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh() { },
+  onPullDownRefresh() {},
   changeScanStatus() {
     if (this.data.scanning) {
       this.bleScanService?.stopScan();
@@ -148,13 +154,16 @@ Page<IMainData, IMainOption>({
       wx.showToast({
         title: "此设备不允许连接",
         icon: "none",
+        duration: 1000,
       });
       return;
     }
-    wx.showLoading({
-      title: "连接中",
-      mask: true
+
+    this.setData({
+      connectDialogShow: true,
+      canceledConnect: false,
     });
+
     if (this.data.scanning) {
       this.bleScanService?.stopScan();
     }
@@ -164,20 +173,27 @@ Page<IMainData, IMainOption>({
       .startConnect()
       .then((result) => {
         if (!result) {
+          this.setData({
+            connectDialogShow: false,
+          });
           wx.showToast({
             title: "连接失败",
             icon: "none",
-            mask: true
+            mask: true,
           });
           return;
         }
         console.log("连接成功");
-        wx.navigateTo({
-          url: "/pages/devicedetail/devicedetail",
-        });
+        if (!this.data.canceledConnect) {
+          wx.navigateTo({
+            url: "/pages/devicedetail/devicedetail",
+          });
+        }
       })
       .finally(() => {
-        wx.hideLoading();
+        this.setData({
+          connectDialogShow: false,
+        });
       });
   },
   onItemLongPress(event) {
@@ -199,5 +215,18 @@ Page<IMainData, IMainOption>({
         });
       },
     });
+  },
+  onDialogClose() {
+    console.log("canceled connect...");
+    this.setData({
+      canceledConnect: true,
+      connectDialogShow: false,
+    });
+
+    if (this.data.currentDevice?.currentDevice?.deviceId) {
+      wx.closeBLEConnection({
+        deviceId: this.data.currentDevice.currentDevice.deviceId,
+      });
+    }
   },
 });
