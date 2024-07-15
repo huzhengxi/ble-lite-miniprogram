@@ -1,7 +1,7 @@
 <view>
-  <van-dropdown-menu custom-class="dropdown-menu" active-color="#007AFF">
+  <van-dropdown-menu custom-class="dropdown-menu" catch:touchmove="" active-color="#007AFF">
     <van-dropdown-item id="dropItem" title-class="drop-item" title="{{deviceFilterToString === '' ? '筛选':deviceFilterToString}}">
-      <view class="container">
+      <view class="container" catch:touchmove="" >
 
         <view wx:for="{{filterForm}}" wx:key="index" class="row filter-list-item flex-center-left">
           <text style="flex: 1;">{{item.label}}</text>

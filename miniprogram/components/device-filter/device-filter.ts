@@ -23,12 +23,12 @@ ComponentWithStore({
       {
         label: "广播名称",
         key: "name",
-        placeholder: "",
+        placeholder: "输入名称",
       },
       {
         label: "广播数据",
         key: "broadcastData",
-        placeholder: "",
+        placeholder: "输入广播数据",
       },
     ],
   },

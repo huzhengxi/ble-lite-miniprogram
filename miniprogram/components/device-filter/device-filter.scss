@@ -1,4 +1,4 @@
-@import "./variable.scss";
+@import "../../variable.scss";
 
 .baseItem {
   min-height: 100rpx;
@@ -32,7 +32,7 @@
 }
 
 .van-popup {
-  background-color: $qp-page-background-color;
+  background-color: $qp-page-background-color !important;
   padding: 0 30rpx;
 }
 
