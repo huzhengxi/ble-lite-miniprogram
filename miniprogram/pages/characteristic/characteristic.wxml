@@ -1,6 +1,6 @@
 <van-notify id="van-notify" />
 
-<navigation-bar extClass="nav-bar" title="Characteristic" />
+<navigation-bar extClass="nav-bar" background="#d2e1ff" title="特征(Characteristic)" />
 
 <!-- nav bar height: 94px -->
 <view style="margin-top: 105px;" />
@@ -13,7 +13,7 @@
   <van-cell title="服务 UUID" label="{{currentCharacteristic.shortServiceUUID}}" />
 
   <!-- 编码设置 -->
-  <van-cell center title="编码类型">
+  <van-cell center title="编码类型" border="{{false}}">
     <select slot="right-icon" nowId="{{currentTypeOption.id}}" nameList="{{valueTypeOptions}}" nowName="{{currentTypeOption.name}}" placeholder="" bind:handleChange="dropdownItemChange"></select>
   </van-cell>
 

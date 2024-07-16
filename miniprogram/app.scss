@@ -368,3 +368,26 @@ button[type="primary"] {
   min-height: 110rpx !important;
   align-items: center !important;
 }
+
+.van-cell {
+  background-color: var(--cell-background-color, #fff);
+  box-sizing: border-box;
+  color: var(--cell-text-color, #323233);
+  display: flex;
+  font-size: var(--cell-font-size, 14px);
+  line-height: var(--cell-line-height, 24px);
+  padding: var(--cell-vertical-padding, 10px)
+    var(--cell-horizontal-padding, 16px);
+  position: relative;
+  width: 100%;
+}
+
+.van-cell::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2rpx; /* 例如：设置下边框的高度为2px */
+  background-color: #00000033; /* 例如：设置下边框的颜色为红色 */
+}
