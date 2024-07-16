@@ -174,7 +174,7 @@ export class BleDeviceService {
         if (characteristic.properties.indicate) {
           strProperties += "Indicate ";
         }
-        
+
         if (characteristic.properties.writeNoResponse) {
           strProperties += "WriteNoResponse ";
         }
@@ -187,8 +187,14 @@ export class BleDeviceService {
           serviceUUID: service.uuid,
           shortServiceUUID: uuid2Short(service.uuid),
           shortCharacteristicUUID: uuid2Short(characteristic.uuid),
+          isLast: false,
         });
       }
+
+      if (characs.length > 0) {
+        characs[characs.length - 1].isLast = true;
+      }
+
       this.services.push({
         serviceUUID: service.uuid,
         serviceName: getServiceName(service.uuid),

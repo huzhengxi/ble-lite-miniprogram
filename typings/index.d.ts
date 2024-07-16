@@ -153,6 +153,7 @@ interface ICharacteristic extends WechatMiniprogram.BLECharacteristic {
   serviceUUID: string;
   shortServiceUUID: string;
   shortCharacteristicUUID: string;
+  isLast: boolean;
 }
 
 interface IDeviceService {
