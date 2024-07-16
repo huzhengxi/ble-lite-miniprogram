@@ -5,7 +5,7 @@
 </van-cell-group>
 
 <van-collapse border="{{false}}" value="{{ activeName }}" bind:change="onCollapseChange">
-  <van-collapse-item border="{{false}}" custom-class="collapse-container" content-class="collapse-content-class" wx:for="{{currentDevice.services}}" wx:key="index" title="{{item.serviceName}}" name="{{item.serviceUUID}}">
+  <van-collapse-item border custom-class="collapse-container" content-class="collapse-content-class" wx:for="{{currentDevice.services}}" wx:key="index" title="{{item.serviceName}}" name="{{item.serviceUUID}}">
     <van-cell bind:click="onCharacteristic" wx:for="{{item.characteristics}}" wx:key="index" title="{{item.name}}" label="{{item.value || item.strProperties}}" data-characteristic="{{item}}" is-link border="{{!item.isLast}}" />
   </van-collapse-item>
 </van-collapse>
