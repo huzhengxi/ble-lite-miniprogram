@@ -63,19 +63,23 @@ Page<ILuckinData, ILuckinOption>({
     loading: true,
   },
 
+
   /**
    * 生命周期函数--监听页面显示
    */
   onShow() {
+    console.log("me--luckin...onShow");
+
     this.startScan();
     this.setData({
       loading: true
     })
     setTimeout(() => {
+      this.clearDevices?.();
       this.setData({
         loading: false,
       });
-    }, 1500);
+    }, 1600);
   },
 
   async startScan() {
