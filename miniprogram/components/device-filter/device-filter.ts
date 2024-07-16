@@ -75,5 +75,8 @@ ComponentWithStore({
         rssi: event.detail.value * -1,
       });
     },
+    touchmove() {
+      
+    }
   },
 });
