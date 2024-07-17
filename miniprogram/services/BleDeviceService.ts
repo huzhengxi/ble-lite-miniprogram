@@ -195,12 +195,25 @@ export class BleDeviceService {
         characs[characs.length - 1].isLast = true;
       }
 
-      this.services.push({
-        serviceUUID: service.uuid,
-        serviceName: getServiceName(service.uuid),
-        characteristics: characs,
-        shortServiceUUID: uuid2Short(service.uuid),
-      });
+      const serviceName = getServiceName(service.uuid);
+      const shortServiceUUID = uuid2Short(service.uuid);
+      if (serviceName === shortServiceUUID) {
+        // 放到后面
+        this.services.push({
+          serviceUUID: service.uuid,
+          serviceName,
+          characteristics: characs,
+          shortServiceUUID,
+        });
+      } else {
+        // 放到前面
+        this.services.unshift({
+          serviceUUID: service.uuid,
+          serviceName,
+          characteristics: characs,
+          shortServiceUUID,
+        });
+      }
     }
   }
 

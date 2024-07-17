@@ -42,7 +42,7 @@
 
   <!-- 写入历史 -->
   <van-cell label-class="characteristic-value" wx:key="index" wx:for="{{currentCharacteristicWriteCache}}" title="{{item.time}}" label="{{item.value}}" />
-  <van-cell wx:key="index" wx:if="{{currentCharacteristicWriteCache.length === 0}}" title="Written values will appear hear" />
+  <van-cell wx:key="index" wx:if="{{currentCharacteristicWriteCache.length === 0}}" label="通过此特征写入过的内容会显示在这里" border="{{false}}" />
 </van-cell-group>
 
 <!-- 通知 -->
@@ -55,7 +55,7 @@
 
   <!-- 通知历史 -->
   <van-cell label-class="characteristic-value" wx:key="index" wx:for="{{currentCharacteristicReadOrNotifyCache}}" title="{{item.time}}" label="{{item.value}}" />
-  <van-cell wx:key="index" wx:if="{{currentCharacteristicReadOrNotifyCache.length === 0}}" title="Notified values will appear hear" />
+  <van-cell wx:key="index" wx:if="{{currentCharacteristicReadOrNotifyCache.length === 0}}" label="通知到此特征的内容会显示到这里" border="{{false}}"/>
 </van-cell-group>
 
 
