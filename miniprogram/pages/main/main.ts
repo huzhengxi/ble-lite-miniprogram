@@ -4,6 +4,8 @@ import { bleScanStore, deviceStore } from "../../mobx/index";
 import BleScanService from "../../services/BleScanService";
 import { permissionTip } from "../../utils/util";
 import { BleDeviceService } from "../../services/BleDeviceService";
+// @ts-ignore
+import Dialog from "@vant/weapp/dialog/dialog";
 
 interface IMainData {
   devices: IBLEDeviceData[];
@@ -57,12 +59,12 @@ Page<IMainData, IMainOption>({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad() { },
+  onLoad() {},
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady() { },
+  onReady() {},
 
   /**
    * 生命周期函数--监听页面显示
@@ -86,12 +88,13 @@ Page<IMainData, IMainOption>({
     });
     const tipContent = permissionTip();
     const showPermissionTip = () => {
-      wx.showModal({
-        title: "",
-        content: tipContent,
-        showCancel: false,
-        confirmText: "OK",
-      });
+      Dialog.alert({
+        message: tipContent,
+        confirmButtonText: "去授权",
+        cancelButtonText: "知道了",
+        confirmButtonOpenType: "openSetting",
+        showCancelButton: true,
+      }).then(() => {});
     };
     try {
       // 检查定位权限和蓝牙权限
@@ -131,20 +134,17 @@ Page<IMainData, IMainOption>({
   onHide() {
     this.bleScanService?.stopScan(true);
     console.log("me--main...onHide");
-    
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload() { 
-
-  },
+  onUnload() {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh() { },
+  onPullDownRefresh() {},
   changeScanStatus() {
     if (this.data.scanning) {
       this.bleScanService?.stopScan();
@@ -178,7 +178,7 @@ Page<IMainData, IMainOption>({
       .then((result) => {
         if (this.data.canceledConnect) {
           // 已经取消连接了返回吧
-          return
+          return;
         }
         if (!result) {
           this.setData({
@@ -196,7 +196,6 @@ Page<IMainData, IMainOption>({
         wx.navigateTo({
           url: "/pages/devicedetail/devicedetail",
         });
-
       })
       .finally(() => {
         this.setData({

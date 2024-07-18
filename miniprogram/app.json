@@ -22,8 +22,7 @@
   },
   "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents",
-  "usingComponents": {
-  },
+  "usingComponents": {},
   "useExtendedLib": {
     "weui": true
   },
@@ -57,5 +56,6 @@
     "scope.userLocation": {
       "desc": "获取定位权限进行蓝牙设备连接"
     }
-  }
+  },
+  "__usePrivacyCheck__": true
 }

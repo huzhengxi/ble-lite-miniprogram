@@ -3,6 +3,9 @@ import { BehaviorWithStore } from "mobx-miniprogram-bindings";
 import { bleScanStore, deviceStore } from "../../mobx/index";
 import BleScanService from "../../services/BleScanService";
 import { permissionTip, uint8Array2hexString } from "../../utils/util";
+// @ts-ignore
+import Dialog from "@vant/weapp/dialog/dialog";
+
 
 interface ILuckinData {
   luckinDevices: IBLEDeviceData[];
@@ -89,12 +92,13 @@ Page<ILuckinData, ILuckinOption>({
     });
     const tipContent = permissionTip();
     const showPermissionTip = () => {
-      wx.showModal({
-        title: "",
-        content: tipContent,
-        showCancel: false,
-        confirmText: "知道了",
-      });
+       Dialog.alert({
+         message: tipContent,
+         confirmButtonText: "去授权",
+         cancelButtonText: "知道了",
+         confirmButtonOpenType: "openSetting",
+         showCancelButton: true,
+       }).then(() => {});
     };
     try {
       // 检查定位权限和蓝牙权限

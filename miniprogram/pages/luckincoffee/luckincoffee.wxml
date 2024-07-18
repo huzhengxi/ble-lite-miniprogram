@@ -34,3 +34,4 @@
 
 </view>
 
+<van-dialog id="van-dialog" />
