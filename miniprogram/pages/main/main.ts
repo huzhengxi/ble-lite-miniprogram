@@ -118,14 +118,15 @@ Page<IMainData, IMainOption>({
           return;
         }
       }
+      if (!this.bleScanService) {
+        this.bleScanService = new BleScanService();
+      }
+      await this.bleScanService?.startScan();
     } catch (error) {
+      this.bleScanService?.stopScan();
+      console.log("main-scan-error", error);
       showPermissionTip();
     }
-
-    if (!this.bleScanService) {
-      this.bleScanService = new BleScanService();
-    }
-    this.bleScanService?.startScan();
   },
 
   /**

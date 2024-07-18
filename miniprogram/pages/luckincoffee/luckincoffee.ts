@@ -6,7 +6,6 @@ import { permissionTip, uint8Array2hexString } from "../../utils/util";
 // @ts-ignore
 import Dialog from "@vant/weapp/dialog/dialog";
 
-
 interface ILuckinData {
   luckinDevices: IBLEDeviceData[];
   scanning: boolean;
@@ -66,7 +65,6 @@ Page<ILuckinData, ILuckinOption>({
     loading: true,
   },
 
-
   /**
    * 生命周期函数--监听页面显示
    */
@@ -75,8 +73,8 @@ Page<ILuckinData, ILuckinOption>({
 
     this.startScan();
     this.setData({
-      loading: true
-    })
+      loading: true,
+    });
     setTimeout(() => {
       this.clearDevices?.();
       this.setData({
@@ -92,13 +90,13 @@ Page<ILuckinData, ILuckinOption>({
     });
     const tipContent = permissionTip();
     const showPermissionTip = () => {
-       Dialog.alert({
-         message: tipContent,
-         confirmButtonText: "去授权",
-         cancelButtonText: "知道了",
-         confirmButtonOpenType: "openSetting",
-         showCancelButton: true,
-       }).then(() => {});
+      Dialog.alert({
+        message: tipContent,
+        confirmButtonText: "去授权",
+        cancelButtonText: "知道了",
+        confirmButtonOpenType: "openSetting",
+        showCancelButton: true,
+      }).then(() => {});
     };
     try {
       // 检查定位权限和蓝牙权限
@@ -122,14 +120,14 @@ Page<ILuckinData, ILuckinOption>({
           return;
         }
       }
+      if (!this.bleScanService) {
+        this.bleScanService = new BleScanService();
+      }
+      await this.bleScanService?.startScan(filterLuckinDevice);
     } catch (error) {
+      this.bleScanService?.stopScan();
       showPermissionTip();
     }
-
-    if (!this.bleScanService) {
-      this.bleScanService = new BleScanService();
-    }
-    this.bleScanService?.startScan(filterLuckinDevice);
   },
 
   /**

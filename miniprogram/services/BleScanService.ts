@@ -80,43 +80,38 @@ export default class BleScanService {
       return;
     }
     const tipContent = permissionTip();
-    try {
-      // 屏幕常亮
-      await wx.setKeepScreenOn({
-        keepScreenOn: true,
-      });
-      // 初始化蓝牙模块
-      await wx.openBluetoothAdapter({
-        mode: "central",
-      });
+    // 屏幕常亮
+    await wx.setKeepScreenOn({
+      keepScreenOn: true,
+    });
+    // 初始化蓝牙模块
+    await wx.openBluetoothAdapter({
+      mode: "central",
+    });
 
-      // 获取蓝牙状态
-      const { available, discovering } = await wx.getBluetoothAdapterState();
-      helper.log(this.logType, available);
+    // 获取蓝牙状态
+    const { available, discovering } = await wx.getBluetoothAdapterState();
+    helper.log(this.logType, available);
 
-      if (!available) {
-        bleScanStore.stopScan();
-        helper.log(this.logType, "蓝牙未打开");
-        return;
-      }
-
-      if (discovering) {
-        helper.log(this.logType, "正在扫描，直接返回");
-        return;
-      }
-
-      wx.onBluetoothDeviceFound(this.onBluetoothDeviceFound);
-
-      await wx.startBluetoothDevicesDiscovery({
-        interval: 50,
-        powerLevel: "high",
-        allowDuplicatesKey: true,
-        // services: ["0000FDCD-0000-1000-8000-00805F9B34FB"],
-      });
-    } catch (error) {
+    if (!available) {
       bleScanStore.stopScan();
-      helper.log(this.logType, "扫描蓝牙错误：", error);
+      helper.log(this.logType, "蓝牙未打开");
+      return;
     }
+
+    if (discovering) {
+      helper.log(this.logType, "正在扫描，直接返回");
+      return;
+    }
+
+    wx.onBluetoothDeviceFound(this.onBluetoothDeviceFound);
+
+    await wx.startBluetoothDevicesDiscovery({
+      interval: 50,
+      powerLevel: "high",
+      allowDuplicatesKey: true,
+      // services: ["0000FDCD-0000-1000-8000-00805F9B34FB"],
+    });
   }
 
   async stopScan(clearDevices: boolean = false) {
