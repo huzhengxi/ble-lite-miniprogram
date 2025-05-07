@@ -1,6 +1,16 @@
 
 <view style="margin-top: 15rpx;" />
+
 <van-cell-group inset>
+  <van-cell center is-link >
+    <image slot="icon" src="/assets/icon/luckin.png" class='icon' style="margin-bottom: 15rpx;"/>
+    <view slot="title">
+      <button class="btn" >瑞幸温度计</button>
+    </view>
+  </van-cell>
+</van-cell-group>
+
+<van-cell-group inset custom-class="group">
   <van-cell center is-link >
   <image slot="icon" src="/assets/icon/contact.png" class='icon'/>
     <view slot="title">

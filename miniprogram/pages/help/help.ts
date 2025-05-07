@@ -3,22 +3,7 @@ Page({
   /**
    * 页面的初始数据
    */
-  data: {
-    valueTypeId: 0,
-    valueType: "Hex",
-    valueTypeOptions: [
-      {
-        id: 0,
-        name: "Hex",
-        value: "hex"
-      },
-      {
-        id: 1,
-        name: "UTF-8 String",
-        value: "str"
-      },
-    ],
-  },
+  data: {},
   dropdownItemChange(event: any) {
     console.log("dropdownItemChange：", event.detail);
   },
@@ -62,11 +47,4 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage() { },
-  btnTap() {
-    wx.showModal({
-      title: 'chara...',
-      placeholderText: '输入 hex ',
-      editable: true
-    })
-  }
 });
