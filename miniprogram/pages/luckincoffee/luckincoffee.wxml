@@ -1,7 +1,8 @@
 <!-- 导航栏 -->
-<van-nav-bar fixed custom-style="background-color:#d2e1ff !important;">
-  <text class="vant-nav-bar-title" slot="left">瑞幸温度计</text>
+<van-nav-bar fixed custom-style="background-color:#d2e1ff !important;" bind:click-left="onClickLeft">
+  <image src="/assets/icon/back.png" style="height: 35rpx; width: 20rpx;" slot="left" />
   <view slot="title" class="nav-bar-custom-title row flex-center-right">
+    <text class="vant-nav-bar-title" slot="left">瑞幸温度计</text>
     <view bind:tap="changeScanStatus" class="scan-status-container row flex-center-center {{scanning ? 'loading': ''}}">
       <image src="../../assets/icon/{{scanning ? 'start': 'stop'}}.png" style="{{scanning ? 'height: 40rpx; width: 40rpx;': 'height: 24rpx; width: 24rpx;' }}" mode="aspectFit" />
     </view>

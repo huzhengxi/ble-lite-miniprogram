@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/main/main",
+    "pages/scangraph/scangraph",
     "pages/luckincoffee/luckincoffee",
     "pages/devicedetail/devicedetail",
     "pages/help/help",
@@ -39,7 +40,7 @@
         "selectedIconPath": "/assets/tab-icons/selected/home.png"
       },
       {
-        "pagePath": "pages/luckincoffee/luckincoffee",
+        "pagePath": "pages/scangraph/scangraph",
         "text": "瑞幸",
         "iconPath": "/assets/tab-icons/normal/luckin.png",
         "selectedIconPath": "/assets/tab-icons/selected/luckin.png"

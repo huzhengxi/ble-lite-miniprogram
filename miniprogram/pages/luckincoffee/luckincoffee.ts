@@ -21,6 +21,7 @@ interface ILuckinOption {
   setCurrentDevice?: (device: IBLEDeviceData) => void;
   clearDevices?: () => void;
   startScan: () => Promise<void>;
+  onClickLeft: () => void
 }
 
 const filterLuckinDevice = (device: IBluetoothDevice) => {
@@ -69,8 +70,6 @@ Page<ILuckinData, ILuckinOption>({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    console.log("me--luckin...onShow");
-
     this.startScan();
     this.setData({
       loading: true,
@@ -153,4 +152,7 @@ Page<ILuckinData, ILuckinOption>({
       url: `/pages/qrcode/qrcode`,
     });
   },
+  onClickLeft() { 
+    wx.navigateBack()
+  }
 });

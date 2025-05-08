@@ -2,7 +2,7 @@
 <view style="margin-top: 15rpx;" />
 
 <van-cell-group inset>
-  <van-cell center is-link >
+  <van-cell center is-link bind:tap="goToLuckin">
     <image slot="icon" src="/assets/icon/luckin.png" class='icon' style="margin-bottom: 15rpx;"/>
     <view slot="title">
       <button class="btn" >瑞幸温度计</button>
