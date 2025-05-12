@@ -60,6 +60,8 @@ interface IBleScanStore {
   lastScanTimeMap: Map<string, number>;
   deviceFilter: IBleBroadcastFilter;
   scanning: boolean;
+  // 所有设备 key 为 deviceId， value 为设备数据
+  allDevices: Map<string, IBLEDeviceData>;
 
   // computed
   devices: () => IBLEDeviceData[];

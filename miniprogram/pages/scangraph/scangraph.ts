@@ -1,4 +1,5 @@
-// pages/scangraph/scangraph.ts
+
+
 Page({
 
   /**

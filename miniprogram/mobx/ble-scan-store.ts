@@ -16,6 +16,7 @@ import {
 export const bleScanStore: IBleScanStore = observable({
   // 数据字段
   deviceList: [] as IBLEDeviceData[],
+  allDevices: [] as IBLEDeviceData[],
   // 保存设备上一次搜索到的时间Map，key为mac value为时间戳
   lastScanTimeMap: new Map<string, number>(),
   deviceFilter: {
@@ -112,6 +113,10 @@ export const bleScanStore: IBleScanStore = observable({
     this: typeof bleScanStore,
     devices: IBLEDeviceData[]
   ) {
+    // 加入到 allDevices 中
+    devices.forEach((device) => {
+      this.allDevices.set(device.deviceId, device);
+    });
     // 可能有用的设备
     const usefulDevices = devices.filter(
       (device) => !!device.name && device.connectable

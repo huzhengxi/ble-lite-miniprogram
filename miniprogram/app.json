@@ -41,9 +41,9 @@
       },
       {
         "pagePath": "pages/scangraph/scangraph",
-        "text": "瑞幸",
-        "iconPath": "/assets/tab-icons/normal/luckin.png",
-        "selectedIconPath": "/assets/tab-icons/selected/luckin.png"
+        "text": "扫描历史",
+        "iconPath": "/assets/tab-icons/normal/graph.png",
+        "selectedIconPath": "/assets/tab-icons/selected/graph.png"
       },
       {
         "pagePath": "pages/help/help",
